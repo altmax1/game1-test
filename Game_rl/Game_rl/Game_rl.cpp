@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "cell.h"
+#include "level.h"
 
 
 int _tmain(int argc, _TCHAR* argv[])
