@@ -1,4 +1,5 @@
 #pragma once
+#include "cell.h"
 
 using namespace std;
 class level
@@ -6,7 +7,7 @@ class level
 private:
 	int widght;
 	int height;
-	cell **cells;
+	X_cell **cells;
 public:
 	level();
 	~level();

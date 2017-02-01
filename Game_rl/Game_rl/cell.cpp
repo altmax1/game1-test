@@ -2,11 +2,11 @@
 #include "cell.h"
 
 
-cell::cell(void)
+X_cell::X_cell(void)
 {
 }
 
 
-cell::~cell(void)
+X_cell::~X_cell(void)
 {
 }

@@ -1,6 +1,6 @@
 #pragma once
 using namespace std;
-class cell
+class X_cell
 {
 private:
 	int tile;
@@ -13,7 +13,7 @@ private:
 	char creature;
 
 public:
-	cell(void);
-	~cell(void);
+	X_cell(void);
+	~X_cell(void);
 };
 
