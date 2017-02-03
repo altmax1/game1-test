@@ -1,0 +1,6 @@
+5
+1 punkt1
+2 punkt2
+3 punkt3
+4 punkt4
+5 punkt5

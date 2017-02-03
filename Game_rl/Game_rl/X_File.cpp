@@ -39,7 +39,7 @@ void X_File::X_ReadFile ( LPCTSTR filename, FileContent &fc)  // читаем произвол
 
 	size = GetFileSize ( file, NULL);
 	fc.lenght = size;
-	fc.content = new unsigned char [size];
+	fc.content = new char [size];
 
 	DWORD offset, read;
 	offset = 0;

@@ -3,7 +3,7 @@
 struct FileContent
 {
 int lenght;
-unsigned char* content;
+char* content;
 };
 
 class X_File
