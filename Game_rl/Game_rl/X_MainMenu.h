@@ -26,5 +26,8 @@ public:
 	void MenuStateUp();
 	void MenuStateDown();
 	void ParseDecorStrings (int &BufferIterator);
+	int ParseNumber (int &BufferIterator);
+	string ParseString (int &BufferIterator);
+	void DecorStringsPrint ();
 };
 

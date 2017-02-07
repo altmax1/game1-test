@@ -27,39 +27,81 @@ void X_MainMenu::GetMenu ()
 	X_File::X_ReadFile ((LPCTSTR)L"MainMenu.txt", buffer);
 	return;
 }
+
+int X_MainMenu::ParseNumber (int &BufferIterator)
+{
+	string temp;
+	int number;
+	temp += buffer.content[BufferIterator];
+	if (buffer.content[BufferIterator+1] != '\n' || buffer.content[BufferIterator+1] != '\r')
+		temp += buffer.content[BufferIterator+1];
+	do	{BufferIterator++;
+		if ( BufferIterator > buffer.lenght+1 )
+			return false;	
+		} while (buffer.content[BufferIterator] != '\n'); //идем до перевода строки
+	BufferIterator++;
+	while (buffer.content[BufferIterator] == '\n' || buffer.content[BufferIterator] == '\r') //теперь если много переводов пока не закончатся
+		BufferIterator++;
+	number = atoi (temp.c_str());
+	return number;
+}
+
+string X_MainMenu::ParseString (int &BufferIterator)
+{
+	string temp;
+	while (buffer.content[BufferIterator] != '\n')
+			{temp += buffer.content[BufferIterator];
+			 BufferIterator++;
+			 if ( BufferIterator > buffer.lenght+1 ) return temp; //вышли за пределы буфера
+			}
+		while (buffer.content[BufferIterator] == '\n' || buffer.content[BufferIterator] == 'r') //пролистываем пустые строки и переводы
+			{BufferIterator++;
+			if ( BufferIterator > buffer.lenght+1 ) return temp; //вышли за пределы буффера
+			}
+	return temp;
+	
+}
+
 void X_MainMenu::ParseDecorStrings (int &BufferIterator)
 {
+	
+	while (BufferIterator < buffer.lenght)
+	{
+		MenuDecorString temp;
+		temp.CoordX = ParseNumber (BufferIterator);
+		temp.CoordY = ParseNumber (BufferIterator);
+		temp.DecorString = ParseString (BufferIterator);
+		DecorStrings.push_back (temp);
+	
+	}
+	return;
+}
+
+void X_MainMenu::DecorStringsPrint ()
+{
+	list <MenuDecorString>::iterator p = DecorStrings.begin();
+		
+	while (p != DecorStrings.end())
+	{
+		int x,y;
+		x = p->CoordX;
+		y = p->CoordY;
+		const char *s = p->DecorString.c_str(); 
+
+		terminal_print (x,y,s);
+		p++;
+	}
+		
 	return;
 }
 
 bool X_MainMenu::ParseFile ()
 {
 	int BufferIterator = 0;
-	string temp;
-	temp += buffer.content[BufferIterator];//загоняем первый символ в темп
-	NumberLines = atoi (temp.c_str()); //преобразуем в инт
-	if ( NumberLines == 0 ) return false;
-	do	{BufferIterator++;
-		if ( BufferIterator > buffer.lenght+1 ) return false;	
-		} while (buffer.content[BufferIterator] != '\n'); //идем до перевода строки
-	BufferIterator++;
-	while (buffer.content[BufferIterator] == '\n' || buffer.content[BufferIterator] == 'r') //теперь если много переводов пока не закончатся
-		BufferIterator++;
-	
+	NumberLines = ParseNumber (BufferIterator);
 	MenuString = new string [NumberLines];
-
 	for (int i =0; i<NumberLines; i++)  // заполняем само меню
-		{while (buffer.content[BufferIterator] != '\n')
-			{MenuString[i] += buffer.content[BufferIterator];
-			 BufferIterator++;
-			 if ( BufferIterator > buffer.lenght+1 ) return true; //вышли за пределы буфера
-			}
-		while (buffer.content[BufferIterator] == '\n' || buffer.content[BufferIterator] == 'r') //пролистываем пустые строки и переводы
-			{BufferIterator++;
-			if ( BufferIterator > buffer.lenght+1 ) return false; //вышли за пределы буффера
-			}
-
-		}
+		MenuString[i] = ParseString (BufferIterator);
 	ParseDecorStrings (BufferIterator);
 	return true;
 
@@ -118,6 +160,7 @@ void X_MainMenu::PrintMenu()
 		}
 	
 	}
+	DecorStringsPrint();
 	terminal_refresh();
 	TerminalRead = terminal_read();
 	if (TerminalRead == TK_UP)

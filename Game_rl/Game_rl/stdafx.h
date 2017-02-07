@@ -12,6 +12,7 @@
 #include <list>
 #include <Windows.h>
 #include <string>
+#include <iterator>
 #include <clocale>
 
 

@@ -13,7 +13,7 @@
 int _tmain(int argc, _TCHAR* argv[])
 {
 	//setlocale(LC_CTYPE, "rus");
-	terminal_open ();
+	terminal_open();
 	terminal_set ("window:title = Game_RL");
 	X_MainMenu Menu1;
 	Menu1.PrintMenu();
