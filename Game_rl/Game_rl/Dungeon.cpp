@@ -29,6 +29,49 @@ Dungeon::~Dungeon(void)
 	delete [] DungeonCells;
 }
 
+void Dungeon::SetLinearCoordsWide ( list <room> ::iterator p)
+{
+	int LeftX = (p->LeftUpCornerX)-1;
+	int RightX = (p->LeftUpCornerX)+(p->RoomWidth);
+	int UpperY = (p->LeftUpCornerY)-1;
+	int DownY = (p->LeftUpCornerY)+(p->RoomHeight);
+	for (int x = LeftX; x<= RightX; x++)
+		for ( int y = UpperY; y<= DownY; y++)
+		{
+			int linear=(y*(MapWidth+1))+x;
+			p->LinearCoordsWide.insert (linear);
+		}	
+}
+
+void Dungeon::DetectCohesion ()
+{
+	list <room>::iterator p1,p2;
+	p1= Rooms.begin();
+	while (p1!=Rooms.end())
+	{
+		p2 = Rooms.begin();
+		while (p2!=Rooms.end())
+		{
+			if (p2!=p1)
+			{
+				set <int> temp;
+				temp.clear();
+				set_intersection (p1->LinearCoords.begin(), p1->LinearCoords.end(),
+				p2->LinearCoordsWide.begin(), p2->LinearCoordsWide.end(),
+				inserter (temp, temp.begin()));
+				if (temp.size() >0)
+				p1->cohesion.push_back (p2->RoomId);
+			}
+			p2++;
+
+			
+		}
+		p1++;
+		
+	}
+	return;
+}
+
 void Dungeon::MakeRooms ()
 {
 	for (int i=0; i<MaxRooms; i++)
@@ -50,7 +93,7 @@ void Dungeon::MakeRooms ()
 void Dungeon::PlaceRooms ()
 {
 	for (int i = 0; i <= MapCellsCount; i++)
-		DungeonCells [i] = 35;
+		DungeonCells [i] = 35; // заполняем поле стенами
 	list <room>::iterator p = Rooms.begin();
 	while ( p!= Rooms.end())
 	{
@@ -63,7 +106,9 @@ void Dungeon::PlaceRooms ()
 			{
 				int linear=(y*(MapWidth+1))+x;
 				DungeonCells [linear] = 46;
+				p->LinearCoords.insert (linear);
 			}
+		SetLinearCoordsWide (p);
 	
 		p++;
 	}
@@ -71,10 +116,34 @@ void Dungeon::PlaceRooms ()
 
 }
 
+void Dungeon::PrintRoomDebug () // потом удалить !!! только для отладки!!!
+{
+	list <room>::iterator p;
+	p = Rooms.begin();
+	while (p!=Rooms.end())
+	{
+		if (p->cohesion.empty())
+		{ 
+			set <int>::iterator p3;
+			p3 = p->LinearCoords.begin();
+			while (p3!=p->LinearCoords.end())
+			{
+				DungeonCells [*p3] = 32;
+			    p3++;
+			}
+
+		}
+		p++;
+	
+	}
+
+}
+
 void Dungeon::PrintDungeon ()
 {
 	terminal_clear ();
 	terminal_refresh ();
+	PrintRoomDebug();
 	int iter = 0;
 	for (int y = 0; y <= MapHeight; y++)
 		for (int x = 0; x<=MapWidth; x++)
@@ -87,6 +156,13 @@ void Dungeon::PrintDungeon ()
 
 }
 
+void Dungeon::Vremenn()
+{
+	return;
+}
+
+
+
 void Dungeon::InitDungeon ()
 {
 	cout << "MakeRooms ();" << endl;
@@ -94,7 +170,9 @@ void Dungeon::InitDungeon ()
 	cout << "PlaceRooms ();" << endl;
 	PlaceRooms ();
 	cout << "PrintDungeon ();" << endl;
+	DetectCohesion ();
 	PrintDungeon ();
+	//Vremenn ();
 	Rooms.clear ();
 	return;
 

@@ -15,6 +15,10 @@
 #include <iterator>
 #include <clocale>
 #include <ctime>
+#include <set>
+#include <queue>
+#include <algorithm>
+#include <iterator>
 
 
 #include "BearLibTerminal.h"
