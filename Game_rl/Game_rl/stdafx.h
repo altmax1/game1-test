@@ -14,7 +14,7 @@
 #include <string>
 #include <iterator>
 #include <clocale>
-
+#include <ctime>
 
 
 #include "BearLibTerminal.h"

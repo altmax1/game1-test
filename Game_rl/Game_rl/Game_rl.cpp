@@ -6,6 +6,7 @@
 #include "level.h"
 #include "X_File.h"
 #include "X_MainMenu.h"
+#include "Dungeon.h"
 
 
 
@@ -16,7 +17,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	terminal_open();
 	terminal_set ("window:title = Game_RL");
 	X_MainMenu Menu1;
-	Menu1.PrintMenu();
+	//Menu1.PrintMenu(); отключено временно, всё работает, не удалять.
+	Dungeon dung1 (45);
+	while (terminal_read ())
+	{
+		dung1.InitDungeon();
+		terminal_clear;
+	}
 	getchar();
 	return 0;
 }
