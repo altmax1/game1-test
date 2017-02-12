@@ -29,7 +29,7 @@ Dungeon::~Dungeon(void)
 	delete [] DungeonCells;
 }
 
-void Dungeon::SetLinearCoordsWide ( list <room> ::iterator p)
+void Dungeon::SetLinearCoordsWide ( vector <room> ::iterator p)
 {
 	int LeftX = (p->LeftUpCornerX)-1;
 	int RightX = (p->LeftUpCornerX)+(p->RoomWidth);
@@ -45,11 +45,12 @@ void Dungeon::SetLinearCoordsWide ( list <room> ::iterator p)
 
 void Dungeon::DetectCohesion ()
 {
-	list <room>::iterator p1,p2;
+	vector <room>::iterator p1,p2;
 	p1= Rooms.begin();
+	int koef = 1;
 	while (p1!=Rooms.end())
 	{
-		p2 = Rooms.begin();
+		p2 = (Rooms.begin()+koef);
 		while (p2!=Rooms.end())
 		{
 			if (p2!=p1)
@@ -60,13 +61,18 @@ void Dungeon::DetectCohesion ()
 				p2->LinearCoordsWide.begin(), p2->LinearCoordsWide.end(),
 				inserter (temp, temp.begin()));
 				if (temp.size() >0)
-				p1->cohesion.push_back (p2->RoomId);
+				{
+				
+					p1->cohesion.push_back (p2->RoomId);
+					p2->cohesion.push_back (p1->RoomId);
+				}
 			}
 			p2++;
 
 			
 		}
 		p1++;
+		koef++;
 		
 	}
 	return;
@@ -94,7 +100,7 @@ void Dungeon::PlaceRooms ()
 {
 	for (int i = 0; i <= MapCellsCount; i++)
 		DungeonCells [i] = 35; // заполняем поле стенами
-	list <room>::iterator p = Rooms.begin();
+	vector <room>::iterator p = Rooms.begin();
 	while ( p!= Rooms.end())
 	{
 		int LeftX = p->LeftUpCornerX;
@@ -118,7 +124,7 @@ void Dungeon::PlaceRooms ()
 
 void Dungeon::PrintRoomDebug () // потом удалить !!! только для отладки!!!
 {
-	list <room>::iterator p;
+	vector <room>::iterator p;
 	p = Rooms.begin();
 	while (p!=Rooms.end())
 	{
@@ -137,6 +143,11 @@ void Dungeon::PrintRoomDebug () // потом удалить !!! только для отладки!!!
 	
 	}
 
+}
+
+int Dungeon::DecartToLinear( int x, int y)
+{
+	return (y*(MapWidth+1))+x;
 }
 
 void Dungeon::PrintDungeon ()
@@ -158,20 +169,146 @@ void Dungeon::PrintDungeon ()
 
 void Dungeon::Vremenn()
 {
+	int i;
+	for (i = 0; i < Rooms.size(); i++)
+	{
+		cout << i << "  " <<Rooms[i].RoomGrafComponent<< endl;
+	}
+	return;
+}
+
+void Dungeon::DrawPassage (int room1, int room2)
+{
+	int x1,y1,x2,y2;
+	int temp;
+	x1 = Rooms[room1].LeftUpCornerX + rand () % Rooms[room1].RoomWidth;
+	y1 = Rooms[room1].LeftUpCornerY + rand () % Rooms[room1].RoomHeight;
+	x2 = Rooms[room2].LeftUpCornerX + rand () % Rooms[room2].RoomWidth;
+	y2 = Rooms[room2].LeftUpCornerY + rand () % Rooms[room2].RoomHeight;
+	if (x2>x1)
+	{
+		for (int i = x1; i<=x2; i++)
+		{
+			int temp = DecartToLinear (i, y1);
+			DungeonCells[temp] = 46;
+		}
+	}
+	if (x2<x1)
+	{
+		for (int i = x2; i<=x1; i++)
+		{
+			int temp = DecartToLinear (i, y1);
+			DungeonCells[temp] = 46;
+		}
+	}if (y2>y1)
+	{
+		for (int i = y1; i<=y2; i++)
+		{
+			int temp = DecartToLinear (x2, i);
+			DungeonCells[temp] = 46;
+		}
+	}
+	if (y2<y1)
+	{
+		for (int i = y2; i<=y1; i++)
+		{
+			int temp = DecartToLinear (x2, i);
+			DungeonCells[temp] = 46;
+		}
+	}
+	return;
+
+}
+
+void Dungeon::FindGrafComponents()
+{
+	GraphComponentCount = 0;
+	queue<int> temp;
+	for (int i=0; i< Rooms.size(); i++)
+		Rooms[i].RoomFlag = 0;
+	for (int i=0; i< Rooms.size(); i++)
+	{
+		if (Rooms[i].RoomFlag!=0)
+			continue;
+		temp.push (i);
+		GraphComponentCount++;
+		while (!temp.empty())
+		{
+			int b;
+			b = temp.front();
+			temp.pop();
+			list <int>::iterator p;
+			p = Rooms[b].cohesion.begin();
+			while (p!=Rooms[b].cohesion.end())
+			{
+				int a = *p;
+				if (Rooms[a].RoomFlag == 0)
+				{	
+					temp.push (a);
+					Rooms[a].RoomFlag = 2;
+				}
+				p++;			
+			}
+			Rooms[b].RoomFlag = 3;
+			Rooms[b].RoomGrafComponent = GraphComponentCount;
+
+		}
+		
+	
+	}
+
+
+}
+
+void Dungeon::MakePassages ()
+{ 
+	for (int a=1; a < (GraphComponentCount); a++)
+	{
+		vector <int> first, second;
+		for (int i = 0; i < Rooms.size(); i++)
+		{
+			if (Rooms[i].RoomGrafComponent == a)
+				first.push_back (i);
+			if (Rooms[i].RoomGrafComponent == (a+1))
+				second.push_back(i);				
+		}
+		int rand1, rand2;
+		rand1 = rand () % (first.size());
+		rand2 = rand () % (second.size());
+		int randomroom1 = first[rand1];
+		int randomroom2 = second[rand2];
+		DrawPassage(randomroom1, randomroom2);
+		cout << randomroom1 << "   "<< randomroom2<< endl;
+		
+
+	}
 	return;
 }
 
 
 
 void Dungeon::InitDungeon ()
-{
+{	
+	int i = clock ();
 	cout << "MakeRooms ();" << endl;
 	MakeRooms ();
+	cout << "MakeRooms (); "<< clock()-i<< "ms" << endl;
+	i = clock ();
 	cout << "PlaceRooms ();" << endl;
 	PlaceRooms ();
+	cout << "PlaceRooms (); "<< clock()-i<< "ms" << endl;
+	i = clock ();
 	cout << "PrintDungeon ();" << endl;
 	DetectCohesion ();
+	cout << "DetectCohesion (); "<< clock()-i<< "ms" << endl;
+	i = clock ();
+	FindGrafComponents();
+	MakePassages();
 	PrintDungeon ();
+	cout << "PrintRooms (); "<< clock()-i<< "ms" << endl;
+	i = clock ();
+	cout << "GraphComponentCount  " << GraphComponentCount << endl;
+	cout << "GraphComponentCount; "<< clock()-i<< "ms" << endl;
 	//Vremenn ();
 	Rooms.clear ();
 	return;

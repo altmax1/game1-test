@@ -10,6 +10,7 @@
 #include <tchar.h>
 #include <iostream>
 #include <list>
+#include <vector>
 #include <Windows.h>
 #include <string>
 #include <iterator>

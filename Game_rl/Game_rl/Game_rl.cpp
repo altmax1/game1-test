@@ -18,11 +18,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	terminal_set ("window:title = Game_RL");
 	X_MainMenu Menu1;
 	//Menu1.PrintMenu(); отключено временно, всё работает, не удалять.
-	Dungeon dung1 (45);
+	Dungeon dung1 (25);
 	while (terminal_read ())
-	{
+	{	
+		int i = clock ();
 		dung1.InitDungeon();
 		terminal_clear;
+		cout << "main cikle  "<< clock () -i<<endl;
 	}
 	getchar();
 	return 0;
