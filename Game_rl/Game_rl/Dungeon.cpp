@@ -3,7 +3,23 @@
 using namespace std;
 
 
-Dungeon::Dungeon(void)
+Dungeon::Dungeon()
+{
+};
+
+Dungeon::~Dungeon()
+{
+
+};
+
+Dungeon* Dungeon::MakeDungeon (int Type, int Width, int Height, int Density)
+{
+	if (Type == 1)
+		return new DungeonType1 ( Width,Height,Density);
+}
+
+
+DungeonType1::DungeonType1(void)
 {
 	MaxRooms = 20;
 	srand (time (0));
@@ -13,7 +29,7 @@ Dungeon::Dungeon(void)
 	DungeonCells = new char [ MapCellsCount];
 }
 
-Dungeon::Dungeon(int nums)
+DungeonType1::DungeonType1(int nums)
 {
 	MaxRooms = nums;
 	srand (time (0));
@@ -23,13 +39,22 @@ Dungeon::Dungeon(int nums)
 	DungeonCells = new char [ MapCellsCount];
 }
 
+DungeonType1::DungeonType1(int Width, int Height, int nums)
+{
+	MaxRooms = nums;
+	srand (time (0));
+	MapWidth = Width-1;
+	MapHeight = Height-1;
+	MapCellsCount = (MapWidth+1)*(MapHeight+1)-1;
+	DungeonCells = new char [ MapCellsCount];
+}
 
-Dungeon::~Dungeon(void)
+DungeonType1::~DungeonType1(void)
 {
 	delete [] DungeonCells;
 }
 
-void Dungeon::SetLinearCoordsWide ( vector <room> ::iterator p)
+void DungeonType1::SetLinearCoordsWide ( vector <room> ::iterator p)
 {
 	int LeftX = (p->LeftUpCornerX)-1;
 	int RightX = (p->LeftUpCornerX)+(p->RoomWidth);
@@ -43,7 +68,7 @@ void Dungeon::SetLinearCoordsWide ( vector <room> ::iterator p)
 		}	
 }
 
-void Dungeon::DetectCohesion ()
+void DungeonType1::DetectCohesion ()
 {
 	vector <room>::iterator p1,p2;
 	p1= Rooms.begin();
@@ -78,7 +103,7 @@ void Dungeon::DetectCohesion ()
 	return;
 }
 
-void Dungeon::MakeRooms ()
+void DungeonType1::MakeRooms ()
 {
 	for (int i=0; i<MaxRooms; i++)
 	{
@@ -96,7 +121,7 @@ void Dungeon::MakeRooms ()
 
 }
 
-void Dungeon::PlaceRooms ()
+void DungeonType1::PlaceRooms ()
 {
 	for (int i = 0; i <= MapCellsCount; i++)
 		DungeonCells [i] = 35; // заполняем поле стенами
@@ -122,7 +147,7 @@ void Dungeon::PlaceRooms ()
 
 }
 
-void Dungeon::PrintRoomDebug () // потом удалить !!! только для отладки!!!
+void DungeonType1::PrintRoomDebug () // потом удалить !!! только для отладки!!!
 {
 	vector <room>::iterator p;
 	p = Rooms.begin();
@@ -145,12 +170,12 @@ void Dungeon::PrintRoomDebug () // потом удалить !!! только для отладки!!!
 
 }
 
-int Dungeon::DecartToLinear( int x, int y)
+int DungeonType1::DecartToLinear( int x, int y)
 {
 	return (y*(MapWidth+1))+x;
 }
 
-void Dungeon::PrintDungeon ()
+void DungeonType1::PrintDungeon ()
 {
 	terminal_clear ();
 	terminal_refresh ();
@@ -167,7 +192,7 @@ void Dungeon::PrintDungeon ()
 
 }
 
-void Dungeon::Vremenn()
+void DungeonType1::Vremenn()
 {
 	int i;
 	for (i = 0; i < Rooms.size(); i++)
@@ -177,7 +202,7 @@ void Dungeon::Vremenn()
 	return;
 }
 
-void Dungeon::DrawPassage (int room1, int room2)
+void DungeonType1::DrawPassage (int room1, int room2)
 {
 	int x1,y1,x2,y2;
 	int temp;
@@ -220,7 +245,7 @@ void Dungeon::DrawPassage (int room1, int room2)
 
 }
 
-void Dungeon::FindGrafComponents()
+void DungeonType1::FindGrafComponents()
 {
 	GraphComponentCount = 0;
 	queue<int> temp;
@@ -260,7 +285,7 @@ void Dungeon::FindGrafComponents()
 
 }
 
-void Dungeon::MakePassages ()
+void DungeonType1::MakePassages ()
 { 
 	for (int a=1; a < (GraphComponentCount); a++)
 	{
@@ -287,7 +312,7 @@ void Dungeon::MakePassages ()
 
 
 
-void Dungeon::InitDungeon ()
+void DungeonType1::InitDungeon ()
 {	
 	int i = clock ();
 	cout << "MakeRooms ();" << endl;

@@ -15,7 +15,21 @@ list <int> cohesion; // с какими комнатами граничит при создании
 
 };
 
-class Dungeon
+
+class Dungeon 
+{
+private:
+	int MapWidth;
+	int MapHeight;
+public:
+	Dungeon(void);
+	virtual ~Dungeon();
+	virtual void InitDungeon() = 0;
+	static Dungeon* MakeDungeon (int Type, int Width, int Height, int Density);
+
+};
+
+class DungeonType1: public Dungeon
 {
 private:
 	int MapWidth;
@@ -26,9 +40,10 @@ private:
 	int MapCellsCount;
 	int GraphComponentCount;
 public:
-	Dungeon(void);
-	Dungeon(int nums);
-	~Dungeon(void);
+	DungeonType1(void);
+	DungeonType1(int nums);
+	DungeonType1(int Width, int Height, int nums);
+	virtual ~DungeonType1(void);
 	void MakeRooms ();
 	void PlaceRooms ();
 	void PrintDungeon ();
