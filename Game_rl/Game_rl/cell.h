@@ -4,6 +4,7 @@ class X_cell
 {
 private:
 	int tile;
+	char BaseType;
 	char visible:1;
 	char opaque:1;
 	char visited:1;
@@ -15,5 +16,7 @@ private:
 public:
 	X_cell(void);
 	~X_cell(void);
+	void SetBaseType ( char p);
+	char GetBaseType ();
 };
 

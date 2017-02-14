@@ -77,6 +77,7 @@
   <ItemGroup>
     <ClInclude Include="cell.h" />
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -86,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game_rl.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="stdafx.cpp">

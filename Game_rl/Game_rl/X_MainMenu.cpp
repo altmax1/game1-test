@@ -3,6 +3,7 @@
 #include "X_File.h"
 #include "X_MainMenu.h"
 #include "Dungeon.h"
+#include "Game.h"
 
 
 using namespace std;
@@ -164,7 +165,13 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 				if (terminal_read () == TK_ESCAPE)
 					break;
 			}
-		
+		}
+
+		if (MenuState == 0)
+		{
+			Game MyGame;
+			MyGame.GameInit();
+			return;		
 		}
 	
 	}

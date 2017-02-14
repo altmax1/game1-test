@@ -339,3 +339,17 @@ void DungeonType1::InitDungeon ()
 	return;
 
 }
+
+void DungeonType1::ReturnDungeon (char *&Dung)
+{
+	Dung = new char [(MapWidth+1)*(MapHeight+1)];
+	MakeRooms();
+	PlaceRooms();
+	DetectCohesion ();
+	FindGrafComponents();
+	MakePassages();
+	for (int i = 0; i <(MapWidth+1)*(MapHeight+1); i++)
+		Dung[i] = DungeonCells[i];
+	return;
+
+}

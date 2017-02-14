@@ -26,6 +26,7 @@ public:
 	virtual ~Dungeon();
 	virtual void InitDungeon() = 0;
 	static Dungeon* MakeDungeon (int Type, int Width, int Height, int Density);
+	virtual void ReturnDungeon (char *&Dung) = 0;
 
 };
 
@@ -56,5 +57,6 @@ public:
 	void MakePassages ();
 	void DrawPassage (int room1, int room2);
 	int DecartToLinear (int x, int y);
+	void ReturnDungeon (char *&Dung);
 
 };

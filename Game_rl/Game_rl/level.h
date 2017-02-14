@@ -5,11 +5,13 @@ using namespace std;
 class level
 {
 private:
-	int widght;
-	int height;
-	X_cell **cells;
+	int LevelWidth;
+	int LevelHeight;
+	
 public:
+	X_cell *cells;
 	level();
 	~level();
+	void LevelCreate ( int Width, int Height, char *&DungeonCells);
 };
 
