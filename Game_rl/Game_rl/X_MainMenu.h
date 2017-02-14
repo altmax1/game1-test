@@ -29,5 +29,6 @@ public:
 	int ParseNumber (int &BufferIterator);
 	string ParseString (int &BufferIterator);
 	void DecorStringsPrint ();
+	inline void MakeChoise (int TerminalRead);
 };
 

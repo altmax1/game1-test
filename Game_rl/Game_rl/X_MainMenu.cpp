@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "X_File.h"
 #include "X_MainMenu.h"
+#include "Dungeon.h"
 
 
 using namespace std;
@@ -142,6 +143,35 @@ void X_MainMenu::MenuStateDown()
 	return;
 }
 
+inline void X_MainMenu::MakeChoise( int TerminalRead )
+{
+	if (TerminalRead == TK_UP)
+		MenuStateUp();
+	if (TerminalRead == TK_DOWN)
+		MenuStateDown();
+	if (TerminalRead == TK_ENTER)
+	{
+		if (MenuState == 4)
+		{
+			Dungeon *ptr;
+			ptr = Dungeon::MakeDungeon (1, 80, 25, 30);
+			while (1)
+			{	
+				int i = clock ();
+				ptr->InitDungeon();
+				terminal_clear;
+				cout << "main cikle  "<< clock () -i<<endl;
+				if (terminal_read () == TK_ESCAPE)
+					break;
+			}
+		
+		}
+	
+	}
+	
+
+}
+
 void X_MainMenu::PrintMenu()
 {
 	int TerminalRead;
@@ -163,15 +193,15 @@ void X_MainMenu::PrintMenu()
 	DecorStringsPrint();
 	terminal_refresh();
 	TerminalRead = terminal_read();
-	if (TerminalRead == TK_UP)
-		MenuStateUp();
-	if (TerminalRead == TK_DOWN)
-		MenuStateDown();
+	MakeChoise ( TerminalRead );
 	if (TerminalRead == TK_ESCAPE)
-		{terminal_close();
-		return;
-		}
-
+	{
+		terminal_close();
+	    return;
 	}
+	
+	}
+
+	
 
 }
