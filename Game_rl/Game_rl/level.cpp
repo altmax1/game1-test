@@ -6,14 +6,27 @@
 
 level::level()
 {
-	cout << "level constructor" << endl;
+	
 }
 
 
 level::~level()
 {
 	delete [] cells;
-	cout << "level destructor" << endl;
+	
+}
+
+int level::DecartToLinear (int x, int y)
+{
+ return (y*LevelWidth+x); 
+}
+int level::GetLevelWidth ()
+{
+	return LevelWidth;
+}
+int level::GetLevelHeight ()
+{
+	return LevelHeight;
 }
 
 
@@ -43,8 +56,10 @@ void level::LevelPrint ()
 		terminal_put (x, y, c);
 		iter++;
 		}
-	terminal_refresh();
-	terminal_read();
+	//terminal_refresh();
+	//terminal_read();
+		return;
+
 
 
 }

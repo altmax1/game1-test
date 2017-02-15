@@ -16,6 +16,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//setlocale(LC_CTYPE, "rus");
 	terminal_open();
 	terminal_set ("window:title = Game_RL, size=80x40"); //terminal_set("window: size=80x25
+	terminal_color ("white");
 	X_MainMenu Menu1;
 	Menu1.PrintMenu(); 
 	/*Dungeon *ptr;

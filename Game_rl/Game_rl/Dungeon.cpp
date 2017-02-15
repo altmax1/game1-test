@@ -304,9 +304,7 @@ void DungeonType1::MakePassages ()
 		int randomroom1 = first[rand1];
 		int randomroom2 = second[rand2];
 		DrawPassage(randomroom1, randomroom2);
-		cout << randomroom1 << "   "<< randomroom2<< endl;
-		
-
+	
 	}
 	return;
 }

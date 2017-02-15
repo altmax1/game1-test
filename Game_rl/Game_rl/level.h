@@ -14,5 +14,8 @@ public:
 	~level();
 	void LevelCreate ( int Type,int Width, int Height, int Density);
 	void LevelPrint ();
+	int DecartToLinear (int x, int y); // утилита для перевода
+	int GetLevelWidth ();
+	int GetLevelHeight ();
 };
 
