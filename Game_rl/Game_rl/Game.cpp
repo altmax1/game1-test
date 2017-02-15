@@ -8,45 +8,33 @@ using namespace std;
 
 Game::Game(void)
 {
+	cout << "Game constructor" << endl;
 }
 
 
 Game::~Game(void)
 {
+	cout << "Game destructor" << endl;
+	//MyLevel->~level();
+	delete MyLevel;
 }
 
-void Game::MakeDungeon ()
-{
-	Dungeon *ptr;
-	ptr = Dungeon::MakeDungeon (1, 80, 40, 40);
-	ptr->ReturnDungeon (DungeonCells);
-	//delete ptr;
 
-}
 
-void Game::MakeLevel ( int Width, int Height, char *DungeonCells)
+
+void Game::MakeLevel (int Type, int Width, int Height, int Density)
 {
 	MyLevel = new level;
-	MyLevel->LevelCreate (Width, Height, DungeonCells);
+	MyLevel->LevelCreate (Type, Width, Height, Density);
 }
+
+
 
 void Game::GameInit()
 {
-	MakeDungeon();
-	cout << "MakeDungeon(); complite";
-	MakeLevel (80,40,DungeonCells);
-
-	//временный кусок для проверки
-	terminal_clear();
-	int iter = 0;
-	for (int y = 0; y < 40; y++)
-		for (int x = 0; x<80; x++)
-		{
-		terminal_put (x, y, DungeonCells [iter]);
-		iter++;
-		}
-	terminal_refresh();
-	terminal_read();
-	
+	MakeLevel (1,80,40,40);
+	MyLevel->LevelPrint();
+	return;
+		
 
 }	

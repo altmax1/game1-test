@@ -12,6 +12,7 @@ public:
 	X_cell *cells;
 	level();
 	~level();
-	void LevelCreate ( int Width, int Height, char *&DungeonCells);
+	void LevelCreate ( int Type,int Width, int Height, int Density);
+	void LevelPrint ();
 };
 

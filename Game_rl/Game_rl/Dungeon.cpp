@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "Dungeon.h"
+#include "level.h"
 using namespace std;
 
 
@@ -26,7 +27,7 @@ DungeonType1::DungeonType1(void)
 	MapWidth = 79;
 	MapHeight = 24;
 	MapCellsCount = (MapWidth+1)*(MapHeight+1)-1;
-	DungeonCells = new char [ MapCellsCount];
+	DungeonCells = new char [ MapCellsCount+1];
 }
 
 DungeonType1::DungeonType1(int nums)
@@ -46,7 +47,7 @@ DungeonType1::DungeonType1(int Width, int Height, int nums)
 	MapWidth = Width-1;
 	MapHeight = Height-1;
 	MapCellsCount = (MapWidth+1)*(MapHeight+1)-1;
-	DungeonCells = new char [ MapCellsCount];
+	DungeonCells = new char [ MapCellsCount+1];
 }
 
 DungeonType1::~DungeonType1(void)
@@ -340,16 +341,15 @@ void DungeonType1::InitDungeon ()
 
 }
 
-void DungeonType1::ReturnDungeon (char *&Dung)
+
+void DungeonType1::ReturnDungeon (level *MyLevel)
 {
-	Dung = new char [(MapWidth+1)*(MapHeight+1)];
 	MakeRooms();
 	PlaceRooms();
 	DetectCohesion ();
 	FindGrafComponents();
 	MakePassages();
 	for (int i = 0; i <(MapWidth+1)*(MapHeight+1); i++)
-		Dung[i] = DungeonCells[i];
+		MyLevel->cells[i].SetBaseType(DungeonCells[i]);
 	return;
-
 }
