@@ -29,6 +29,29 @@ int level::GetLevelHeight ()
 	return LevelHeight;
 }
 
+void level::FovCellsInit ()
+{
+	map.Width = LevelWidth;
+	map.Height = LevelHeight;
+	map.Cells = new FOV_CELL[map.Width * map.Height];
+	ZeroMemory( map.Cells, sizeof(FOV_CELL) * map.Width * map.Height );
+	for ( int i=0; i < map.Width * map.Height; i++ )
+    {
+		switch ( cells[i].GetBaseType())
+        {
+            case '.':
+                map.Cells[i].Flags &= (0xFF ^ FOV_CELL_OPAQUE);
+                break;
+
+            case '#':
+                map.Cells[i].Flags |= FOV_CELL_OPAQUE;
+                break;
+
+        };
+		cout << map.Cells[i].Flags;
+    }
+
+}
 
 void level::LevelCreate ( int Type,int Width, int Height, int Density)
 {
@@ -41,6 +64,7 @@ void level::LevelCreate ( int Type,int Width, int Height, int Density)
 	temp = this;
 	ptr->ReturnDungeon (temp);
 	delete ptr;
+	FovCellsInit ();
 
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "cell.h"
+#include "bearlibfov.h"
 
 using namespace std;
 class level
@@ -7,6 +8,7 @@ class level
 private:
 	int LevelWidth;
 	int LevelHeight;
+	FOV_MAP    map;
 	
 public:
 	X_cell *cells;
@@ -17,5 +19,6 @@ public:
 	int DecartToLinear (int x, int y); // утилита для перевода
 	int GetLevelWidth ();
 	int GetLevelHeight ();
+	void FovCellsInit ();
 };
 
