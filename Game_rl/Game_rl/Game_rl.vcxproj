@@ -72,9 +72,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\Debug\libBeaRLibFOV.a" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bearlibfov.h" />
     <ClInclude Include="BearLibTerminal.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="Dungeon.h" />
@@ -87,6 +89,9 @@
     <ClInclude Include="X_MainMenu.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bearlibfov.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Game.cpp" />

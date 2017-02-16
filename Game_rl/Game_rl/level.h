@@ -20,5 +20,6 @@ public:
 	int GetLevelWidth ();
 	int GetLevelHeight ();
 	void FovCellsInit ();
+	void FovProcess (int x, int y, int radius);
 };
 

@@ -48,8 +48,14 @@ void level::FovCellsInit ()
                 break;
 
         };
-		cout << map.Cells[i].Flags;
-    }
+	 }
+
+}
+
+void level::FovProcess (int x, int y, int Radius )
+{
+	
+	CalcFOVC (&map, x, y, Radius);
 
 }
 
@@ -77,7 +83,14 @@ void level::LevelPrint ()
 		for (int x = 0; x<80; x++)
 		{
 		c = cells[iter].GetBaseType();
+		if (map.Cells[iter].Flags & FOV_CELL_VISIBLE)
+			terminal_color ("white");
+		else if (map.Cells[iter].Flags & FOV_CELL_VISITED)
+			terminal_color (0x6fdfdfa9);
+		else 
+			terminal_color ("black");
 		terminal_put (x, y, c);
+		//cout <<'\n'<< map.Cells[iter].Flags;
 		iter++;
 		}
 	//terminal_refresh();

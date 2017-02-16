@@ -40,6 +40,7 @@ void Gamer::GamerPlacing()
 
 	CoordX = x;
 	CoordY = y;
+	MyLevel->FovProcess (CoordX, CoordY, 7);
 	return;
 
 }
@@ -75,6 +76,7 @@ void Gamer::Move (int Direction)
 		{	
 			CoordX = NextX;
 			CoordY = NextY;
+			MyLevel->FovProcess (CoordX, CoordY, 7);
 		}
 	}
 
