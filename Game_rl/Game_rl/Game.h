@@ -1,6 +1,7 @@
 #pragma once
 #include "level.h"
 #include "Gamer.h"
+#include "Items.h"
 
 
 
@@ -10,6 +11,7 @@ private:
 	static Game *MyGame;
 	level *MyLevel;
 	Gamer *MyGamer;
+	Items *MyItems;
 	Game(void);
 
 public:
@@ -18,6 +20,7 @@ public:
 	void GameInit ();
 	void MakeLevel (int Type, int Width, int Height, int Density);
 	void MakeGamer ();
+	void MakeItems ();
 	
 };
 

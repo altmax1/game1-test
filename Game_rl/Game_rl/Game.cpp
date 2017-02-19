@@ -45,10 +45,18 @@ void Game::MakeGamer()
 	return;
 }
 
+void Game::MakeItems()
+{
+	MyItems = new Items;
+	MyItems->GetWeaponsFromFile();
+	return;
+}
+
 
 void Game::GameInit()
 {
 	int KeyCode;
+	MakeItems();
 	MakeLevel (1,80,40,40);
 	MakeGamer ();
 	MyLevel->LevelPrint();

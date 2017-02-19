@@ -86,6 +86,8 @@ void Gamer::Move (int Direction)
 void Gamer::GamerPrint ()
 {
 	int linear;
+	terminal_layer (20);
 	terminal_put (CoordX, CoordY, 64);
+	terminal_layer (0);
 	return;
 }
