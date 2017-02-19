@@ -11,6 +11,15 @@ Items::Items(void)
 Items::~Items(void)
 {
 }
+int Items::GetTypeOfWeapon ( int ID)
+{
+	return ColdWeapons[ID].Type;
+}
+
+int Items::QuantityColdWeaponItems()
+{
+	return ColdWeapons.size();
+}
 
 void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
 {
@@ -39,7 +48,6 @@ void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
 		p++;
 
 	}
-
 
 }
 

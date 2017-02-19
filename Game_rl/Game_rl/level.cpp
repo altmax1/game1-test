@@ -2,6 +2,7 @@
 #include "level.h"
 #include "cell.h"
 #include "Dungeon.h"
+#include "Game.h"
 
 
 level::level()
@@ -14,6 +15,51 @@ level::~level()
 {
 	delete [] cells;
 	
+}
+
+void level::PrintWeapons (int x, int y, int linear)
+{
+	int ID = cells[linear].GetItemsID();
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	int TypeOfWeapon;
+	TypeOfWeapon = MyItems->GetTypeOfWeapon (ID);
+	if (TypeOfWeapon == 0)
+		terminal_put (x,y,92);
+	else if ((TypeOfWeapon == 1) || (TypeOfWeapon == 2))
+		terminal_put (x,y,124);
+	else terminal_put (x,y, 37);
+	return;
+
+
+}
+
+void level::PlaceWeapons (int Quantity)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	for (int i = 0; i< Quantity; i++)
+	{
+		int coords;
+		char basetype;
+		do {
+		coords = rand () % (LevelWidth*LevelHeight);
+		basetype = cells[coords].GetBaseType();
+		} while (basetype!= '.');
+		int QuantityTypes = MyItems->QuantityColdWeaponItems();
+		int WeaponType;
+		WeaponType = rand() % QuantityTypes;
+		cells[coords].AddItems(WeaponType);
+	}
+}
+void level::PlaceItems()
+{
+	PlaceWeapons (20);
+	return;
 }
 
 int level::DecartToLinear (int x, int y)
@@ -90,7 +136,8 @@ void level::LevelPrint ()
 		else 
 			terminal_color ("black");
 		terminal_put (x, y, c);
-		//cout <<'\n'<< map.Cells[iter].Flags;
+		if (cells[iter].GetItemsQuantity() >0)
+			PrintWeapons (x,y,iter);
 		iter++;
 		}
 	//terminal_refresh();

@@ -18,5 +18,8 @@ public:
 	~X_cell(void);
 	void SetBaseType ( char p);
 	char GetBaseType ();
+	void AddItems (int ID);
+	int GetItemsQuantity ();
+	int GetItemsID ();
 };
 

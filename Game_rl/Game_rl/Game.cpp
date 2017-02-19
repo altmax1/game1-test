@@ -30,7 +30,10 @@ Game::~Game(void)
 	delete MyGamer;
 }
 
-
+Items* Game::GetItems ()
+{
+	return MyItems;
+}
 
 
 void Game::MakeLevel (int Type, int Width, int Height, int Density)
@@ -59,6 +62,7 @@ void Game::GameInit()
 	MakeItems();
 	MakeLevel (1,80,40,40);
 	MakeGamer ();
+	MyLevel->PlaceItems();
 	MyLevel->LevelPrint();
 	MyGamer->GamerPlacing();
 	while (1)

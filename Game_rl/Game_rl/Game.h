@@ -21,6 +21,7 @@ public:
 	void MakeLevel (int Type, int Width, int Height, int Density);
 	void MakeGamer ();
 	void MakeItems ();
+	Items* GetItems ();
 	
 };
 

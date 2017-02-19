@@ -21,5 +21,7 @@ public:
 	~Items(void);
 	void GetWeaponsFromFile ();
 	void InsertWeaponsInStorage (vector <map<string,string>> Temp);
+	int QuantityColdWeaponItems ();
+	int GetTypeOfWeapon ( int ID);
 };
 

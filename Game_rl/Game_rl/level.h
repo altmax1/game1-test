@@ -21,5 +21,8 @@ public:
 	int GetLevelHeight ();
 	void FovCellsInit ();
 	void FovProcess (int x, int y, int radius);
+	void PlaceItems ();
+	void PlaceWeapons (int quantity);
+	void PrintWeapons(int x, int y, int linear);
 };
 

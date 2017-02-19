@@ -16,6 +16,7 @@ public:
 	int GetCoordX ();
 	int GetCoordY ();
 	void GamerPlacing ();
+
 	
 };
 
