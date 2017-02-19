@@ -56,3 +56,67 @@ void X_File::X_ReadFile ( LPCTSTR filename, FileContent &fc)  // читаем произвол
 
 	return;
 }
+
+void X_File::X_ParseIniFile ( FileContent &MyFile, vector <map <string, string>> &MyVector)
+{
+        
+		MyVector.clear();
+		int iter;
+        iter = 0;
+        while (iter < MyFile.lenght)
+        {
+                map <string,string>::iterator p;
+                map <string,string> TempMap;
+                string p1,p2;
+                while (MyFile.content[iter]!= '[')
+                {	
+                        iter++;
+                        if (iter>= MyFile.lenght) break;
+                }
+                iter++;
+                p1.clear(); p2.clear();
+                while(MyFile.content[iter]!= ']')
+                {
+                        p1+= MyFile.content[iter];
+                        iter++;
+                        if (iter>= MyFile.lenght) break;
+                }
+                iter++;
+                while((MyFile.content[iter]== '\r')||(MyFile.content[iter]== '\n'))
+                        {
+                                iter++;
+                                if (iter>= MyFile.lenght) break;
+                        }
+                TempMap.insert (pair <string, string> ("ID", p1));
+                while ((MyFile.content[iter]!= '[') && (iter <MyFile.lenght ))
+                {	
+                        p1.clear(); p2.clear();
+                        while (MyFile.content[iter]!= '=')
+                        {
+                                p1+= MyFile.content[iter];
+                                iter++;
+                                if (iter>= MyFile.lenght) break;
+                        }
+                        iter++;
+                        while((MyFile.content[iter]!= '\r')&&(MyFile.content[iter]!= '\n'))
+                        {
+                                p2+= MyFile.content[iter];
+                                iter++;
+                                if (iter>= MyFile.lenght) break;
+                        }
+                        while((MyFile.content[iter]== '\r')||(MyFile.content[iter]== '\n'))
+                        {
+                                iter++;
+                                if (iter>= MyFile.lenght) break;
+                        }
+                        TempMap.insert (pair <string, string> (p1, p2));
+                        cout << p1 << "  " << p2 << endl;
+
+                }
+                
+				MyVector.push_back (TempMap);
+
+        }
+
+return;
+}

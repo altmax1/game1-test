@@ -86,7 +86,7 @@ void level::LevelPrint ()
 		if (map.Cells[iter].Flags & FOV_CELL_VISIBLE)
 			terminal_color ("white");
 		else if (map.Cells[iter].Flags & FOV_CELL_VISITED)
-			terminal_color (0x6fdfdfa9);
+			terminal_color (0xafdfdfa9);
 		else 
 			terminal_color ("black");
 		terminal_put (x, y, c);

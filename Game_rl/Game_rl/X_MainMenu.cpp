@@ -26,7 +26,7 @@ X_MainMenu::~X_MainMenu(void)
 
 void X_MainMenu::GetMenu ()
 {
-	X_File::X_ReadFile ((LPCTSTR)L"MainMenu.txt", buffer);
+	X_File::X_ReadFile ((LPCTSTR)L".\\Files\\MainMenu.txt", buffer);
 	return;
 }
 
@@ -169,8 +169,9 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 
 		if (MenuState == 0)
 		{
-			Game MyGame;
-			MyGame.GameInit();
+			Game *MyGame;
+			MyGame = Game::GetGameInstance();
+			MyGame->GameInit();
 			return;		
 		}
 	

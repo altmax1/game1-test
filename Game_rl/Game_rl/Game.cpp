@@ -6,9 +6,21 @@
 
 using namespace std;
 
+Game* Game::MyGame = 0;
+
 Game::Game(void)
 {
 	
+}
+
+Game* Game::GetGameInstance ()
+{
+	if (!MyGame)
+	{
+		MyGame  = new Game;
+	}
+	return MyGame;
+
 }
 
 

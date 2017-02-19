@@ -7,11 +7,13 @@
 class Game
 {
 private:
+	static Game *MyGame;
 	level *MyLevel;
 	Gamer *MyGamer;
-	
-public:
 	Game(void);
+
+public:
+	static Game* GetGameInstance ();
 	~Game(void);
 	void GameInit ();
 	void MakeLevel (int Type, int Width, int Height, int Density);

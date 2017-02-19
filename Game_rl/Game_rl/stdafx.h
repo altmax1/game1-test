@@ -20,6 +20,7 @@
 #include <queue>
 #include <algorithm>
 #include <iterator>
+#include <map>
 
 
 #include "BearLibTerminal.h"
