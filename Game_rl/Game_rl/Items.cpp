@@ -13,12 +13,12 @@ Items::~Items(void)
 }
 int Items::GetTypeOfWeapon ( int ID)
 {
-	return ColdWeapons[ID].Type;
+	return Weapons[ID].Type;
 }
 
-int Items::QuantityColdWeaponItems()
+int Items::QuantityWeaponItems()
 {
-	return ColdWeapons.size();
+	return Weapons.size();
 }
 
 void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
@@ -29,7 +29,7 @@ void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
 	while (p!= Temp.end())
 	{
 		map <string,string>::iterator MapPtr;
-		ColdWeapon TempWeapon;
+		Weapon TempWeapon;
 		MapPtr = p->find("ID");
 		TempWeapon.ID = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Name");
@@ -44,7 +44,7 @@ void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.MinDamage = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("MaxDamage");
 		TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
-		ColdWeapons.push_back (TempWeapon);
+		Weapons.push_back (TempWeapon);
 		p++;
 
 	}

@@ -1,7 +1,7 @@
 #pragma once
 using namespace std;
 
-struct ColdWeapon
+struct Weapon
 {
 	int ID;
 	string Name;
@@ -15,13 +15,13 @@ struct ColdWeapon
 class Items
 {
 private:
-	vector <ColdWeapon> ColdWeapons;
+	vector <Weapon> Weapons;
 public:
 	Items(void);
 	~Items(void);
 	void GetWeaponsFromFile ();
 	void InsertWeaponsInStorage (vector <map<string,string>> Temp);
-	int QuantityColdWeaponItems ();
+	int QuantityWeaponItems ();
 	int GetTypeOfWeapon ( int ID);
 };
 

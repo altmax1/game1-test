@@ -50,7 +50,7 @@ void level::PlaceWeapons (int Quantity)
 		coords = rand () % (LevelWidth*LevelHeight);
 		basetype = cells[coords].GetBaseType();
 		} while (basetype!= '.');
-		int QuantityTypes = MyItems->QuantityColdWeaponItems();
+		int QuantityTypes = MyItems->QuantityWeaponItems();
 		int WeaponType;
 		WeaponType = rand() % QuantityTypes;
 		cells[coords].AddItems(WeaponType);
