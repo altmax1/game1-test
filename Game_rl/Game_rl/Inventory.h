@@ -18,6 +18,8 @@ int CurrentCellCount;
 public:
 	void PutItemInInventory ();
 	void PutItemInVector (int Id);
+	void PrintInventory ();
+	void PrintItems ();
 	Inventory(void);
 	~Inventory(void);
 };

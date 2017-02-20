@@ -16,6 +16,11 @@ int Items::GetTypeOfWeapon ( int ID)
 	return Weapons[ID].Type;
 }
 
+string Items::GetNameOfWeapon (int ID)
+{
+	return Weapons[ID].RName;
+}
+
 int Items::QuantityWeaponItems()
 {
 	return Weapons.size();

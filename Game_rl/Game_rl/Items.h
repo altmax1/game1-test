@@ -29,5 +29,6 @@ public:
 	void InsertWeaponsInStorage (vector <map<string,string>> Temp);
 	int QuantityWeaponItems ();
 	int GetTypeOfWeapon ( int ID);
+	string GetNameOfWeapon (int ID);
 };
 
