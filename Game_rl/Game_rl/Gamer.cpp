@@ -4,15 +4,18 @@
 
 Gamer::Gamer(void)
 {
+	MyInventory = new Inventory;
 }
 
 Gamer::Gamer (level *LevelPtr)
 {
- MyLevel= LevelPtr;
+	MyInventory = new Inventory;
+	 MyLevel= LevelPtr;
 }
 
 Gamer::~Gamer(void)
 {
+	delete MyInventory;
 }
 
 int Gamer::GetCoordX()
@@ -52,6 +55,11 @@ void Gamer::Move (int Direction)
 	NextX = CoordX;
 	NextY = CoordY;
 	char NextCellType;
+	if (Direction == TK_T)
+	{
+		MyInventory->PutItemInInventory();
+		return;
+	}
 	if (Direction == TK_UP || Direction == TK_KP_8)
 		NextY -=1;
 	if (Direction == TK_DOWN || Direction == TK_KP_2)

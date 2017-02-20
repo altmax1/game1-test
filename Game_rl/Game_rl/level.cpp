@@ -16,6 +16,28 @@ level::~level()
 	delete [] cells;
 	
 }
+int level::GetQuantityItemsOnCell (int x, int y)
+{
+	int linear;
+	linear = DecartToLinear (x,y);
+	int quantity = cells[linear].GetItemsQuantity();
+	return quantity;
+}
+int level::GetItemIDByCell (int x, int y)
+{
+	int linear;
+	linear = DecartToLinear (x,y);
+	int ID = cells[linear].GetItemsID();
+	return ID;
+}
+
+void level::RemoveItemFromCell (int x, int y)
+{
+	int linear;
+	linear = DecartToLinear (x,y);
+	cells[linear].RemoveItem();
+	return;
+}
 
 void level::PrintWeapons (int x, int y, int linear)
 {

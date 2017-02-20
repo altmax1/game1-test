@@ -22,7 +22,15 @@ int X_cell::GetItemsID()
 	list<int>::iterator p;
 	p = items.begin();
 	return *p;
+}
 
+void X_cell::RemoveItem ()
+{
+	int a;
+	if (items.size () >0)
+		items.pop_front();
+	return;
+	
 }
 
 int X_cell::GetItemsQuantity ()

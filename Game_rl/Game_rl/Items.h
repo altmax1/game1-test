@@ -10,6 +10,12 @@ struct Weapon
 	int Weight;
 	int MaxDamage;
 	int MinDamage;
+	//int Range;
+	//bool Distant;
+	//int BlastRadius; //радиус поражения
+	//bool NeedsAmmo;
+	//int AmmoID;
+	//int Accuracy; //кучность
 };
 
 class Items

@@ -82,6 +82,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gamer.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="stdafx.h" />
@@ -98,6 +99,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gamer.cpp" />
     <ClCompile Include="Game_rl.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="stdafx.cpp">

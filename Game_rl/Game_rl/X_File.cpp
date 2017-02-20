@@ -110,8 +110,7 @@ void X_File::X_ParseIniFile ( FileContent &MyFile, vector <map <string, string>>
                                 if (iter>= MyFile.lenght) break;
                         }
                         TempMap.insert (pair <string, string> (p1, p2));
-                        cout << p1 << "  " << p2 << endl;
-
+                        
                 }
                 
 				MyVector.push_back (TempMap);

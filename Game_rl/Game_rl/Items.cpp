@@ -58,8 +58,7 @@ void Items::GetWeaponsFromFile()
 	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\Weapons.ini", Content);
 	X_File::X_ParseIniFile (Content, Temp);
 	InsertWeaponsInStorage (Temp);
-	cout << Temp.size()<<endl;
-
+	
 	return;
 
 }

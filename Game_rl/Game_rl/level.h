@@ -24,5 +24,8 @@ public:
 	void PlaceItems ();
 	void PlaceWeapons (int quantity);
 	void PrintWeapons(int x, int y, int linear);
+	int GetItemIDByCell (int x, int y);
+	int GetQuantityItemsOnCell (int x, int y);
+	void RemoveItemFromCell (int x, int y);
 };
 

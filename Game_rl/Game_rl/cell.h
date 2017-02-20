@@ -21,5 +21,6 @@ public:
 	void AddItems (int ID);
 	int GetItemsQuantity ();
 	int GetItemsID ();
+	void RemoveItem ();
 };
 

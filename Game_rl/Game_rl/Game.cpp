@@ -35,6 +35,17 @@ Items* Game::GetItems ()
 	return MyItems;
 }
 
+level* Game::GetLevel()
+{
+	return MyLevel;
+}
+
+Gamer* Game::GetGamer()
+{
+	return MyGamer;
+}
+
+
 
 void Game::MakeLevel (int Type, int Width, int Height, int Density)
 {

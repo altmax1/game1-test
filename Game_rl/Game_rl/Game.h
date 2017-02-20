@@ -22,6 +22,8 @@ public:
 	void MakeGamer ();
 	void MakeItems ();
 	Items* GetItems ();
+	level *GetLevel();
+	Gamer* GetGamer();
 	
 };
 
