@@ -17,9 +17,11 @@ int CurrentCellCount;
 
 public:
 	void PutItemInInventory ();
-	void PutItemInVector (int Id);
+	void PutItemInVector (int Id, bool Stackable, int nums);
 	void PrintInventory ();
 	void PrintItems ();
+	bool ItemExist (int ID);
+	int FindItemByID (int ID);
 	Inventory(void);
 	~Inventory(void);
 };

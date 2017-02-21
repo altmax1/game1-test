@@ -30,6 +30,21 @@ int level::GetItemIDByCell (int x, int y)
 	int ID = cells[linear].GetItemsID();
 	return ID;
 }
+bool level::GetStackableByCell (int x, int y)
+{
+	int linear;
+	linear = DecartToLinear (x,y);
+	bool Stackable = cells[linear].GetItemsStackable();
+	return Stackable;
+}
+int level::GetNumsInStack (int x, int y)
+{
+	int linear;
+	linear = DecartToLinear (x,y);
+	int nums = cells[linear].GetNumsInStack();
+	return nums;
+
+}
 
 void level::RemoveItemFromCell (int x, int y)
 {
@@ -74,8 +89,10 @@ void level::PlaceWeapons (int Quantity)
 		} while (basetype!= '.');
 		int QuantityTypes = MyItems->QuantityWeaponItems();
 		int WeaponType;
+		bool Stackable;
 		WeaponType = rand() % QuantityTypes;
-		cells[coords].AddItems(WeaponType);
+		Stackable = MyItems->GetStackable (WeaponType);
+		cells[coords].AddItems(WeaponType, Stackable);
 	}
 }
 void level::PlaceItems()

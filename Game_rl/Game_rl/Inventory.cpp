@@ -12,6 +12,34 @@ Inventory::~Inventory(void)
 {
 }
 
+bool Inventory::ItemExist (int ID)
+{
+	vector <InventoryCell>::iterator p;
+	p = MyInventory.begin();
+	while (p!=MyInventory.end())
+	{
+		if (p->ID == ID)
+			return true;
+		p++;
+	}
+	return false;
+}
+
+int Inventory::FindItemByID (int ID)
+{
+	int iter = 0;
+	vector <InventoryCell>::iterator p;
+	p = MyInventory.begin();
+	while (p!=MyInventory.end())
+	{
+		if (p->ID == ID)
+			return iter;
+		iter++;
+		p++;
+	}
+
+}
+
 void Inventory::PrintItems()
 {	
 	if (MyInventory.size() == 0)
@@ -26,13 +54,17 @@ void Inventory::PrintItems()
 	p = MyInventory.begin();
 	while (p!= MyInventory.end())
 	{	
-		char* temp;
-		temp = new char [2];
+		char *temp, *tempnums;
+		temp = new char [4];
+		tempnums = new char [4];
 		_itoa (iter, temp, 10);
+		int nums = p->Quantity;
+		_itoa (nums, tempnums, 10);
 		string stemp;
 		stemp = MyItems->GetNameOfWeapon (p->ID);
 		terminal_print (startX, startY, temp);
 		terminal_print (startX+3, startY, stemp.c_str());
+		terminal_print (startX+20, startY, tempnums);
 		p++;
 		startY++; startY++;
 		iter++;
@@ -57,12 +89,21 @@ void Inventory::PrintInventory()
 	}
 }
 
-void Inventory::PutItemInVector (int ID)
+void Inventory::PutItemInVector (int ID, bool Stackable, int nums)
 {
 	InventoryCell temp;
+	if (Stackable)
+	{
+		if (ItemExist(ID))
+		{
+			MyInventory[FindItemByID (ID)].Quantity += nums;
+			return;	
+		}
+		
+	}
 	temp.ID = ID;
-	temp.Quantity = 1;
-	temp.stackable = 0;
+	temp.Quantity = nums;
+	temp.stackable = Stackable;
 	MyInventory.push_back (temp);
 	return;
 }
@@ -83,7 +124,9 @@ void Inventory::PutItemInInventory ()
 	if (ItemsQuantity >0)
 	{	
 		int ID = MyLevel->GetItemIDByCell(CoordX, CoordY);
-		PutItemInVector (ID);
+		bool Stackable = MyLevel->GetStackableByCell (CoordX, CoordY);
+		int Nums = MyLevel->GetNumsInStack (CoordX, CoordY);
+		PutItemInVector (ID, Stackable, Nums);
 		MyLevel->RemoveItemFromCell(CoordX, CoordY);
 			
 	}

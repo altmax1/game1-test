@@ -2,6 +2,8 @@
 #include "cell.h"
 
 
+
+
 X_cell::X_cell(void)
 {
 }
@@ -11,17 +13,36 @@ X_cell::~X_cell(void)
 {
 }
 
-void X_cell::AddItems (int ID)
+void X_cell::AddItems (int ID, bool Stackable)
 {
-	items.push_back(ID);
+	CellItems temp;
+	temp.ID = ID;
+	temp.quantity = 1;
+	temp.stackable = Stackable;
+	items.push_back(temp);
 	return;
 }
 
 int X_cell::GetItemsID()
 {
-	list<int>::iterator p;
+	list<CellItems>::iterator p;
 	p = items.begin();
-	return *p;
+	return p->ID ;
+}
+
+bool X_cell::GetItemsStackable ()
+{
+	list<CellItems>::iterator p;
+	p = items.begin();
+	return p->stackable;
+}
+
+int X_cell::GetNumsInStack ()
+{
+	list<CellItems>::iterator p;
+	p = items.begin();
+	return p->quantity;
+
 }
 
 void X_cell::RemoveItem ()

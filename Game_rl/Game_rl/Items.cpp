@@ -16,6 +16,12 @@ int Items::GetTypeOfWeapon ( int ID)
 	return Weapons[ID].Type;
 }
 
+bool Items::GetStackable (int ID)
+{
+
+	return Weapons[ID].Stackable;
+}
+
 string Items::GetNameOfWeapon (int ID)
 {
 	return Weapons[ID].RName;
@@ -49,6 +55,8 @@ void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.MinDamage = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("MaxDamage");
 		TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Stackable");
+		TempWeapon.Stackable = atoi(MapPtr->second.c_str());
 		Weapons.push_back (TempWeapon);
 		p++;
 

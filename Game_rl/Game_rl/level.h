@@ -27,5 +27,7 @@ public:
 	int GetItemIDByCell (int x, int y);
 	int GetQuantityItemsOnCell (int x, int y);
 	void RemoveItemFromCell (int x, int y);
+	bool GetStackableByCell (int x, int y);
+	int GetNumsInStack (int x, int y);
 };
 

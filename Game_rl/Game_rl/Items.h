@@ -10,6 +10,7 @@ struct Weapon
 	int Weight;
 	int MaxDamage;
 	int MinDamage;
+	bool Stackable;
 	//int Range;
 	//bool Distant;
 	//int BlastRadius; //радиус поражения
@@ -29,6 +30,7 @@ public:
 	void InsertWeaponsInStorage (vector <map<string,string>> Temp);
 	int QuantityWeaponItems ();
 	int GetTypeOfWeapon ( int ID);
+	bool GetStackable (int ID);
 	string GetNameOfWeapon (int ID);
 };
 
