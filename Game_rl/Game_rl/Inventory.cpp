@@ -130,8 +130,104 @@ void Inventory::PutItemInInventory ()
 		MyLevel->RemoveItemFromCell(CoordX, CoordY);
 			
 	}
-
 	return;	
+}
 
+void Inventory::PrintBorder (int state)
+{
+	terminal_put (8, 10+state*2, 42);
+	return;
+}
+
+int Inventory::SelectItem ()
+{
+	int MenuSize = MyInventory.size();
+	int state = 0;
+	while (1)
+	{
+		terminal_clear();
+		terminal_wprint (10, 7, L"Выберите позицию");
+		PrintItems ();
+		PrintBorder (state);
+		terminal_refresh();
+		int a = terminal_read();
+		if (a == TK_UP && state >0)
+			state--;
+		if (a == TK_DOWN && state < MenuSize-1)
+			state++;
+		if (a==TK_ENTER)
+			return state;
+		if (a==TK_ESCAPE)
+			return 1000000;
+	}
+}
+
+int Inventory::SelectQuantity (int num)
+{
+	int MaxQuantity = MyInventory[num].Quantity;
+	int TotalQuantity = MaxQuantity;
+	while (1)
+	{
+		terminal_clear();
+		terminal_wprint (10, 7, L"Выберите количество");
+		terminal_wprint (10, 8, L"Используйте стрелки для изменения");
+		terminal_wprint (10, 9, L"Enter для выбора, Escape - выход");
+		char temp[10];
+		_itoa ( TotalQuantity, temp, 10);
+		terminal_print (15, 12, temp);
+		terminal_refresh();
+		int a = terminal_read ();
+		if (a==TK_UP && TotalQuantity < MaxQuantity)
+			TotalQuantity++;
+		if (a==TK_DOWN && TotalQuantity >1)
+			TotalQuantity--;
+		if (a==TK_ENTER)
+			return TotalQuantity;
+		if (a==TK_ESCAPE)
+			return 0;
+
+	}
+
+}
+
+void  Inventory::RemoveItemFromVector (int num, int Quantity)
+{
+	if (Quantity == MyInventory[num].Quantity)
+	{	
+		vector <InventoryCell>::iterator p;
+		p = MyInventory.begin ();
+		p += num;
+		MyInventory.erase (p);
+		return;
+		
+	}
+
+	if (Quantity < MyInventory[num].Quantity)
+	{
+		MyInventory[num].Quantity -= Quantity;
+		return;
+	}
+}
+
+void Inventory::DropItem ()
+{
+	int size;
+	size = MyInventory.size();
+	if (size==0)
+		return;
+	int ItemNum; int ItemQuantity;
+	ItemNum = SelectItem ();
+	if (ItemNum == 1000000)
+		return;
+	ItemQuantity = 1;
+	if (MyInventory[ItemNum].Quantity >1)
+		ItemQuantity = SelectQuantity (ItemNum);
+	if (ItemQuantity==0)
+		return;
+	RemoveItemFromVector (ItemNum, ItemQuantity);
+
+	
+	
+	return;
 
 }

@@ -66,6 +66,13 @@ void Gamer::Move (int Direction)
 		MyInventory->PrintInventory();
 		return;
 	}
+
+	if (Direction == TK_D)
+	{
+		MyInventory->DropItem ();
+		return;
+	}
+
 	if (Direction == TK_UP || Direction == TK_KP_8)
 		NextY -=1;
 	if (Direction == TK_DOWN || Direction == TK_KP_2)

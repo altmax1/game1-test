@@ -22,6 +22,11 @@ public:
 	void PrintItems ();
 	bool ItemExist (int ID);
 	int FindItemByID (int ID);
+	void DropItem ();
+	int SelectItem ();
+	void PrintBorder (int state);
+	int SelectQuantity (int num);
+	void RemoveItemFromVector (int num, int Quantity);
 	Inventory(void);
 	~Inventory(void);
 };
