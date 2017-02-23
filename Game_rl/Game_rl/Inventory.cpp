@@ -224,10 +224,18 @@ void Inventory::DropItem ()
 		ItemQuantity = SelectQuantity (ItemNum);
 	if (ItemQuantity==0)
 		return;
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	level *MyLevel;
+	MyLevel = MyGame->GetLevel();
+	Gamer *MyGamer;
+	MyGamer = MyGame->GetGamer();
+	int CoordX, CoordY;
+	CoordX = MyGamer->GetCoordX();
+	CoordY = MyGamer->GetCoordY();
+	bool Stackable = MyInventory[ItemNum].stackable;
+	MyLevel->PutItemsOnCell (MyInventory[ItemNum].ID, ItemQuantity, MyInventory[ItemNum].stackable, CoordX, CoordY);
 	RemoveItemFromVector (ItemNum, ItemQuantity);
-
-	
-	
 	return;
 
 }

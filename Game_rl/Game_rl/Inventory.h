@@ -27,6 +27,7 @@ public:
 	void PrintBorder (int state);
 	int SelectQuantity (int num);
 	void RemoveItemFromVector (int num, int Quantity);
+	//int FindIdByNumber (int nubmer);
 	Inventory(void);
 	~Inventory(void);
 };

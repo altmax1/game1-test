@@ -92,7 +92,7 @@ void level::PlaceWeapons (int Quantity)
 		bool Stackable;
 		WeaponType = rand() % QuantityTypes;
 		Stackable = MyItems->GetStackable (WeaponType);
-		cells[coords].AddItems(WeaponType, Stackable);
+		cells[coords].AddItems(WeaponType, Stackable, 1);
 	}
 }
 void level::PlaceItems()
@@ -183,6 +183,29 @@ void level::LevelPrint ()
 	//terminal_read();
 		return;
 
+}
 
+void level::PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, int y)
+{
+	int coord = DecartToLinear (x,y);
+	if (Stackable == false)
+	{
+		cells[coord].AddItems(ID, Stackable, Quantity);
+		return;
+	}
+	if (cells[coord].IsEmpty())
+	{
+		cells[coord].AddItems(ID, Stackable, Quantity);
+		return;
+	}
+
+	int NumberOfItem = cells[coord].FindItemByID (ID);
+	if (NumberOfItem == 0)
+	{
+		cells[coord].AddItems(ID, Stackable, Quantity);
+		return;
+	}
+	cells[coord].AddItemsInSlot (ID, Quantity, NumberOfItem);
+	return;
 
 }

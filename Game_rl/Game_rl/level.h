@@ -26,8 +26,9 @@ public:
 	void PrintWeapons(int x, int y, int linear);
 	int GetItemIDByCell (int x, int y);
 	int GetQuantityItemsOnCell (int x, int y);
-	void RemoveItemFromCell (int x, int y);
+	void RemoveItemFromCell (int x, int y); //переделать на несколько вещей в клетке
 	bool GetStackableByCell (int x, int y);
 	int GetNumsInStack (int x, int y);
+	void PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, int y) ;
 };
 

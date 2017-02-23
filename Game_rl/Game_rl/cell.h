@@ -26,11 +26,14 @@ public:
 	~X_cell(void);
 	void SetBaseType ( char p);
 	char GetBaseType ();
-	void AddItems (int ID, bool Stackable);
+	void AddItems (int ID, bool Stackable, int Quantity);
 	int GetItemsQuantity ();
 	int GetItemsID ();
 	bool GetItemsStackable();
 	int GetNumsInStack();
 	void RemoveItem ();
+	bool IsEmpty ();
+	int FindItemByID (int ID);
+	void AddItemsInSlot (int ID, int Quantity, int SlotNumber);
 };
 
