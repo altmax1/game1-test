@@ -24,11 +24,13 @@ public:
 	void PlaceItems ();
 	void PlaceWeapons (int quantity);
 	void PrintWeapons(int x, int y, int linear);
-	int GetItemIDByCell (int x, int y);
+	int GetItemIDByCell (int x, int y, int stacknum);
 	int GetQuantityItemsOnCell (int x, int y);
-	void RemoveItemFromCell (int x, int y); //переделать на несколько вещей в клетке
-	bool GetStackableByCell (int x, int y);
-	int GetNumsInStack (int x, int y);
+	void RemoveItemFromCell (int x, int y,int stacknum, int quantity); 
+	bool GetStackableByCell (int x, int y, int stacknum);
+	int GetNumsInStack (int x, int y, int stacknum);
 	void PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, int y) ;
+	int SelectItem (int x, int y);
+	int SelectQuantity (int x, int y, int stacknum);
 };
 

@@ -23,40 +23,40 @@ int level::GetQuantityItemsOnCell (int x, int y)
 	int quantity = cells[linear].GetItemsQuantity();
 	return quantity;
 }
-int level::GetItemIDByCell (int x, int y)
+int level::GetItemIDByCell (int x, int y, int stacknum)
 {
 	int linear;
 	linear = DecartToLinear (x,y);
-	int ID = cells[linear].GetItemsID();
+	int ID = cells[linear].GetItemsID(stacknum);
 	return ID;
 }
-bool level::GetStackableByCell (int x, int y)
+bool level::GetStackableByCell (int x, int y, int stacknum)
 {
 	int linear;
 	linear = DecartToLinear (x,y);
-	bool Stackable = cells[linear].GetItemsStackable();
+	bool Stackable = cells[linear].GetItemsStackable(stacknum);
 	return Stackable;
 }
-int level::GetNumsInStack (int x, int y)
+int level::GetNumsInStack (int x, int y, int stacknum)
 {
 	int linear;
 	linear = DecartToLinear (x,y);
-	int nums = cells[linear].GetNumsInStack();
+	int nums = cells[linear].GetNumsInStack(stacknum);
 	return nums;
 
 }
 
-void level::RemoveItemFromCell (int x, int y)
+void level::RemoveItemFromCell (int x, int y, int stacknum, int quantity)
 {
 	int linear;
 	linear = DecartToLinear (x,y);
-	cells[linear].RemoveItem();
+	cells[linear].RemoveItem(stacknum, quantity);
 	return;
 }
 
 void level::PrintWeapons (int x, int y, int linear)
 {
-	int ID = cells[linear].GetItemsID();
+	int ID = cells[linear].GetItemsID(0);
 	Game *MyGame;
 	MyGame = Game::GetGameInstance();
 	Items *MyItems;
@@ -208,4 +208,16 @@ void level::PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, i
 	cells[coord].AddItemsInSlot (ID, Quantity, NumberOfItem);
 	return;
 
+}
+
+int level::SelectItem (int x, int y)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].SelectItem();
+}
+
+int level::SelectQuantity (int x, int y, int stacknum)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].SelectQuantity (stacknum);
 }

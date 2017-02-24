@@ -28,12 +28,16 @@ public:
 	char GetBaseType ();
 	void AddItems (int ID, bool Stackable, int Quantity);
 	int GetItemsQuantity ();
-	int GetItemsID ();
-	bool GetItemsStackable();
-	int GetNumsInStack();
-	void RemoveItem ();
+	int GetItemsID (int stacknum);
+	bool GetItemsStackable(int stacknum);
+	int GetNumsInStack(int stacknum);
+	void RemoveItem (int stacknum, int quantity);
 	bool IsEmpty ();
 	int FindItemByID (int ID);
 	void AddItemsInSlot (int ID, int Quantity, int SlotNumber);
+	int SelectItem ();
+	void PrintItems ();
+	void PrintBorder (int state);
+	int SelectQuantity (int num);
 };
 
