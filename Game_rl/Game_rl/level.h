@@ -19,6 +19,8 @@ public:
 	int DecartToLinear (int x, int y); // утилита для перевода
 	int GetLevelWidth ();
 	int GetLevelHeight ();
+	char GetBaseType (int x, int y);
+	unsigned char GetFlagsFOV (int x, int y);
 	void FovCellsInit ();
 	void FovProcess (int x, int y, int radius);
 	void PlaceItems ();

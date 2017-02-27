@@ -85,9 +85,10 @@ void Game::GameInit()
 	while (1)
 	{
 	terminal_color (0xFFDFDFA9);
-	MyLevel->LevelPrint();
+	MyInterface->PrintFOV();
+	//MyLevel->LevelPrint();
 	terminal_color ("white");
-	MyGamer->GamerPrint();
+	//MyGamer->GamerPrint();
 	terminal_refresh();
 	KeyCode = terminal_read();
 	if (KeyCode == TK_ESCAPE)

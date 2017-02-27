@@ -159,6 +159,18 @@ void level::LevelCreate ( int Type,int Width, int Height, int Density)
 
 }
 
+char level::GetBaseType (int x, int y)
+{
+	int coord = DecartToLinear (x,y);
+	return cells[coord].GetBaseType();
+}
+unsigned char level::GetFlagsFOV (int x, int y)
+{
+	int coord = DecartToLinear (x,y);
+	return map.Cells[coord].Flags;
+
+}
+
 void level::LevelPrint ()
 {
 	terminal_clear();
