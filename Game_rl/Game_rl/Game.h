@@ -2,6 +2,8 @@
 #include "level.h"
 #include "Gamer.h"
 #include "Items.h"
+#include "Interface.h"
+#include "X_File.h"
 
 
 
@@ -12,6 +14,7 @@ private:
 	level *MyLevel;
 	Gamer *MyGamer;
 	Items *MyItems;
+	Interface *MyInterface;
 	Game(void);
 
 public:
@@ -21,6 +24,7 @@ public:
 	void MakeLevel (int Type, int Width, int Height, int Density);
 	void MakeGamer ();
 	void MakeItems ();
+	void MakeInterface();
 	Items* GetItems ();
 	level *GetLevel();
 	Gamer* GetGamer();

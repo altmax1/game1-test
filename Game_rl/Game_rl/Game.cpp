@@ -65,6 +65,11 @@ void Game::MakeItems()
 	MyItems->GetWeaponsFromFile();
 	return;
 }
+void Game::MakeInterface()
+{
+	MyInterface = new Interface;
+	return;
+}
 
 
 void Game::GameInit()
@@ -73,6 +78,7 @@ void Game::GameInit()
 	MakeItems();
 	MakeLevel (1,80,40,40);
 	MakeGamer ();
+	MakeInterface();
 	MyLevel->PlaceItems();
 	MyLevel->LevelPrint();
 	MyGamer->GamerPlacing();
