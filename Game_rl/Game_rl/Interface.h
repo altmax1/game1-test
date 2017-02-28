@@ -19,7 +19,9 @@ public:
 	void GetGamerAndLevel ();
 	void PrintFOV ();
 	void PrintMiniMap ();
+	void PrintBorder ();
 	void CorrectLeftUp (int &x, int &y);
+	void PrintItems (int BaseX, int BaseY, int FOVX, int FOVY);
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
 	Interface(void);
 	~Interface(void);

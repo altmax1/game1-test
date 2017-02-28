@@ -5,6 +5,7 @@
 
 
 
+
 Interface::Interface(void)
 {
 	ReadIniFile();
@@ -80,15 +81,55 @@ void Interface::PrintMiniMap ()
 			{	
 				terminal_color ("blue");
 				terminal_put_ext (43,33, x*2, y*2, 729);
-				
 			}
-
 		}
 	terminal_color ("white");
 	terminal_put_ext (43,33, GamerCoordX*2, GamerCoordY*2, 729);
 	terminal_composition (TK_OFF);
 	return;
+}
 
+void Interface::PrintBorder ()
+{
+	terminal_color (0xFFA64800);
+	terminal_put (0,0,0x250F);
+	for (int i = 1; i <=FOVWidth; i++)
+	{
+		terminal_put (i,0, 0x2501);
+		terminal_put (i, FOVHeight+1, 0x2501);
+	}
+	terminal_put (FOVWidth+1,0, 0x2513);
+	for (int i = 1; i <= FOVHeight; i++)
+	{
+		terminal_put (0,i, 0x2503);
+		terminal_put (FOVWidth+1, i, 0x2503);
+	}
+	terminal_put (0, FOVHeight+1, 0x2517);
+	terminal_put (FOVWidth+1, FOVHeight+1, 0x251B);
+	
+}
+
+void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
+{
+	int ItemID = Mylevel->GetItemIDByCell (BaseX, BaseY,0);
+	Game *MyGame;
+	MyGame = Game::GetGameInstance ();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	int ItemType = MyItems ->GetTypeOfWeapon (ItemID);
+	if (ItemType == 0)
+		terminal_put (FOVX,FOVY,92);
+	else if ((ItemType == 1) || (ItemType == 2))
+		terminal_put (FOVX,FOVY,124);
+	else terminal_put (FOVX,FOVY, 37);
+	if ((Mylevel->GetQuantityItemsOnCell(BaseX, BaseY))>1)
+	{
+		terminal_layer (2);
+		terminal_color ("red");
+		terminal_put (FOVX,FOVY, 731);
+		terminal_layer (0);
+		terminal_color ("white");
+	}
 }
 
 void Interface::PrintFOV ()
@@ -99,6 +140,7 @@ void Interface::PrintFOV ()
 	LeftUpY = GamerCoordY - FOVHeight/2;
 	CorrectLeftUp (LeftUpX, LeftUpY);
 	char c;
+	int ItemCounter;
 	terminal_clear();
 	for (int y = 0; y <FOVHeight; y++)
 		for (int x =0; x < FOVWidth; x++)
@@ -110,14 +152,18 @@ void Interface::PrintFOV ()
 				terminal_color (0xafdfdfa9);
 			else
 				terminal_color ("black");
-			terminal_put (x,y,c);
+			terminal_put (x+1,y+1,c);
 			if ((x+LeftUpX == GamerCoordX) && (y+LeftUpY == GamerCoordY ))
-				terminal_put (x,y, 64);
+			{
+				terminal_layer (10);
+				terminal_put (x+1,y+1, 64);
+				terminal_layer (0);
+			}
+			ItemCounter = Mylevel->GetQuantityItemsOnCell (x+LeftUpX,y+LeftUpY);
+			if (ItemCounter >0)
+				PrintItems (x+LeftUpX,y+LeftUpY, x+1, y+1);
 		}
-
+	PrintBorder();
 	PrintMiniMap ();
-	/*terminal_layer (20);
-	terminal_put (GamerCoordX, GamerCoordX, 64);
-	terminal_layer (0);*/
 	return;
 }

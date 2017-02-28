@@ -113,6 +113,10 @@ void DungeonType1::MakeRooms ()
 		TempRoom.RoomHeight = (rand () %7)+2;
 		TempRoom.LeftUpCornerX = rand () %(MapWidth - TempRoom.RoomWidth);
 		TempRoom.LeftUpCornerY = rand () %(MapHeight - TempRoom.RoomHeight);
+		if (TempRoom.LeftUpCornerX == 0)
+			TempRoom.LeftUpCornerX  = 1;
+		if (TempRoom.LeftUpCornerY == 0)
+			TempRoom.LeftUpCornerY = 1;
 		TempRoom.RoomId = i;
 		TempRoom.RoomFlag = 0;
 		Rooms.push_back (TempRoom);		
