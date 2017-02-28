@@ -18,6 +18,7 @@ public:
 	void ReadIniFile ();
 	void GetGamerAndLevel ();
 	void PrintFOV ();
+	void PrintMiniMap ();
 	void CorrectLeftUp (int &x, int &y);
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
 	Interface(void);

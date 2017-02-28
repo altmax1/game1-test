@@ -62,6 +62,35 @@ void Interface::CorrectLeftUp ( int &x, int &y)
 
 }
 
+void Interface::PrintMiniMap ()
+{
+	char c, basetype;
+	terminal_composition (TK_ON);
+	for (int y = 0; y< LevelHeight; y++)
+		for (int x = 0; x < LevelWidth; x++)
+		{
+			basetype = Mylevel->GetBaseType(x,y);
+			c = Mylevel->GetFlagsFOV (x, y);
+			if ((c&FOV_CELL_VISITED)&& basetype=='#')
+			{
+				terminal_color ("grey");
+				terminal_put_ext (43,33, x*2, y*2, 729);
+			}
+			if ((c&FOV_CELL_VISITED)&& basetype=='.')
+			{	
+				terminal_color ("blue");
+				terminal_put_ext (43,33, x*2, y*2, 729);
+				
+			}
+
+		}
+	terminal_color ("white");
+	terminal_put_ext (43,33, GamerCoordX*2, GamerCoordY*2, 729);
+	terminal_composition (TK_OFF);
+	return;
+
+}
+
 void Interface::PrintFOV ()
 {
 	GetGamerAndLevel();
@@ -86,6 +115,7 @@ void Interface::PrintFOV ()
 				terminal_put (x,y, 64);
 		}
 
+	PrintMiniMap ();
 	/*terminal_layer (20);
 	terminal_put (GamerCoordX, GamerCoordX, 64);
 	terminal_layer (0);*/
