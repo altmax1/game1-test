@@ -31,6 +31,10 @@ void Interface::ReadIniFile()
 	FOVHeight = atoi(MapPtr->second.c_str());
 	MapPtr = temp[0].find("FOVWidth");
 	FOVWidth = atoi(MapPtr->second.c_str());
+	MapPtr = temp[0].find("MiniMapCoordX");
+	MiniMapCoordX = atoi(MapPtr->second.c_str());
+	MapPtr = temp[0].find("MiniMapCoordY");
+	MiniMapCoordY = atoi(MapPtr->second.c_str());
 	return;
 
 }
@@ -62,9 +66,35 @@ void Interface::CorrectLeftUp ( int &x, int &y)
 	return;
 
 }
+void Interface::PrintMiniMapBorder ()
+{
+	terminal_color (0xFFA64800);
+	int SizeX = (LevelWidth/4);
+	if (LevelWidth%4>0)
+		SizeX++;
+	int SizeY = (LevelHeight/8);
+	if (LevelHeight%4>0)
+		SizeY++;
+	terminal_put (MiniMapCoordX, MiniMapCoordY, 0x2554);
+	terminal_put (MiniMapCoordX, MiniMapCoordY+SizeY+1, 0x255A);
+	terminal_put (MiniMapCoordX+SizeX+1, MiniMapCoordY, 0x2557);
+	terminal_put (MiniMapCoordX+SizeX+1, MiniMapCoordY+SizeY+1, 0x255D);
+	for (int i = MiniMapCoordX+1; i<=MiniMapCoordX+SizeX; i++)
+	{
+		terminal_put (i,MiniMapCoordY, 0x2550);
+		terminal_put (i,MiniMapCoordY+SizeY+1, 0x2550);	
+	}
+	for (int i = MiniMapCoordY+1; i<=MiniMapCoordY+SizeY; i++)
+	{
+		terminal_put (MiniMapCoordX, i, 0x2551);
+		terminal_put (MiniMapCoordX+SizeX+1, i, 0x2551);
+	}
+
+}
 
 void Interface::PrintMiniMap ()
-{
+{	
+	PrintMiniMapBorder ();
 	char c, basetype;
 	terminal_composition (TK_ON);
 	for (int y = 0; y< LevelHeight; y++)
@@ -75,16 +105,16 @@ void Interface::PrintMiniMap ()
 			if ((c&FOV_CELL_VISITED)&& basetype=='#')
 			{
 				terminal_color ("grey");
-				terminal_put_ext (43,33, x*2, y*2, 729);
+				terminal_put_ext (MiniMapCoordX+1,MiniMapCoordY+1, x*2, y*2, 729);
 			}
 			if ((c&FOV_CELL_VISITED)&& basetype=='.')
 			{	
 				terminal_color ("blue");
-				terminal_put_ext (43,33, x*2, y*2, 729);
+				terminal_put_ext (MiniMapCoordX+1,MiniMapCoordY+1, x*2, y*2, 729);
 			}
 		}
 	terminal_color ("white");
-	terminal_put_ext (43,33, GamerCoordX*2, GamerCoordY*2, 729);
+	terminal_put_ext (MiniMapCoordX+1,MiniMapCoordY+1, GamerCoordX*2, GamerCoordY*2, 729);
 	terminal_composition (TK_OFF);
 	return;
 }
@@ -116,6 +146,7 @@ void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
 	MyGame = Game::GetGameInstance ();
 	Items *MyItems;
 	MyItems = MyGame->GetItems();
+	
 	int ItemType = MyItems ->GetTypeOfWeapon (ItemID);
 	if (ItemType == 0)
 		terminal_put (FOVX,FOVY,92);
@@ -124,11 +155,17 @@ void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
 	else terminal_put (FOVX,FOVY, 37);
 	if ((Mylevel->GetQuantityItemsOnCell(BaseX, BaseY))>1)
 	{
+		level *MyLevel;
+		MyLevel = MyGame->GetLevel();
+		char flags = MyLevel->GetFlagsFOV(BaseX, BaseY);
+		if (flags&FOV_CELL_VISITED)
+		{
 		terminal_layer (2);
 		terminal_color ("red");
 		terminal_put (FOVX,FOVY, 731);
 		terminal_layer (0);
 		terminal_color ("white");
+		}
 	}
 }
 

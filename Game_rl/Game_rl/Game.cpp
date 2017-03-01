@@ -76,7 +76,7 @@ void Game::GameInit()
 {
 	int KeyCode;
 	MakeItems();
-	MakeLevel (1,80,40,40);
+	MakeLevel (1,128,40,40);
 	MakeGamer ();
 	MakeInterface();
 	MyLevel->PlaceItems();

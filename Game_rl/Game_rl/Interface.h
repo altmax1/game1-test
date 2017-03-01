@@ -4,15 +4,17 @@
 class Interface
 {
 private:
-	int LevelWidth; //размер от 1!!
+	int LevelWidth;			 //размер уровня от 1
 	int LevelHeight;
-	int WindowWidth;
+	int WindowWidth;		// размер окна терминала
 	int WindowHeight;
-	int FOVHeight;
+	int FOVHeight;			//размер области видимости в терминале
 	int FOVWidth;
 	level *Mylevel;
-	int GamerCoordX;
+	int GamerCoordX;		//координаты игрока
 	int GamerCoordY;
+	int MiniMapCoordX;		//координаты миникарты
+	int MiniMapCoordY;
 
 public:
 	void ReadIniFile ();
@@ -22,6 +24,7 @@ public:
 	void PrintBorder ();
 	void CorrectLeftUp (int &x, int &y);
 	void PrintItems (int BaseX, int BaseY, int FOVX, int FOVY);
+	void PrintMiniMapBorder ();
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
 	Interface(void);
 	~Interface(void);
