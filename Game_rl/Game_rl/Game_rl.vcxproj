@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="bearlibfov.h" />
     <ClInclude Include="BearLibTerminal.h" />
+    <ClInclude Include="Beast.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Game.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="bearlibfov.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Beast.cpp" />
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -113,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Debug\BearLibTerminal.lib" />
+    <Library Include="extlibs\lua53.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

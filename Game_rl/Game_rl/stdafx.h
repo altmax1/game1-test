@@ -24,6 +24,12 @@
 
 
 #include "BearLibTerminal.h"
+extern "C"{
+#include "extlibs/lua.h"
+#include "extlibs/lualib.h"
+#include "extlibs/lauxlib.h"
+}
+#include "extlibs/LuaBridge.h"
 
 
 
