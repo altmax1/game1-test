@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Beast.h"
 
+using namespace std;
 
 Beast::Beast(void)
 {
@@ -13,6 +14,33 @@ Beast::~Beast(void)
 
 
 // ------------------------------ Getters and Setters -----------------------
+	void Beast::SetName (std::string S)
+	{
+		Name = S;
+		return;
+	}
+	std::string Beast::GetName ()
+	{
+		return Name;
+	}
+	void Beast::SetRName (std::string S)
+	{
+		RName = S;
+		return;
+	}
+	std::string Beast::GetRName ()
+	{
+		return RName;
+	}
+	void Beast::SetRDesc (std::string S)
+	{
+		RDesc = S;
+		return;
+	}
+	std::string Beast::GetRDesc ()
+	{
+		return RDesc;
+	}
 	void Beast::SetHP (int a)
 {
 	HP = a;
@@ -191,5 +219,9 @@ Beast::~Beast(void)
 	}
 	int Beast::GetNextStep ()
 	{
-		return NextStep.pop_front();
+		list <int>::iterator p;
+		p = NextStep.begin();
+		int a = *p;
+		NextStep.pop_front();
+		return a;
 	}

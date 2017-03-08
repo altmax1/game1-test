@@ -2,6 +2,9 @@
 class Beast
 {
 private:
+	std::string Name;
+	std::string RName;
+	std::string RDesc;
 	int HP;  // «доровье
 	int Energy;  // Ёнерги€ - аналог маны
 	int Speed; // —короость передвижени€
@@ -24,6 +27,12 @@ private:
 public:
 	Beast(void);
 	~Beast(void);
+	void SetName (std::string S);
+	std::string GetName ();
+	void SetRName (std::string S);
+	std::string GetRName ();
+	void SetRDesc (std::string S);
+	std::string GetRDesc ();
 	void SetHP (int a);
 	int GetHP ();
 	void SetEnergy (int a);
