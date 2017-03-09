@@ -2,7 +2,9 @@
 #include "Beast.h"
 
 using namespace std;
+
 using namespace luabridge;
+
 
 
 Beast::Beast(void)
@@ -16,15 +18,16 @@ Beast::~Beast(void)
 
 void Beast::LuaReg ()
 {
-	lua_State* L = luaL_newstate();
-	luaL_openlibs(L);
-    getGlobalNamespace(L).addFunction("SetHP", &Beast::SetHP);
-	getGlobalNamespace(L).addFunction("SetCoordX", &Beast::SetCoordX);
-	getGlobalNamespace(L).addFunction("SetCoordY", &Beast::SetCoordY);
+	//lua_State* L = luaL_newstate();
+	//luaL_openlibs(L);
+    //getGlobalNamespace(L).addFunction("SetHP", &Beast::SetHP);
+	//getGlobalNamespace(L).addFunction("SetCoordX", &Beast::SetCoordX);
+	//getGlobalNamespace(L).addFunction("SetCoordY", &Beast::SetCoordY);
 }
 
 
 // ------------------------------ Getters and Setters -----------------------
+
 	void Beast::SetCoordX (int a)
 	{
 		CoordX = a;
@@ -42,6 +45,34 @@ void Beast::LuaReg ()
 	int Beast::GetCoordY ()
 	{
 		return CoordY;
+	}
+	void Beast::SetName (std::string S)
+	{
+		Name = S;
+		return;
+	}
+	std::string Beast::GetName ()
+	{
+		return Name;
+	}
+	void Beast::SetRName (std::string S)
+	{
+		RName = S;
+		return;
+	}
+	std::string Beast::GetRName ()
+	{
+		return RName;
+	}
+	void Beast::SetRDesc (std::string S)
+	{
+		RDesc = S;
+		return;
+	}
+	std::string Beast::GetRDesc ()
+	{
+		return RDesc;
+
 	}
 	void Beast::SetHP (int a)
 {
@@ -221,5 +252,9 @@ void Beast::LuaReg ()
 	}
 	int Beast::GetNextStep ()
 	{
-		return NextStep.pop_front();
+		list <int>::iterator p;
+		p = NextStep.begin();
+		int a = *p;
+		NextStep.pop_front();
+		return a;
 	}

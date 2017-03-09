@@ -2,8 +2,12 @@
 class Beast
 {
 private:
+
 	int CoordX;
 	int CoordY;
+	std::string Name;
+	std::string RName;
+	std::string RDesc;
 	int HP;  // «доровье
 	int Energy;  // Ёнерги€ - аналог маны
 	int Speed; // —короость передвижени€
@@ -31,6 +35,12 @@ public:
 	void SetCoordY(int a);
 	int GetCoordX ();
 	int GetCoordY ();
+	void SetName (std::string S);
+	std::string GetName ();
+	void SetRName (std::string S);
+	std::string GetRName ();
+	void SetRDesc (std::string S);
+	std::string GetRDesc ();
 	void SetHP (int a);
 	int GetHP ();
 	void SetEnergy (int a);
