@@ -30,6 +30,8 @@ extern "C"{
 #include "extlibs/lauxlib.h"
 }
 #include "extlibs/LuaBridge.h"
+//#include "extlibs/lua.hpp"
+//#include "extlibs/luaconf.h"
 
 
 

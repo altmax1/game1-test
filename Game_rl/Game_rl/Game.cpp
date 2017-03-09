@@ -45,6 +45,10 @@ Gamer* Game::GetGamer()
 	return MyGamer;
 }
 
+Bestiary* Game::GetBestiary()
+{
+	return MyBestiary;
+}
 
 
 void Game::MakeLevel (int Type, int Width, int Height, int Density)
@@ -71,6 +75,12 @@ void Game::MakeInterface()
 	return;
 }
 
+void Game::MakeBestiary()
+{
+	MyBestiary = new Bestiary;
+	MyBestiary->MakeCreatures();
+	return;
+}
 
 void Game::GameInit()
 {
@@ -79,6 +89,7 @@ void Game::GameInit()
 	MakeLevel (1,128,40,40);
 	MakeGamer ();
 	MakeInterface();
+	MakeBestiary();
 	MyLevel->PlaceItems();
 	MyLevel->LevelPrint();
 	MyGamer->GamerPlacing();

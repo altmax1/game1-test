@@ -79,6 +79,7 @@
     <ClInclude Include="bearlibfov.h" />
     <ClInclude Include="BearLibTerminal.h" />
     <ClInclude Include="Beast.h" />
+    <ClInclude Include="Bestiary.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Game.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="level.h" />
+    <ClInclude Include="LuaAdapter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="X_File.h" />
@@ -97,6 +99,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Beast.cpp" />
+    <ClCompile Include="Bestiary.cpp" />
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -106,6 +109,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="level.cpp" />
+    <ClCompile Include="LuaAdapter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

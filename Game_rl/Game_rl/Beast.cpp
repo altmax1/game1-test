@@ -18,11 +18,13 @@ Beast::~Beast(void)
 
 void Beast::LuaReg ()
 {
-	//lua_State* L = luaL_newstate();
-	//luaL_openlibs(L);
-    //getGlobalNamespace(L).addFunction("SetHP", &Beast::SetHP);
-	//getGlobalNamespace(L).addFunction("SetCoordX", &Beast::SetCoordX);
-	//getGlobalNamespace(L).addFunction("SetCoordY", &Beast::SetCoordY);
+	/*lua_State* L = luaL_newstate();
+	luaL_openlibs(L);
+    getGlobalNamespace(L)
+		.beginClass <Beast>("Beast")
+			.addFunction("SetHPBeast", &Beast::SetHP)
+			.addFunction("SetCoordXBeast", &Beast::SetCoordX)
+			.addFunction("SetCoordYBeast", &Beast::SetCoordY);*/
 }
 
 

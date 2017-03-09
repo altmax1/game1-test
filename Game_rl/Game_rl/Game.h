@@ -4,6 +4,7 @@
 #include "Items.h"
 #include "Interface.h"
 #include "X_File.h"
+#include "Bestiary.h"
 
 
 
@@ -15,6 +16,7 @@ private:
 	Gamer *MyGamer;
 	Items *MyItems;
 	Interface *MyInterface;
+	Bestiary *MyBestiary;
 	Game(void);
 
 public:
@@ -25,9 +27,11 @@ public:
 	void MakeGamer ();
 	void MakeItems ();
 	void MakeInterface();
+	void MakeBestiary ();
 	Items* GetItems ();
 	level *GetLevel();
 	Gamer* GetGamer();
+	Bestiary* GetBestiary();
 	
 };
 
