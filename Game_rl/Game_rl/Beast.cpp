@@ -1,6 +1,9 @@
 #include "StdAfx.h"
 #include "Beast.h"
 
+using namespace std;
+using namespace luabridge;
+
 
 Beast::Beast(void)
 {
@@ -11,8 +14,35 @@ Beast::~Beast(void)
 {
 }
 
+void Beast::LuaReg ()
+{
+	lua_State* L = luaL_newstate();
+	luaL_openlibs(L);
+    getGlobalNamespace(L).addFunction("SetHP", &Beast::SetHP);
+	getGlobalNamespace(L).addFunction("SetCoordX", &Beast::SetCoordX);
+	getGlobalNamespace(L).addFunction("SetCoordY", &Beast::SetCoordY);
+}
+
 
 // ------------------------------ Getters and Setters -----------------------
+	void Beast::SetCoordX (int a)
+	{
+		CoordX = a;
+		return;
+	}
+	void Beast::SetCoordY (int a)
+	{
+		CoordY = a;
+		return;
+	}
+	int Beast::GetCoordX ()
+	{
+		return CoordX;
+	}
+	int Beast::GetCoordY ()
+	{
+		return CoordY;
+	}
 	void Beast::SetHP (int a)
 {
 	HP = a;

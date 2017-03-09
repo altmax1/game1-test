@@ -1,8 +1,9 @@
 #include "StdAfx.h"
 #include "X_File.h"
+#include "Game.h"
 
 using namespace std;
-
+using namespace luabridge;
 X_File::X_File(void)
 {
 }
@@ -119,3 +120,4 @@ void X_File::X_ParseIniFile ( FileContent &MyFile, vector <map <string, string>>
 
 return;
 }
+

@@ -2,6 +2,8 @@
 class Beast
 {
 private:
+	int CoordX;
+	int CoordY;
 	int HP;  // «доровье
 	int Energy;  // Ёнерги€ - аналог маны
 	int Speed; // —короость передвижени€
@@ -24,6 +26,11 @@ private:
 public:
 	Beast(void);
 	~Beast(void);
+	void LuaReg ();
+	void SetCoordX(int a);
+	void SetCoordY(int a);
+	int GetCoordX ();
+	int GetCoordY ();
 	void SetHP (int a);
 	int GetHP ();
 	void SetEnergy (int a);
