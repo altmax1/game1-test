@@ -7,6 +7,7 @@
 
 X_cell::X_cell(void)
 {
+	creature = -1;
 }
 
 
@@ -218,4 +219,22 @@ int X_cell::SelectQuantity (int num)
 
 	}
 
+}
+
+void X_cell::SetCreature (int a)
+{
+	creature = a;
+	return;
+	
+}
+
+void X_cell::RemoveCreature ()
+{
+	creature = -1;
+	return;
+}
+
+int X_cell::GetCreature ()
+{
+	return creature;
 }

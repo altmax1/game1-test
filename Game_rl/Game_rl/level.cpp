@@ -233,3 +233,24 @@ int level::SelectQuantity (int x, int y, int stacknum)
 	int linear = DecartToLinear (x,y);
 	return cells[linear].SelectQuantity (stacknum);
 }
+
+void level::SetCreature (int a, int x, int y)
+{
+	int linear = DecartToLinear (x, y);
+	cells[linear].SetCreature (a);
+	return;
+}
+
+void level::RemoveCreature (int x, int y)
+{
+	int linear = DecartToLinear (x, y);
+	cells[linear].RemoveCreature();
+	return;
+}
+
+int level::GetCreature (int x, int y)
+{
+	int linear = DecartToLinear (x, y);
+	return cells[linear].GetCreature();
+	
+}

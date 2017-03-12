@@ -10,7 +10,7 @@ private:
 public:
 	void MakeCreatures ();
 	void FillCreatures ();
-	void PutCreatureInBOL (int ID);
+	void MakeCreature (int ID, int x, int y);
 	Bestiary(void);
 	~Bestiary(void);
 };

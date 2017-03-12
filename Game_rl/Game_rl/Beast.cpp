@@ -20,6 +20,7 @@ void Beast::LuaReg (lua_State* L)
 {
 	getGlobalNamespace(L)
 		.beginClass <Beast>("Beast")
+		.addProperty ("ID", &Beast::GetID, &Beast::SetID)
 		.addProperty ("CoordX", &Beast::GetCoordX, &Beast::SetCoordX)
 		.addProperty ("CoordY", &Beast::GetCoordY, &Beast::SetCoordY)
 		.addProperty ("Name", &Beast::GetName)
@@ -51,6 +52,17 @@ void Beast::LuaReg (lua_State* L)
 
 
 // ------------------------------ Getters and Setters -----------------------
+
+void Beast::SetID (int a)
+{
+	ID = a;
+	return;
+}
+
+int Beast::GetID () const
+{
+	return ID;
+}
 
 	void Beast::SetCoordX (int a) 
 	{

@@ -4,6 +4,8 @@
 #include "LuaAdapter.h"
 
 using namespace std;
+using namespace luabridge;
+
 Bestiary::Bestiary(void)
 {
 	FillCreatures ();
@@ -68,15 +70,36 @@ void Bestiary::FillCreatures ()
 	}
 }
 
-void Bestiary::PutCreatureInBOL (int ID)
+void Bestiary::MakeCreature (int ID, int x, int y)
 
 {
 	BeastsOfLevel.push_back(Creatures[ID]);
+	int size = BeastsOfLevel.size();
+	BeastsOfLevel[size-1].SetCoordX (x);
+	BeastsOfLevel[size-1].SetCoordY (y);
+	BeastsOfLevel[size-1].SetID (ID);
+	Game * MyGame;
+	MyGame = Game::GetGameInstance();
+	level *MyLevel;
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetCreature (ID, x, y);
 	return;
 }
 
 void Bestiary::MakeCreatures ()
 {
-
-
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\MakeCreatures.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef MakeCrs = getGlobal(L, "MakeCreatures");
+    //
+	try {
+            MakeCrs (Luaad);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
 }

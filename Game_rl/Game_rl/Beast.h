@@ -3,6 +3,7 @@ class Beast
 {
 private:
 
+	int ID;
 	int CoordX;
 	int CoordY;
 	std::string Name;
@@ -31,6 +32,8 @@ public:
 	Beast(void);
 	~Beast(void);
 	void LuaReg (lua_State* L);
+	void SetID (int ID);
+	int GetID () const; 
 	void SetCoordX(int a);
 	void SetCoordY(int a);
 	int GetCoordX () const;

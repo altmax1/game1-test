@@ -34,5 +34,8 @@ public:
 	void PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, int y) ;
 	int SelectItem (int x, int y);
 	int SelectQuantity (int x, int y, int stacknum);
+	int GetCreature (int x, int y);
+	void SetCreature (int a, int x, int y);
+	void RemoveCreature (int x, int y);
 };
 

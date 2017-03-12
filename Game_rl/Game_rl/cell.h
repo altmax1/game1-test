@@ -19,7 +19,7 @@ private:
 	char passable:1;
 	char empty_cell:1;// 1 если тайл пустой и без эффектов
 	list <CellItems> items;
-	char creature;
+	int creature;
 
 public:
 	X_cell(void);
@@ -39,5 +39,8 @@ public:
 	void PrintItems ();
 	void PrintBorder (int state);
 	int SelectQuantity (int num);
+	int GetCreature ();
+	void SetCreature (int a);
+	void RemoveCreature ();
 };
 

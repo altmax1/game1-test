@@ -199,6 +199,13 @@ void Interface::PrintFOV ()
 			ItemCounter = Mylevel->GetQuantityItemsOnCell (x+LeftUpX,y+LeftUpY);
 			if (ItemCounter >0)
 				PrintItems (x+LeftUpX,y+LeftUpY, x+1, y+1);
+			if ((Mylevel->GetCreature(x+LeftUpX,y+LeftUpY))>=0)
+			{
+				terminal_layer (0);
+				terminal_put (x+1,y+1, 82);
+				terminal_layer (0);
+			}
+
 		}
 	PrintBorder();
 	PrintMiniMap ();

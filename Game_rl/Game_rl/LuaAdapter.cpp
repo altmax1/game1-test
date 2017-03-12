@@ -25,6 +25,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetLevelWidth", &LuaAdapter::GetLevelWidth)
 			.addFunction ("GetLevelHeight", &LuaAdapter::GetLevelHeight)
 			.addFunction ("CreateTheBeast", &LuaAdapter::CreateTheBeast)
+			.addFunction ("MyRandom", &LuaAdapter::GetRandom)
 		.endClass();
 		
 }
@@ -36,16 +37,21 @@ char  LuaAdapter::GetTileBaseType (int x, int y) const
 
 int LuaAdapter::GetLevelWidth ()
 {
-	return MyLevel->GetLevelHeight();
+	return (MyLevel->GetLevelWidth());
 }
 
 int LuaAdapter::GetLevelHeight()
 {
-	return MyLevel->GetLevelHeight();
+	return (MyLevel->GetLevelHeight());
 }
 
-void LuaAdapter::CreateTheBeast (int ID)
+void LuaAdapter::CreateTheBeast (int ID, int x, int y)
 {
-	MyBestiary->PutCreatureInBOL (ID);
+	MyBestiary->MakeCreature (ID, x, y);
 	return;
+}
+
+int LuaAdapter::GetRandom (int a)
+{
+	return (rand() %a);
 }

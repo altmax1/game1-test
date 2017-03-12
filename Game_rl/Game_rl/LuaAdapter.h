@@ -12,7 +12,8 @@ public:
 	char GetTileBaseType (int x, int y) const;
 	int GetLevelWidth();
 	int GetLevelHeight ();
-	void CreateTheBeast (int ID);
+	int GetRandom (int a);
+	void CreateTheBeast (int ID, int x, int y);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };
