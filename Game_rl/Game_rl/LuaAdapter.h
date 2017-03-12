@@ -8,7 +8,7 @@ private:
 	Gamer *MyGamer;
 	Bestiary *MyBestiary;
 public:
-	void LuaDesc ();
+	void LuaDesc (lua_State *L);
 	char GetTileBaseType (int x, int y) const;
 	int GetLevelWidth();
 	int GetLevelHeight ();

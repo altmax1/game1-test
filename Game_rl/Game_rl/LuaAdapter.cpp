@@ -15,11 +15,10 @@ LuaAdapter::LuaAdapter(void)
 LuaAdapter::~LuaAdapter(void)
 {
 }
-void LuaAdapter::LuaDesc ()
+void LuaAdapter::LuaDesc (lua_State *L)
 {
 	
-	lua_State *L = luaL_newstate();
-	luaL_openlibs(L);
+	
 	getGlobalNamespace(L)
 			.beginClass <LuaAdapter> ("LuaAdapter")
 			.addFunction ("GetTileBaseType", &LuaAdapter::GetTileBaseType)
@@ -28,11 +27,6 @@ void LuaAdapter::LuaDesc ()
 			.addFunction ("CreateTheBeast", &LuaAdapter::CreateTheBeast)
 		.endClass();
 		
-		
-	luaL_dofile(L, ".\\files\\lua\\MakeCreatures.lua");
-    lua_pcall(L, 0, 0, 0);
-
-
 }
 
 char  LuaAdapter::GetTileBaseType (int x, int y) const

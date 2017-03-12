@@ -78,11 +78,5 @@ void Bestiary::PutCreatureInBOL (int ID)
 void Bestiary::MakeCreatures ()
 {
 
-	//lua_State *L = luaL_newstate();
-	LuaAdapter MyLua;
-	MyLua.LuaDesc ();
-	//luaL_dofile(L, ".\\files\\lua\\MakeCreatures.lua");
-    //luaL_openlibs(L);
-    //lua_pcall(L, 0, 0, 0);
 
 }
