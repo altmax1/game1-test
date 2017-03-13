@@ -37,5 +37,8 @@ public:
 	int GetCreature (int x, int y);
 	void SetCreature (int a, int x, int y);
 	void RemoveCreature (int x, int y);
+	int LOS (int x1, int y1, int x2, int y2);
+	int GetOpaque (int x, int y);
+	void SetOpaque (int x, int y, int a);
 };
 

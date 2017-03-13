@@ -227,14 +227,36 @@ void X_cell::SetCreature (int a)
 	return;
 	
 }
-
 void X_cell::RemoveCreature ()
 {
 	creature = -1;
 	return;
 }
-
 int X_cell::GetCreature ()
 {
 	return creature;
+}
+int X_cell::GetOpaque ()
+{
+	return (int)opaque;
+}
+void X_cell::SetOpaque (int a)
+{
+	if (a==0)
+		opaque = 0;
+	if (a >0)
+		opaque = 1;
+	return;
+}
+int X_cell::GetPassable ()
+{
+	return (int)passable;
+}
+void X_cell::SetPassable (int a)
+{
+	if (a==0)
+		passable = 0;
+	if (a>0)
+		passable = 1;
+	return;
 }

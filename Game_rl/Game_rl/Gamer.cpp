@@ -18,16 +18,77 @@ Gamer::~Gamer(void)
 	delete MyInventory;
 }
 
-int Gamer::GetCoordX()
+int Gamer::GetCoordX() const
 {
 	return CoordX;
 }
-int Gamer::GetCoordY()
+void Gamer::SetCoordX (int a)
+{
+	CoordX = a;
+	return;
+}
+int Gamer::GetCoordY() const
 
 {
 	return CoordY;
 }
-
+void Gamer::SetCoordY (int a)
+{
+	CoordY = a;
+	return;
+}
+int Gamer::GetHP () const
+{
+	return HP;
+}
+void Gamer::SetHP (int a)
+{
+	HP = a;
+}
+int Gamer::GetMaxHP () const
+{
+	return MaxHP;
+}
+void Gamer::SetMaxHP (int a)
+{
+	MaxHP = a;
+}
+int Gamer::GetEnergy () const 
+{
+	return Energy;
+}
+void Gamer::SetEnergy (int a)
+{
+	Energy = a;
+	return;
+}
+int Gamer::GetMaxEnergy () const
+{
+	return MaxEnergy;
+}
+void Gamer::SetMaxEnergy (int a)
+{
+	MaxEnergy = a;
+	return;
+}
+int Gamer::GetStr () const
+{
+	return Str;
+}
+void Gamer::SetStr (int a)
+{
+	Str = a;
+	return;
+}
+int Gamer::GetDex () const
+{
+	return Dex;
+}
+void Gamer::SetDex (int a)
+{
+	Dex = a;
+	return;
+}
 void Gamer::GamerPlacing()
 {
 	int x, y, linear;

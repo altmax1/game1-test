@@ -14,6 +14,10 @@ public:
 	int GetLevelHeight ();
 	int GetRandom (int a);
 	void CreateTheBeast (int ID, int x, int y);
+	int GetGamerX () const;
+	void SetGamerX ( int a);
+	int GetGamerY () const;
+	void SetGamerY (int a);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

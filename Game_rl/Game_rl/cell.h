@@ -42,5 +42,9 @@ public:
 	int GetCreature ();
 	void SetCreature (int a);
 	void RemoveCreature ();
+	int GetOpaque ();
+	void SetOpaque (int a);
+	int GetPassable ();
+	void SetPassable (int a);
 };
 

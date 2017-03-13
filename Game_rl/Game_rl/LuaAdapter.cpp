@@ -26,6 +26,8 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetLevelHeight", &LuaAdapter::GetLevelHeight)
 			.addFunction ("CreateTheBeast", &LuaAdapter::CreateTheBeast)
 			.addFunction ("MyRandom", &LuaAdapter::GetRandom)
+			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
+			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 		.endClass();
 		
 }
@@ -45,6 +47,24 @@ int LuaAdapter::GetLevelHeight()
 	return (MyLevel->GetLevelHeight());
 }
 
+int LuaAdapter::GetGamerX () const 
+{
+	return MyGamer->GetCoordX ();
+}
+int LuaAdapter::GetGamerY () const 
+{
+	return MyGamer->GetCoordY ();
+}
+void LuaAdapter::SetGamerX (int a)
+{
+	MyGamer->SetCoordX (a);
+	return;
+}
+void LuaAdapter::SetGamerY (int a)
+{
+	MyGamer->SetCoordY (a);
+	return;
+}
 void LuaAdapter::CreateTheBeast (int ID, int x, int y)
 {
 	MyBestiary->MakeCreature (ID, x, y);

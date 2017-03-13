@@ -156,7 +156,15 @@ void level::LevelCreate ( int Type,int Width, int Height, int Density)
 	ptr->ReturnDungeon (temp);
 	delete ptr;
 	FovCellsInit ();
-
+	for (int i = 0; i <Width*Height; i++)
+	{
+		if (cells[i].GetBaseType() == '#')
+		{
+			cells[i].SetOpaque(1);
+		}
+		else
+			cells[i].SetOpaque (0);
+	}
 }
 
 char level::GetBaseType (int x, int y)
@@ -252,5 +260,94 @@ int level::GetCreature (int x, int y)
 {
 	int linear = DecartToLinear (x, y);
 	return cells[linear].GetCreature();
-	
 }
+int level::GetOpaque (int x, int y)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].GetOpaque ();
+}
+
+void level::SetOpaque (int x, int y, int a)
+{
+	int linear = DecartToLinear (x,y);
+	cells[linear].SetOpaque (a);
+	return;
+}
+
+int level::LOS (int x1, int y1, int x2, int y2)
+{
+	int x, y, xend, yend, s, dx, dy, d, inc1, inc2;
+	dx = abs(x2-x1); 
+    dy = abs(y2-y1);
+    if (dx > dy) 
+    {
+        inc1 = 2*dy; 
+        inc2 = 2*(dy - dx); 
+        d = 2*dy - dx;
+        if (x1 < x2)
+        {
+            x = x1; y = y1; xend = x2;
+            if (y1 < y2) s = 1;
+            else s = -1;
+        }
+        else
+        {
+            x = x2;
+            y = y2; 
+            xend = x1;
+            if (y1 > y2) s = 1;
+            else s = -1;
+        }
+        //SetPixel(hdc,x,y,cDraw);
+		
+        while (x < xend)
+        {
+            x++;
+            if (d > 0)
+            {
+                y+=s;
+                d+=inc2;
+            }
+            else d+=inc1;
+           // SetPixel(hdc,x,y,cDraw);
+			if (GetOpaque(x,y)==1)
+				return 0;
+        }
+    }
+    else
+    {
+        inc1 = 2*dx; 
+        inc2 = 2*(dx - dy); 
+        d = 2*dx - dy;
+        if (y1 < y2)
+        {
+            y = y1; x = x1; yend = y2;
+            if (x1 < x2) s = 1;
+            else s = -1;
+        }
+        else
+        {
+            y = y2; 
+            x = x2; 
+            yend = y1;
+            if (x1 > x2)s = 1;
+            else s = -1;
+        }
+        //SetPixel(hdc,x,y,RGB(255,255,255));
+        while (y < yend)
+        {
+            y++;
+            if (d > 0)
+            {
+                x+=s;
+                d+=inc2;
+            }
+            else d+=inc1;
+          //  SetPixel(hdc,x,y,RGB(255,255,255));
+			if (GetOpaque(x,y)==1)
+			return 0;
+        }
+    }
+	return 1;
+}
+
