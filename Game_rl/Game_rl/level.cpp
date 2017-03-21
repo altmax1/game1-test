@@ -136,14 +136,12 @@ void level::FovCellsInit ()
 	 }
 
 }
-
 void level::FovProcess (int x, int y, int Radius )
 {
 	
 	CalcFOVC (&map, x, y, Radius);
 
 }
-
 void level::LevelCreate ( int Type,int Width, int Height, int Density)
 {
 	LevelWidth = Width;
@@ -166,7 +164,6 @@ void level::LevelCreate ( int Type,int Width, int Height, int Density)
 			cells[i].SetOpaque (0);
 	}
 }
-
 char level::GetBaseType (int x, int y)
 {
 	int coord = DecartToLinear (x,y);
@@ -178,7 +175,6 @@ unsigned char level::GetFlagsFOV (int x, int y)
 	return map.Cells[coord].Flags;
 
 }
-
 void level::LevelPrint ()
 {
 	terminal_clear();
@@ -204,7 +200,6 @@ void level::LevelPrint ()
 		return;
 
 }
-
 void level::PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, int y)
 {
 	int coord = DecartToLinear (x,y);
@@ -229,33 +224,28 @@ void level::PutItemsOnCell (int ID, int Quantity, const bool Stackable, int x, i
 	return;
 
 }
-
 int level::SelectItem (int x, int y)
 {
 	int linear = DecartToLinear (x,y);
 	return cells[linear].SelectItem();
 }
-
 int level::SelectQuantity (int x, int y, int stacknum)
 {
 	int linear = DecartToLinear (x,y);
 	return cells[linear].SelectQuantity (stacknum);
 }
-
 void level::SetCreature (int a, int x, int y)
 {
 	int linear = DecartToLinear (x, y);
 	cells[linear].SetCreature (a);
 	return;
 }
-
 void level::RemoveCreature (int x, int y)
 {
 	int linear = DecartToLinear (x, y);
 	cells[linear].RemoveCreature();
 	return;
 }
-
 int level::GetCreature (int x, int y)
 {
 	int linear = DecartToLinear (x, y);
@@ -266,14 +256,12 @@ int level::GetOpaque (int x, int y)
 	int linear = DecartToLinear (x,y);
 	return cells[linear].GetOpaque ();
 }
-
 void level::SetOpaque (int x, int y, int a)
 {
 	int linear = DecartToLinear (x,y);
 	cells[linear].SetOpaque (a);
 	return;
 }
-
 int level::LOS (int x1, int y1, int x2, int y2)
 {
 	int x, y, xend, yend, s, dx, dy, d, inc1, inc2;
@@ -349,5 +337,64 @@ int level::LOS (int x1, int y1, int x2, int y2)
         }
     }
 	return 1;
+}
+int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
+{
+	struct CellPath
+	{
+		int x;
+		int y;
+		int a;
+	}
+	int MyMap [LevelWidth][LevelHeight];
+	for (int x = 0; x < LevelWidth; x++)
+		for (int y = 0; y < LevelHeight; y++)
+			MyMap [x][y] = -1;
+	queue<CellPath> MyQueue;
+	CellPath Temp;
+	Temp.x = EndX;
+	Temp.y = EndY;
+	Temp.a = 0;
+	int WayHasFind = 0;
+	MyQueue.push (Temp);
+	MyMap[EndX][EndY] = 0;
+	while (!MyQueue.empty())
+	{
+		for (int i = -1; i<=1; i++)
+		{
+			for (int j = -1; j<=1; j++) 
+			{
+				int x = MyQueue.front().x+i;
+				int y = MyQueue.front().y+j;
+				if ((x<0)|| (x>LevelWidth-1)) 
+					continue;
+				if ((y<0) || (y>LevelHeight-1))
+					continue;
+				if ((GetBaseType (x,y) == '.') && (MyMap [x][y]<0))
+				{
+					MyMap[x][y] = MyQueue.front().a+1;
+					CellPath Temp2;
+					Temp2.x = x;
+					Temp2.y = y;
+					Temp2.a = (MyQueue.front().a+1);
+					MyQueue.push (Temp2);
+				
+				}
+				if ((x==StartX) && (y==StartY))
+				{
+					WayHasFind = 1;
+					break;
+				}
+			if (WayHasFind == 1)
+				break;
+			}
+
+		}
+		MyQueue.pop();
+	
+	}
+
+	if (WayHasFind == 0)
+		return 0;
 }
 

@@ -26,6 +26,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetLevelHeight", &LuaAdapter::GetLevelHeight)
 			.addFunction ("CreateTheBeast", &LuaAdapter::CreateTheBeast)
 			.addFunction ("MyRandom", &LuaAdapter::GetRandom)
+			.addFunction ("PathFind", &LuaAdapter::PathFind)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 		.endClass();
@@ -74,4 +75,9 @@ void LuaAdapter::CreateTheBeast (int ID, int x, int y)
 int LuaAdapter::GetRandom (int a)
 {
 	return (rand() %a);
+}
+
+int LuaAdapter::PathFind (int StartX, int StartY, int EndX, int EndY)
+{
+	return MyLevel->PathFind (StartX, StartY, EndX, EndY);
 }

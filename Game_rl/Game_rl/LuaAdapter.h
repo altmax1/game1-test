@@ -18,6 +18,7 @@ public:
 	void SetGamerX ( int a);
 	int GetGamerY () const;
 	void SetGamerY (int a);
+	int PathFind (int StartX, int StartY, int EndX, int EndY);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };
