@@ -20,6 +20,7 @@ public:
 	Gamer (level *LevelPtr);
 	~Gamer(void);
 	void Move(int Direction);
+	void GamerMoveLua (int KeyCode);
 	void GamerPrint ();
 	int GetCoordX () const;
 	int GetCoordY () const;

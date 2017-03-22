@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "Gamer.h"
+#include "Game.h"
+#include "LuaAdapter.h"
 
 
 Gamer::Gamer(void)
@@ -134,7 +136,9 @@ void Gamer::Move (int Direction)
 		return;
 	}
 
-	if (Direction == TK_UP || Direction == TK_KP_8)
+	GamerMoveLua (Direction);
+
+	/*if (Direction == TK_UP || Direction == TK_KP_8)
 		NextY -=1;
 	if (Direction == TK_DOWN || Direction == TK_KP_2)
 		NextY += 1;
@@ -160,9 +164,31 @@ void Gamer::Move (int Direction)
 			CoordY = NextY;
 			MyLevel->FovProcess (CoordX, CoordY, 7);
 		}
-	}
-
+	}*/
+	MyLevel->FovProcess (CoordX, CoordY, 7);
 	return;
+}
+
+void Gamer::GamerMoveLua (int KeyCode)
+{
+	using namespace luabridge;
+
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\GamerMove.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef GamerMove = getGlobal(L, "GamerMove");
+    //
+	try {
+            GamerMove (Luaad, KeyCode);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
+
+
 }
 
 void Gamer::GamerPrint ()

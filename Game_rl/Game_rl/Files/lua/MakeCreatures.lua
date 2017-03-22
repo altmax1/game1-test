@@ -1,15 +1,15 @@
-MakeCreatures = function (LuaAdapter)
+MakeCreatures = function (Game)
 for i = 1,20 do
 x = 0
 y = 0
-levelwidth = LuaAdapter:GetLevelWidth ()
-levelheight = LuaAdapter:GetLevelHeight  ()
+levelwidth = Game:GetLevelWidth ()
+levelheight = Game:GetLevelHeight  ()
 repeat
-  x = LuaAdapter:MyRandom (levelwidth)
-  y = LuaAdapter:MyRandom (levelheight)
-until LuaAdapter:GetTileBaseType (x,y) == "."
+  x = Game:MyRandom (levelwidth)
+  y = Game:MyRandom (levelheight)
+until Game:GetTileBaseType (x,y) == "."
 print (x)
 print (y)
-LuaAdapter:CreateTheBeast (0, x, y)
+Game:CreateTheBeast (0, x, y)
 end
 end

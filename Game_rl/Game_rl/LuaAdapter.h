@@ -19,6 +19,10 @@ public:
 	int GetGamerY () const;
 	void SetGamerY (int a);
 	int PathFind (int StartX, int StartY, int EndX, int EndY);
+	int GetCellPassable (int x, int y);
+	void SetPassable (int x, int y, int passable);
+	int GetBeastNumber (int x, int y);
+	void RemoveCreature (int Num);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

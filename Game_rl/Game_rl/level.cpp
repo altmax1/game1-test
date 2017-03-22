@@ -159,9 +159,13 @@ void level::LevelCreate ( int Type,int Width, int Height, int Density)
 		if (cells[i].GetBaseType() == '#')
 		{
 			cells[i].SetOpaque(1);
+			cells[i].SetPassable(0);
 		}
 		else
+		{	
 			cells[i].SetOpaque (0);
+			cells[i].SetPassable(1);
+		}
 	}
 }
 char level::GetBaseType (int x, int y)
@@ -345,11 +349,12 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 		int x;
 		int y;
 		int a;
-	}
-	int MyMap [LevelWidth][LevelHeight];
+	};
+//	int MyMap [LevelWidth][LevelHeight];  Доделать на динамический массив!!!!
+	int MyMap[128][80];
 	for (int x = 0; x < LevelWidth; x++)
 		for (int y = 0; y < LevelHeight; y++)
-			MyMap [x][y] = -1;
+			MyMap[x][y] = -1;
 	queue<CellPath> MyQueue;
 	CellPath Temp;
 	Temp.x = EndX;
@@ -398,3 +403,15 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 		return 0;
 }
 
+int level::GetPassable (int x, int y)
+{
+	int linear = DecartToLinear (x, y);
+	return cells[linear].GetPassable();
+}
+
+void level::SetPassable (int x, int y, int passable)
+{
+	int linear = DecartToLinear (x,y);
+	cells[linear].SetPassable (passable);
+	return;
+}

@@ -82,7 +82,7 @@ void Bestiary::MakeCreature (int ID, int x, int y)
 	MyGame = Game::GetGameInstance();
 	level *MyLevel;
 	MyLevel = MyGame->GetLevel();
-	MyLevel->SetCreature (ID, x, y);
+	MyLevel->SetCreature (size-1, x, y);
 	return;
 }
 
@@ -102,4 +102,19 @@ void Bestiary::MakeCreatures ()
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;
         }
+}
+
+void Bestiary::RemoveCreature (int Num)
+{
+	int x = BeastsOfLevel[Num].GetCoordX();
+	int y = BeastsOfLevel[Num].GetCoordY();
+	//BeastsOfLevel.erase (BeastsOfLevel.begin()+Num);
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	level *MyLevel;
+	MyLevel = MyGame->GetLevel();
+	MyLevel->RemoveCreature (x,y);
+	
+	return;
+
 }

@@ -11,6 +11,7 @@ public:
 	void MakeCreatures ();
 	void FillCreatures ();
 	void MakeCreature (int ID, int x, int y);
+	void RemoveCreature (int Num);
 	Bestiary(void);
 	~Bestiary(void);
 };

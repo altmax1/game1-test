@@ -224,12 +224,14 @@ int X_cell::SelectQuantity (int num)
 void X_cell::SetCreature (int a)
 {
 	creature = a;
+	passable = 0;
 	return;
 	
 }
 void X_cell::RemoveCreature ()
 {
 	creature = -1;
+	passable = 1;
 	return;
 }
 int X_cell::GetCreature ()
@@ -250,7 +252,7 @@ void X_cell::SetOpaque (int a)
 }
 int X_cell::GetPassable ()
 {
-	return (int)passable;
+	return passable;
 }
 void X_cell::SetPassable (int a)
 {

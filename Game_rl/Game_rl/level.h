@@ -41,5 +41,7 @@ public:
 	int GetOpaque (int x, int y);
 	void SetOpaque (int x, int y, int a);
 	int PathFind ( int StartX, int StartY, int EndX, int EndY);
+	int GetPassable (int x, int y);
+	void SetPassable (int x, int y, int passable);
 };
 
