@@ -62,6 +62,12 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetMagic(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("Behavior");
 		MyBeast.SetBehavior(atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find ("MaxAttack");
+		MyBeast.SetMaxAttack (atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find ("MinAttack");
+		MyBeast.SetMinAttack (atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find ("AttackType");
+		MyBeast.SetAttackType (atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ID");
 		int ID = (atoi (MapPtr->second.c_str()));
 
@@ -117,4 +123,9 @@ void Bestiary::RemoveCreature (int Num)
 	
 	return;
 
+}
+
+Beast* Bestiary::GetCreatureFromLevel (int Num)
+{
+	return &BeastsOfLevel[Num];
 }

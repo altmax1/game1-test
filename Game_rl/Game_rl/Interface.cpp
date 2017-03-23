@@ -62,7 +62,6 @@ void Interface::CorrectLeftUp ( int &x, int &y)
 		x = LevelWidth-1-FOVWidth;
 	if (y>LevelHeight-1-FOVHeight)
 	y = LevelHeight-1-FOVHeight;
-	cout << x<< " " << y<< endl;
 	return;
 
 }

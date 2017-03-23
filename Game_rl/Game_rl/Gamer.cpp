@@ -91,6 +91,33 @@ void Gamer::SetDex (int a)
 	Dex = a;
 	return;
 }
+int Gamer::GetDefense () const
+{
+	return Defense;
+}
+void Gamer::SetDefense (int a)
+{
+	Defense = a;
+	return;
+}
+int Gamer::GetRegenHP () const
+{
+	return RegenHP;
+}
+void Gamer::SetRegenHP (int a)
+{
+	RegenHP = a;
+	return;
+}
+int Gamer::GetRegenEnergy () const
+{
+	return RegenEnergy;
+}
+void Gamer::SetRegenEnergy (int a)
+{
+	RegenEnergy = a;
+	return;
+}
 void Gamer::GamerPlacing()
 {
 	int x, y, linear;
@@ -180,7 +207,7 @@ void Gamer::GamerMoveLua (int KeyCode)
 	luaL_dofile(L, ".\\Files\\lua\\GamerMove.lua");
     lua_pcall(L, 0, 0, 0);
     LuaRef GamerMove = getGlobal(L, "GamerMove");
-    //
+	  //
 	try {
             GamerMove (Luaad, KeyCode);
         }

@@ -9,6 +9,7 @@ using namespace luabridge;
 
 Beast::Beast(void)
 {
+	IsDead = 0;
 }
 
 
@@ -53,6 +54,18 @@ void Beast::LuaReg (lua_State* L)
 
 // ------------------------------ Getters and Setters -----------------------
 
+void Beast::SetIsDead (int a)
+{
+	if (a==0)
+		IsDead = 0;
+	if (a>0)
+		IsDead = 1;
+}
+
+int Beast::GetIsDead () const
+{
+	return IsDead;
+}
 void Beast::SetID (int a)
 {
 	ID = a;
@@ -172,6 +185,34 @@ int Beast::GetID () const
 	int Beast::GetDefence () const
 	{
 		return Defense;
+	}
+
+	void Beast::SetMaxAttack (int a)
+	{
+		MaxAttack = a;
+		return;
+	}
+	int Beast::GetMaxAttack () const
+	{
+		return MaxAttack;
+	}
+	void Beast::SetMinAttack (int a)
+	{
+		MinAttack = a;
+		return;
+	}
+	int Beast::GetMinAttack () const 
+	{
+		return MinAttack;
+	}
+	void Beast::SetAttackType (int a)
+	{
+		AttackType = a;
+		return;
+	}
+	int Beast::GetAttackType () const
+	{
+		return AttackType;
 	}
 	void Beast::SetDex (int a)
 	{

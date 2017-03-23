@@ -13,6 +13,11 @@ private:
 	int Dex;
 	int Energy;
 	int MaxEnergy;
+	int MaxAttack;
+	int MinAttack;
+	int Defense;
+	int RegenHP;
+	int RegenEnergy;
 	level *MyLevel;
 	Inventory *MyInventory;
 public:
@@ -38,6 +43,12 @@ public:
 	void SetStr (int a);
 	int GetDex () const;
 	void SetDex (int a);
+	int GetDefense () const;
+	void SetDefense (int a);
+	int GetRegenHP () const;
+	void SetRegenHP (int a);
+	int GetRegenEnergy () const;
+	void SetRegenEnergy (int a);
 	void GamerPlacing ();
 
 	

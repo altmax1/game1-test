@@ -8,8 +8,7 @@ repeat
   x = Game:MyRandom (levelwidth)
   y = Game:MyRandom (levelheight)
 until Game:GetTileBaseType (x,y) == "."
-print (x)
-print (y)
+
 Game:CreateTheBeast (0, x, y)
 end
 end

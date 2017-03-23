@@ -12,6 +12,7 @@ public:
 	void FillCreatures ();
 	void MakeCreature (int ID, int x, int y);
 	void RemoveCreature (int Num);
+	Beast* GetCreatureFromLevel (int Num);
 	Bestiary(void);
 	~Bestiary(void);
 };

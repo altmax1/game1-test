@@ -31,8 +31,18 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetCellPassable", &LuaAdapter::SetPassable)
 			.addFunction ("GetBeastNumber", &LuaAdapter::GetBeastNumber)
 			.addFunction ("RemoveCreature", &LuaAdapter::RemoveCreature)
+			.addFunction ("AttackBeastByNum", &LuaAdapter::AttackBeastByNum)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
+			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
+			.addProperty ("GamerMaxHP", &LuaAdapter::GetGamerMaxHP, &LuaAdapter::SetGamerMaxHP)
+			.addProperty ("GamerStr", &LuaAdapter::GetGamerStr, &LuaAdapter::SetGamerStr)
+			.addProperty ("GamerDex", &LuaAdapter::GetGamerDex, &LuaAdapter::SetGamerDex)
+			.addProperty ("GamerEnergy", &LuaAdapter::GetGamerEnergy, &LuaAdapter::SetGamerEnergy)
+			.addProperty ("GamerMaxEnergy", &LuaAdapter::GetGamerMaxEnergy, &LuaAdapter::SetGamerMaxEnergy)
+			.addProperty ("GamerDefense", &LuaAdapter::GetGamerDefense, &LuaAdapter::SetGamerDefense)
+			.addProperty ("GamerRegenHP", &LuaAdapter::GetGamerRegenHP, &LuaAdapter::SetGamerRegenHP)
+			.addProperty ("GamerRegenEnergy", &LuaAdapter::GetGamerRegenEnergy, &LuaAdapter::SetGamerRegenEnergy)
 		.endClass();
 
 	getGlobalNamespace (L)
@@ -50,6 +60,10 @@ void LuaAdapter::LuaDesc (lua_State *L)
 		.addProperty ("Behavior", &Beast::GetBehavior, &Beast::SetBehavior)
 		.addProperty ("Sleeping", &Beast::GetSleep, &Beast::SetSleep)
 		.addProperty ("Active", &Beast::GetActive, &Beast::SetActive)
+		.addProperty ("MaxAttack", &Beast::GetMaxAttack, &Beast::SetMaxAttack)
+		.addProperty ("MinAttack", &Beast::GetMinAttack, &Beast::SetMinAttack)
+		.addProperty ("AttackType", &Beast::GetAttackType, &Beast::SetAttackType)
+		.addProperty ("IsDead", &Beast::GetIsDead, &Beast::SetIsDead)
 		.endClass();
 		
 }
@@ -114,6 +128,88 @@ void LuaAdapter::SetPassable (int x, int y, int passable)
 	return;
 }
 
+int LuaAdapter::GetGamerHP () const
+{
+	return MyGamer->GetHP();
+}
+void LuaAdapter::SetGamerHP (int a)
+{
+	MyGamer->SetHP (a);
+	return;
+}
+int LuaAdapter::GetGamerStr () const
+{
+	return MyGamer->GetStr();	
+}
+void LuaAdapter::SetGamerStr (int a)
+{
+	MyGamer->SetStr (a);
+	return;
+}
+int LuaAdapter::GetGamerMaxHP () const
+{
+	return MyGamer->GetMaxHP();
+}
+void LuaAdapter::SetGamerMaxHP (int a)
+{
+	MyGamer->SetMaxHP (a);
+	return;
+}
+int LuaAdapter::GetGamerDex () const
+{
+	return MyGamer->GetDex ();
+}
+void LuaAdapter::SetGamerDex (int a)
+{
+	MyGamer->SetDex (a);
+	return;
+}
+int LuaAdapter::GetGamerEnergy () const
+{
+	return MyGamer->GetEnergy();
+}
+void LuaAdapter::SetGamerEnergy (int a)
+{
+	MyGamer->SetEnergy(a);
+	return;
+}
+int LuaAdapter::GetGamerMaxEnergy () const
+{
+	return MyGamer->GetMaxEnergy();
+}
+void LuaAdapter::SetGamerMaxEnergy (int a)
+{
+	MyGamer->SetMaxEnergy(a);
+	return;
+}
+int LuaAdapter::GetGamerDefense () const
+{
+	return MyGamer->GetDefense();
+}
+void LuaAdapter::SetGamerDefense (int a)
+{
+	MyGamer->SetDefense (a);
+	return;
+}
+int LuaAdapter::GetGamerRegenHP () const
+{
+	return MyGamer->GetRegenHP ();
+}
+void LuaAdapter::SetGamerRegenHP (int a)
+{
+	MyGamer->SetRegenHP (a);
+	return;
+}
+int LuaAdapter::GetGamerRegenEnergy () const
+{
+	return MyGamer->GetRegenEnergy();
+}
+void LuaAdapter::SetGamerRegenEnergy (int a)
+{
+	MyGamer->SetRegenEnergy(a);
+	return;
+}
+
 int LuaAdapter::GetBeastNumber (int x, int y)
 {
 	return MyLevel->GetCreature (x,y);
@@ -123,4 +219,26 @@ void LuaAdapter::RemoveCreature (int Num)
 {
 	MyBestiary->RemoveCreature (Num);
 	return;
+}
+
+void LuaAdapter::AttackBeastByNum (int Num)
+{
+	using namespace luabridge;
+
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\GamerMove.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef GamerAttack = getGlobal(L, "GamerAttack");
+	  //
+	try {
+            GamerAttack (Luaad, MyBestiary->GetCreatureFromLevel (Num), Num);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
+
+	//return MyBestiary->GetCreatureFromLevel (Num);
 }

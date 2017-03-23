@@ -13,6 +13,8 @@ TK_KP_8=0x60
 TK_KP_9=0x61
 PASSABLE= 1
 NOT_PASSABLE=0
+YES=1
+NO=0
 
 GamerMove = function (Game, KeyCode)
 NextX = Game.GamerX
@@ -53,7 +55,22 @@ if Passable == NOT_PASSABLE then
 	print (CreatureNum)
 end
 if CreatureNum >= 0 then
-	Game:RemoveCreature (CreatureNum)
+	-- вызываем GamerAttack из этого же скрипта:
+	Game:AttackBeastByNum (CreatureNum)
+	--Game:RemoveCreature (CreatureNum)
+	
+	
 	end
 
+end
+
+GamerAttack = function (Game, Beast, NumOfBeast)
+print ("GGGGHHYG")
+--print (NumOfBeast)
+print (Beast.HP)
+Beast.HP = Beast.HP-1
+if Beast.HP <=0 then
+	Game:RemoveCreature (NumOfBeast)
+	Beast.IsDead = YES
+end
 end

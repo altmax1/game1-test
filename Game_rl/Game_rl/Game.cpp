@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Game.h"
 #include "Dungeon.h"
+#include "LuaAdapter.h"
 
 //#include 
 
@@ -59,7 +60,22 @@ void Game::MakeLevel (int Type, int Width, int Height, int Density)
 
 void Game::MakeGamer()
 {
+	using namespace luabridge;
 	MyGamer = new Gamer (MyLevel) ;
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\Gamer.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef MakeGamerLua = getGlobal(L, "MakeGamer");
+    //
+	try {
+            MakeGamerLua (Luaad);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
 	return;
 }
 

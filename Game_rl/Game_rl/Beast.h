@@ -2,7 +2,7 @@
 class Beast
 {
 private:
-
+	int IsDead;
 	int ID;
 	int CoordX;
 	int CoordY;
@@ -16,6 +16,9 @@ private:
 	int RegenEnergy;  // Скорость регенерации энергии
 	int LevelOfBeast; //виртуальный уровень
 	int Defense;  //уровень защиты
+	int MaxAttack; // максимальная атака
+	int MinAttack; // минимальная атака
+	int AttackType; //тип атаки
 	int Dex;  // ловкость
 	int Str;  //сила
 	int FlyAble:1; //способен к полету?
@@ -32,6 +35,8 @@ public:
 	Beast(void);
 	~Beast(void);
 	void LuaReg (lua_State* L);
+	void SetIsDead (int a);
+	int GetIsDead () const;
 	void SetID (int ID);
 	int GetID () const; 
 	void SetCoordX(int a);
@@ -58,6 +63,12 @@ public:
 	int GetLevelOfBeast () const;
 	void SetDefense (int a);
 	int GetDefence () const;
+	void SetMaxAttack (int a);
+	int GetMaxAttack () const;
+	void SetMinAttack (int a);
+	int GetMinAttack () const;
+	void SetAttackType (int a);
+	int GetAttackType () const;
 	void SetDex (int a);
 	int GetDex () const;
 	void SetStr (int a);
