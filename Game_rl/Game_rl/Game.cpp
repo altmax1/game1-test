@@ -98,6 +98,12 @@ void Game::MakeBestiary()
 	return;
 }
 
+void Game::MakeAIMove ()
+{
+	MyBestiary->MakeBeastsMove ();
+	return;
+}
+
 void Game::GameInit()
 {
 	int KeyCode;
@@ -121,6 +127,7 @@ void Game::GameInit()
 	if (KeyCode == TK_ESCAPE)
 		break;
 	MyGamer->Move(KeyCode);
+	MakeAIMove();
 	}
 	return;
 		

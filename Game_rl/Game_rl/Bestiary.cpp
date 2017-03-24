@@ -129,3 +129,13 @@ Beast* Bestiary::GetCreatureFromLevel (int Num)
 {
 	return &BeastsOfLevel[Num];
 }
+
+void Bestiary::MakeBeastsMove ()
+{
+	int size = BeastsOfLevel.size();
+	for (int i = 0; i < size; i++)
+	{
+		BeastsOfLevel[i].MakeMove();	
+	}
+	return;
+}

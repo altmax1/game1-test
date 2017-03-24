@@ -13,11 +13,11 @@ class X_cell
 private:
 	int tile;
 	char BaseType;
-	char visible:1;
-	char opaque:1;
-	char visited:1;
+	unsigned char visible:1;
+	unsigned char opaque:1;
+	unsigned char visited:1;
 	unsigned char passable:1;
-	char empty_cell:1;// 1 если тайл пустой и без эффектов
+	unsigned char empty_cell:1;// 1 если тайл пустой и без эффектов
 	list <CellItems> items;
 	int creature;
 

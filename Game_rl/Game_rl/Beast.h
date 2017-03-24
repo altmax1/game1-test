@@ -35,6 +35,7 @@ public:
 	Beast(void);
 	~Beast(void);
 	void LuaReg (lua_State* L);
+	void MakeMove ();
 	void SetIsDead (int a);
 	int GetIsDead () const;
 	void SetID (int ID);

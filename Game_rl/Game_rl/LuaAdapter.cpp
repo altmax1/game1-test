@@ -32,6 +32,8 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetBeastNumber", &LuaAdapter::GetBeastNumber)
 			.addFunction ("RemoveCreature", &LuaAdapter::RemoveCreature)
 			.addFunction ("AttackBeastByNum", &LuaAdapter::AttackBeastByNum)
+			.addFunction ("LOS", &LuaAdapter::LOS)
+			.addFunction ("PathFind", &LuaAdapter::PathFind)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -240,5 +242,10 @@ void LuaAdapter::AttackBeastByNum (int Num)
             std::cout << "LuaException: " << e.what() << std::endl;
         }
 
-	//return MyBestiary->GetCreatureFromLevel (Num);
+	
+}
+
+int LuaAdapter::LOS (int x1, int y1, int x2, int y2)
+{
+	return MyLevel->LOS (x1, y1, x2, y2);
 }

@@ -28,6 +28,7 @@ public:
 	void MakeItems ();
 	void MakeInterface();
 	void MakeBestiary ();
+	void MakeAIMove ();
 	Items* GetItems ();
 	level *GetLevel();
 	Gamer* GetGamer();

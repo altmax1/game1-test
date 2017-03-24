@@ -42,6 +42,7 @@ public:
 	int GetBeastNumber (int x, int y);
 	void RemoveCreature (int Num);
 	void AttackBeastByNum (int Num);
+	int LOS (int x1, int y1, int x2, int y2);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

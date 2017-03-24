@@ -344,6 +344,8 @@ int level::LOS (int x1, int y1, int x2, int y2)
 }
 int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 {
+	int a = clock ();
+	int iteration = 0;
 	struct CellPath
 	{
 		int x;
@@ -355,13 +357,13 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 	for (int x = 0; x < LevelWidth; x++)
 		for (int y = 0; y < LevelHeight; y++)
 			MyMap[x][y] = -1;
-	queue<CellPath> MyQueue;
+	list<CellPath> MyQueue;
 	CellPath Temp;
 	Temp.x = EndX;
 	Temp.y = EndY;
 	Temp.a = 0;
 	int WayHasFind = 0;
-	MyQueue.push (Temp);
+	MyQueue.push_back (Temp);
 	MyMap[EndX][EndY] = 0;
 	while (!MyQueue.empty())
 	{
@@ -369,6 +371,7 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 		{
 			for (int j = -1; j<=1; j++) 
 			{
+				iteration++;
 				int x = MyQueue.front().x+i;
 				int y = MyQueue.front().y+j;
 				if ((x<0)|| (x>LevelWidth-1)) 
@@ -382,7 +385,7 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 					Temp2.x = x;
 					Temp2.y = y;
 					Temp2.a = (MyQueue.front().a+1);
-					MyQueue.push (Temp2);
+					MyQueue.push_back (Temp2);
 				
 				}
 				if ((x==StartX) && (y==StartY))
@@ -393,14 +396,41 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 			if (WayHasFind == 1)
 				break;
 			}
+			if (WayHasFind == 1)
+				break;
 
 		}
-		MyQueue.pop();
+		MyQueue.pop_front();
+		if (WayHasFind == 1)
+			break;
+
 	
 	}
+	cout << "Time: "<< clock()-a<<endl;
+	cout << "Iteration: " <<iteration<<endl;
 
 	if (WayHasFind == 0)
 		return 0;
+	int a1 = MyMap[StartX][StartY];
+	int iter = 1;
+	for (int y = -1; y <=1; y++)
+		for (int x = -1; x<=1; x++)
+		{
+			int MyX = StartX+x;
+			int MyY = StartY+y;
+			if ((MyX>=0) && (MyX<=LevelWidth-1)&& (MyY>=0) && (MyY<=LevelHeight-1)) 
+			{
+			 if ( ((MyMap[StartX+x][StartY+y])+1) == a1)
+			 {
+				 
+				 return iter;
+			 
+			 }
+			
+			}
+			iter++;
+		}
+	return -100;
 }
 
 int level::GetPassable (int x, int y)
