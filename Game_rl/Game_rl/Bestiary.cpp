@@ -68,6 +68,8 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetMinAttack (atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("AttackType");
 		MyBeast.SetAttackType (atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find ("RangeOfSight");
+		MyBeast.SetRangeOfSight (atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ID");
 		int ID = (atoi (MapPtr->second.c_str()));
 

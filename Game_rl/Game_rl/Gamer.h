@@ -12,6 +12,7 @@ private:
 	int Str;
 	int Dex;
 	int Energy;
+	int RangeOfSight;
 	int MaxEnergy;
 	int MaxAttack;
 	int MinAttack;
@@ -37,6 +38,8 @@ public:
 	void SetMaxHP (int a);
 	int GetEnergy () const;
 	void SetEnergy (int a);
+	int GetRangeOfSight () const;
+	void SetRangeOfSight (int a);
 	int GetMaxEnergy () const;
 	void SetMaxEnergy (int a);
 	int GetStr () const;

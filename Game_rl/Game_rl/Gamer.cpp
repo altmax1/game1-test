@@ -64,6 +64,18 @@ void Gamer::SetEnergy (int a)
 	Energy = a;
 	return;
 }
+int Gamer::GetRangeOfSight () const
+{
+	return RangeOfSight;
+}
+
+void Gamer::SetRangeOfSight (int a)
+{
+	RangeOfSight = a;
+	return;
+}
+
+
 int Gamer::GetMaxEnergy () const
 {
 	return MaxEnergy;
@@ -134,6 +146,7 @@ void Gamer::GamerPlacing()
 	CoordX = x;
 	CoordY = y;
 	MyLevel->FovProcess (CoordX, CoordY, 7);
+	MyLevel->SetPassable (CoordX, CoordY, 0);
 	return;
 
 }

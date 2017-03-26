@@ -46,8 +46,10 @@ if NextX >=0 and NextX < Game:GetLevelWidth () and NextY >= 0 and NextY < Game:G
 else LegalCoords = 0
 end
 if Passable == PASSABLE and LegalCoords == 1 then
+	Game:SetCellPassable (Game.GamerX, Game.GamerY, PASSABLE)
 	Game.GamerX = NextX
 	Game.GamerY = NextY
+	Game:SetCellPassable (Game.GamerX, Game.GamerY, NOT_PASSABLE)
 end
 CreatureNum = -1
 if Passable == NOT_PASSABLE then

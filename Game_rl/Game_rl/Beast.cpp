@@ -54,6 +54,8 @@ void Beast::LuaReg (lua_State* L)
 
 void Beast::MakeMove()
 {
+	if (IsDead == 1)
+		return;
 	using namespace luabridge;
 
 	lua_State* L = luaL_newstate();
@@ -70,6 +72,51 @@ void Beast::MakeMove()
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;
         }
+	return;
+}
+
+void Beast::MoveCreature (int x, int y, int MyMode)
+{
+	if (IsDead == 1)
+		return;
+	Game *MyGame;
+	MyGame= Game::GetGameInstance();
+	level *MyLevel;
+	MyLevel = MyGame->GetLevel ();
+	int NumOfCreature = MyLevel->GetCreature (CoordX,CoordY);
+
+	if (MyMode == 0)
+	{
+		const int Passable = MyLevel->GetPassable (x,y);
+		if (Passable == 1)
+		{
+			MyLevel->RemoveCreature (CoordX,CoordY);
+			CoordX = x;
+			CoordY = y;
+			MyLevel->SetCreature (NumOfCreature, CoordX, CoordY);
+			return;
+		}
+	
+	}
+
+	if (MyMode == 1)
+	{
+		int NextX = CoordX+x;
+		int NextY = CoordY+y;
+		if ((NextX<0)||(NextY<0)||(NextX > (MyLevel->GetLevelWidth())-1)||(NextY > (MyLevel->GetLevelHeight())-1))
+			return;
+		const int Passable = MyLevel->GetPassable(x,y);
+		if (Passable == 1)
+		{
+			MyLevel->RemoveCreature (CoordX,CoordY);
+			CoordX = NextX;
+			CoordY = NextY;
+			MyLevel->SetCreature (NumOfCreature, CoordX, CoordY);
+			return;
+		}
+
+	}
+	
 	return;
 }
 
@@ -162,6 +209,18 @@ int Beast::GetID () const
 	{
 		return Energy;
 	}
+
+	void Beast::SetRangeOfSight (int a)
+	{
+		RangeOfSight = a;
+		return;
+	}
+
+	int Beast::GetRangeOfSight () const
+	{
+		return RangeOfSight;
+	}
+
 	void Beast::SetSpeed (int a)
 	{
 		Speed = a;

@@ -31,6 +31,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetCellPassable", &LuaAdapter::SetPassable)
 			.addFunction ("GetBeastNumber", &LuaAdapter::GetBeastNumber)
 			.addFunction ("RemoveCreature", &LuaAdapter::RemoveCreature)
+			.addFunction ("SetCreature", &LuaAdapter::SetCreature)
 			.addFunction ("AttackBeastByNum", &LuaAdapter::AttackBeastByNum)
 			.addFunction ("LOS", &LuaAdapter::LOS)
 			.addFunction ("PathFind", &LuaAdapter::PathFind)
@@ -41,6 +42,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addProperty ("GamerStr", &LuaAdapter::GetGamerStr, &LuaAdapter::SetGamerStr)
 			.addProperty ("GamerDex", &LuaAdapter::GetGamerDex, &LuaAdapter::SetGamerDex)
 			.addProperty ("GamerEnergy", &LuaAdapter::GetGamerEnergy, &LuaAdapter::SetGamerEnergy)
+			.addProperty ("GamerRangeOfSight", &LuaAdapter::GetGamerRangeOfSight, &LuaAdapter::SetGamerRangeOfSight)
 			.addProperty ("GamerMaxEnergy", &LuaAdapter::GetGamerMaxEnergy, &LuaAdapter::SetGamerMaxEnergy)
 			.addProperty ("GamerDefense", &LuaAdapter::GetGamerDefense, &LuaAdapter::SetGamerDefense)
 			.addProperty ("GamerRegenHP", &LuaAdapter::GetGamerRegenHP, &LuaAdapter::SetGamerRegenHP)
@@ -49,11 +51,13 @@ void LuaAdapter::LuaDesc (lua_State *L)
 
 	getGlobalNamespace (L)
 		.beginClass <Beast> ("Beast")
+		.addFunction ("Move", &Beast::MoveCreature)
 		.addProperty ("CoordX", &Beast::GetCoordX, &Beast::SetCoordX)
 		.addProperty ("CoordY", &Beast::GetCoordY, &Beast::SetCoordY)
 		.addProperty ("HP", &Beast::GetHP,&Beast::SetHP)
 		.addProperty ("Dex", &Beast::GetDex, &Beast::SetDex)
 		.addProperty ("Energy", &Beast::GetEnergy, &Beast::SetEnergy)
+		.addProperty ("RangeOfSight", &Beast::GetRangeOfSight, &Beast::SetRangeOfSight)
 		.addProperty ("Defense", &Beast::GetDefence, &Beast::SetDefense)
 		.addProperty ("Speed", &Beast::GetSpeed, &Beast::SetSpeed)
 		.addProperty ("RegenHP", &Beast::GetRegenHp, &Beast::SetRegenHP)
@@ -69,6 +73,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 		.endClass();
 		
 }
+
 
 char  LuaAdapter::GetTileBaseType (int x, int y) const
 {
@@ -175,6 +180,17 @@ void LuaAdapter::SetGamerEnergy (int a)
 	MyGamer->SetEnergy(a);
 	return;
 }
+
+int LuaAdapter::GetGamerRangeOfSight () const
+{
+	return MyGamer->GetRangeOfSight();
+}
+
+void LuaAdapter::SetGamerRangeOfSight (int a)
+{
+	MyGamer->SetRangeOfSight (a);
+	return;
+}
 int LuaAdapter::GetGamerMaxEnergy () const
 {
 	return MyGamer->GetMaxEnergy();
@@ -220,6 +236,12 @@ int LuaAdapter::GetBeastNumber (int x, int y)
 void LuaAdapter::RemoveCreature (int Num)
 {
 	MyBestiary->RemoveCreature (Num);
+	return;
+}
+
+void LuaAdapter::SetCreature (int x, int y, int Num)
+{
+	MyLevel->SetCreature (Num, x, y);
 	return;
 }
 

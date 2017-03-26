@@ -11,6 +11,7 @@ private:
 	std::string RDesc;
 	int HP;  // «доровье
 	int Energy;  // Ёнерги€ - аналог маны
+	int RangeOfSight; //рассто€ние на которое вид€т
 	int Speed; // —короость передвижени€
 	int RegenHP; //—корость регенерации здоровь€
 	int RegenEnergy;  // —корость регенерации энергии
@@ -36,6 +37,9 @@ public:
 	~Beast(void);
 	void LuaReg (lua_State* L);
 	void MakeMove ();
+	virtual virtual void MoveCreature (int x, int y, int MyMode=0);
+
+	//----Setters AND Getters
 	void SetIsDead (int a);
 	int GetIsDead () const;
 	void SetID (int ID);
@@ -54,6 +58,8 @@ public:
 	int GetHP () const;
 	void SetEnergy (int a);
 	int GetEnergy () const;
+	void SetRangeOfSight (int a);
+	int GetRangeOfSight () const;
 	void SetSpeed (int a);
 	int GetSpeed () const;
 	void SetRegenHP (int a);

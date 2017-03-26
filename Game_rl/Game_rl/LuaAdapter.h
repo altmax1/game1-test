@@ -31,6 +31,8 @@ public:
 	void SetGamerDex (int a);
 	int GetGamerEnergy () const;
 	void SetGamerEnergy (int a);
+	int GetGamerRangeOfSight () const;
+	void SetGamerRangeOfSight (int a); 
 	int GetGamerMaxEnergy () const;
 	void SetGamerMaxEnergy (int a);
 	int GetGamerDefense () const;
@@ -41,6 +43,7 @@ public:
 	void SetGamerRegenEnergy (int a);
 	int GetBeastNumber (int x, int y);
 	void RemoveCreature (int Num);
+	void SetCreature (int x, int y, int Num);
 	void AttackBeastByNum (int Num);
 	int LOS (int x1, int y1, int x2, int y2);
 	LuaAdapter(void);
