@@ -70,6 +70,11 @@ void LuaAdapter::LuaDesc (lua_State *L)
 		.addProperty ("MinAttack", &Beast::GetMinAttack, &Beast::SetMinAttack)
 		.addProperty ("AttackType", &Beast::GetAttackType, &Beast::SetAttackType)
 		.addProperty ("IsDead", &Beast::GetIsDead, &Beast::SetIsDead)
+		.addFunction ("GetNextStep", &Beast::GetNextStep)
+		.addFunction ("SetNextStep", &Beast::SetNextStep)
+		.addFunction ("ClearAllSteps", &Beast::ClearAllSteps)
+		.addFunction ("GetStepsSize", &Beast::GetNextStepSize)
+		.addFunction ("RemoveFirstStep", &Beast::RemoveFirstStep)
 		.endClass();
 		
 }

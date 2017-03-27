@@ -37,7 +37,7 @@ public:
 	~Beast(void);
 	void LuaReg (lua_State* L);
 	void MakeMove ();
-	virtual virtual void MoveCreature (int x, int y, int MyMode=0);
+	int MoveCreature (int x, int y, int MyMode=0);
 
 	//----Setters AND Getters
 	void SetIsDead (int a);
@@ -101,6 +101,8 @@ public:
 	void SetNextStep (int step);
 	void ClearAllSteps ();
 	int GetNextStep ();
+	void RemoveFirstStep ();
+	int GetNextStepSize ();
 
 };
 

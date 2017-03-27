@@ -75,10 +75,10 @@ void Beast::MakeMove()
 	return;
 }
 
-void Beast::MoveCreature (int x, int y, int MyMode)
+int Beast::MoveCreature (int x, int y, int MyMode)
 {
 	if (IsDead == 1)
-		return;
+		return 0;
 	Game *MyGame;
 	MyGame= Game::GetGameInstance();
 	level *MyLevel;
@@ -94,7 +94,7 @@ void Beast::MoveCreature (int x, int y, int MyMode)
 			CoordX = x;
 			CoordY = y;
 			MyLevel->SetCreature (NumOfCreature, CoordX, CoordY);
-			return;
+			return 1;
 		}
 	
 	}
@@ -104,7 +104,7 @@ void Beast::MoveCreature (int x, int y, int MyMode)
 		int NextX = CoordX+x;
 		int NextY = CoordY+y;
 		if ((NextX<0)||(NextY<0)||(NextX > (MyLevel->GetLevelWidth())-1)||(NextY > (MyLevel->GetLevelHeight())-1))
-			return;
+			return 0;
 		const int Passable = MyLevel->GetPassable(x,y);
 		if (Passable == 1)
 		{
@@ -112,12 +112,12 @@ void Beast::MoveCreature (int x, int y, int MyMode)
 			CoordX = NextX;
 			CoordY = NextY;
 			MyLevel->SetCreature (NumOfCreature, CoordX, CoordY);
-			return;
+			return 1;
 		}
 
 	}
 	
-	return;
+	return 0;
 }
 
 // ------------------------------ Getters and Setters -----------------------
@@ -412,6 +412,18 @@ int Beast::GetID () const
 		list <int>::iterator p;
 		p = NextStep.begin();
 		int a = *p;
-		NextStep.pop_front();
+		//NextStep.pop_front();
 		return a;
+	}
+
+	void Beast::RemoveFirstStep ()
+	{
+		if (NextStep.size()>0)
+			NextStep.pop_front();
+		return;
+	}
+
+	int Beast::GetNextStepSize ()
+	{
+		return NextStep.size();
 	}
