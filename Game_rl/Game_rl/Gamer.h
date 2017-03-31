@@ -1,6 +1,7 @@
 #pragma once
 #include "level.h"
 #include "Inventory.h"
+#include "Equipment.h"
 
 class Gamer
 {
@@ -21,6 +22,7 @@ private:
 	int RegenEnergy;
 	level *MyLevel;
 	Inventory *MyInventory;
+	Equipment *MyEquipment;
 public:
 	Gamer(void);
 	Gamer (level *LevelPtr);

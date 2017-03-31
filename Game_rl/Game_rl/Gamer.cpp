@@ -12,12 +12,14 @@ Gamer::Gamer(void)
 Gamer::Gamer (level *LevelPtr)
 {
 	MyInventory = new Inventory;
+	MyEquipment = new Equipment;
 	 MyLevel= LevelPtr;
 }
 
 Gamer::~Gamer(void)
 {
 	delete MyInventory;
+	delete MyEquipment;
 }
 
 int Gamer::GetCoordX() const

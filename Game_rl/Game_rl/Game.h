@@ -5,6 +5,7 @@
 #include "Interface.h"
 #include "X_File.h"
 #include "Bestiary.h"
+#include "Equipment.h"
 
 
 

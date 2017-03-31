@@ -75,3 +75,48 @@ void Items::GetWeaponsFromFile()
 	return;
 
 }
+
+void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
+{
+	vector <map<string,string>>::iterator p;
+	p = Temp.begin();
+	while (p!= Temp.end())
+	{
+		map <string,string>::iterator MapPtr;
+		Armour TempArmour;
+		MapPtr = p->find("ID");
+		TempArmour.ID = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Name");
+		TempArmour.Name = MapPtr->second;
+		MapPtr = p->find("RName");
+		TempArmour.RName = MapPtr->second;
+		MapPtr = p->find("Type");
+		TempArmour.Type = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Type2");
+		TempArmour.Type = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Weight");
+		TempArmour.Weight = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense");
+		TempArmour.Defense = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense2");
+		TempArmour.Defense = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("TypeOfDefense2");
+		TempArmour.TypeOfDefense2 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Stackable");
+		TempArmour.Stackable = atoi(MapPtr->second.c_str());
+		Armours.push_back (TempArmour);
+		p++;
+
+	}
+	return;
+}
+
+void Items::GetArmoursFromFile ()
+{
+	vector <map<string,string>> Temp;
+	FileContent Content;
+	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\Armours.ini", Content);
+	X_File::X_ParseIniFile (Content, Temp);
+	InsertArmoursInStorage (Temp);
+	return;
+}

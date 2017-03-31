@@ -82,6 +82,7 @@
     <ClInclude Include="Bestiary.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gamer.h" />
     <ClInclude Include="Interface.h" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Bestiary.cpp" />
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gamer.cpp" />
     <ClCompile Include="Game_rl.cpp" />

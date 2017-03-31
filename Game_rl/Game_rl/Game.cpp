@@ -83,8 +83,11 @@ void Game::MakeItems()
 {
 	MyItems = new Items;
 	MyItems->GetWeaponsFromFile();
+	MyItems->GetArmoursFromFile();
 	return;
 }
+
+
 void Game::MakeInterface()
 {
 	MyInterface = new Interface;
