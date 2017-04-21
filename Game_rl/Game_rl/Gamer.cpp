@@ -178,6 +178,12 @@ void Gamer::Move (int Direction)
 		return;
 	}
 
+	if (Direction == TK_E)
+	{
+		MyEquipment->PrintEquipment();
+		return;
+	}
+
 	GamerMoveLua (Direction);
 
 	/*if (Direction == TK_UP || Direction == TK_KP_8)
@@ -240,4 +246,14 @@ void Gamer::GamerPrint ()
 	terminal_put (CoordX, CoordY, 64);
 	terminal_layer (0);
 	return;
+}
+
+Inventory* Gamer::GetInventory ()
+{
+	return MyInventory;
+}
+
+Equipment* Gamer::GetEquipment ()
+{
+	return MyEquipment;
 }

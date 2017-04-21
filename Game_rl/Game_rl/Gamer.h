@@ -55,6 +55,8 @@ public:
 	int GetRegenEnergy () const;
 	void SetRegenEnergy (int a);
 	void GamerPlacing ();
+	Inventory* GetInventory ();
+	Equipment* GetEquipment ();
 
 	
 };

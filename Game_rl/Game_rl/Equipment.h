@@ -14,5 +14,7 @@ private:
 public:
 	Equipment(void);
 	~Equipment(void);
+	void PrintItems ();
+	void PrintEquipment ();
 };
 

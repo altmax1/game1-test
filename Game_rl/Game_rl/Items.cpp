@@ -76,6 +76,20 @@ void Items::GetWeaponsFromFile()
 
 }
 
+string Items::GetNameOfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!=Armours.end ())
+	{
+		if (p->ID == ID)
+			return p->RName;
+		p++;
+	
+	}
+	return "Not found";
+}
+
 void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
 {
 	vector <map<string,string>>::iterator p;

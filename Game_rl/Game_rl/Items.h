@@ -50,5 +50,6 @@ public:
 	int GetTypeOfWeapon (int ID);
 	bool GetStackable (int ID);
 	string GetNameOfWeapon (int ID);
+	string GetNameOfArmour (int ID);
 };
 
