@@ -80,7 +80,7 @@ void Inventory::PrintInventory()
 	int a;
 		while (1)
 	{
-		terminal_wprint (10, 7, L"Инвентарь");
+		terminal_wprint (10, 7, L"И Н В Е Н Т А Р Ь");
 		PrintItems ();
 		terminal_refresh();
 		a = terminal_read();

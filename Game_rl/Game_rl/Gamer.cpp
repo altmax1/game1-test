@@ -180,7 +180,7 @@ void Gamer::Move (int Direction)
 
 	if (Direction == TK_E)
 	{
-		MyEquipment->PrintEquipment();
+		MyEquipment->SelectEquipment();
 		return;
 	}
 
