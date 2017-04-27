@@ -61,8 +61,9 @@ void level::PrintWeapons (int x, int y, int linear)
 	MyGame = Game::GetGameInstance();
 	Items *MyItems;
 	MyItems = MyGame->GetItems();
-	int TypeOfWeapon;
-	TypeOfWeapon = MyItems->GetTypeOfWeapon (ID);
+	int TypeOfWeapon=0;
+	if (ID < 1000000)
+		TypeOfWeapon = MyItems->GetTypeOfWeapon (ID);
 	if (TypeOfWeapon == 0)
 		terminal_put (x,y,92);
 	else if ((TypeOfWeapon == 1) || (TypeOfWeapon == 2))

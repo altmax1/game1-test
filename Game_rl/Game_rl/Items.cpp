@@ -13,7 +13,8 @@ Items::~Items(void)
 }
 int Items::GetTypeOfWeapon ( int ID)
 {
-	return Weapons[ID].Type;
+	if (ID<1000000)
+		return Weapons[ID].Type;
 }
 
 bool Items::GetStackable (int ID)
@@ -87,8 +88,24 @@ string Items::GetNameOfArmour (int ID)
 		p++;
 	
 	}
-	return "Not found";
+	return "Not found in Armour";
 }
+
+int Items::GetTypeOfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!=Armours.end ())
+	{
+		if (p->ID == ID)
+			return p->Type;
+		p++;
+	
+	}
+	return -1;
+
+}
+
 
 void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
 {
@@ -133,4 +150,24 @@ void Items::GetArmoursFromFile ()
 	X_File::X_ParseIniFile (Content, Temp);
 	InsertArmoursInStorage (Temp);
 	return;
+}
+
+string Items::GetNameById (int ID)
+{
+	if (ID>=0 && ID <1000000)
+		return GetNameOfWeapon (ID);
+	if (ID >= 1000000 && ID < 2000000)
+		return GetNameOfArmour (ID);
+	return "NOT FOUND";
+
+}
+
+int Items::GetTypeById (int ID)
+{
+	if (ID>=0 && ID <1000000)
+		return GetTypeOfWeapon (ID);
+	if (ID >= 1000000 && ID < 2000000)
+		return GetTypeOfArmour (ID);
+	return -1;
+
 }

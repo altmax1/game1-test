@@ -13,6 +13,7 @@ private:
 	int MenuX;
 	int MenuY;
 	int DeltaXName;
+	int *Ptr [8];
 
 public:
 	Equipment(void);
@@ -21,5 +22,8 @@ public:
 	void PrintEquipment ();
 	void SelectEquipment ();
 	void PrintBorder (int MenuState);
+	void MakeChoise (int MenuState);
+	void WearItem (int MenuState);
+	void UnWearItem (int MenuState);
 };
 

@@ -48,8 +48,11 @@ public:
 	void InsertArmoursInStorage ( vector <map <string, string>> Temp);
 	int QuantityWeaponItems ();
 	int GetTypeOfWeapon (int ID);
+	int GetTypeOfArmour (int ID);
 	bool GetStackable (int ID);
 	string GetNameOfWeapon (int ID);
 	string GetNameOfArmour (int ID);
+	string GetNameById (int ID);
+	int GetTypeById (int ID);
 };
 

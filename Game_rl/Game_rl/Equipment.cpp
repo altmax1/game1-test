@@ -18,6 +18,15 @@ Equipment::Equipment(void)
 	MenuY = 5;
 	DeltaXName = 12;
 
+	Ptr[0] = &HeadEq;
+	Ptr[1] = &BodyEq;
+	Ptr[2] = &ArmsEq;
+	Ptr[3] = &GlovesEq;
+	Ptr[4] = &LegsEq;
+	Ptr[5] = &BootsEq;
+	Ptr[6] = &LeftArmWeapon;
+	Ptr[7] = &RightArmWeapon;
+
 }
 
 
@@ -90,10 +99,7 @@ void Equipment::PrintBorder (int MenuState)
 			terminal_wprint (MenuX, MenuY+12, L"ГЛевая рука:");
 		}
 		
-		int a = clock ();
 		terminal_refresh();
-		cout <<clock()-a<<endl;
-		
 		return;
 }
 
@@ -122,6 +128,8 @@ void Equipment::SelectEquipment ()
 			MenuState++;
 		if (a == TK_UP && MenuState > MinMenuState)
 			MenuState--;
+		if (a == TK_ENTER)
+			MakeChoise (MenuState);
 		
 	
 	}
@@ -181,4 +189,53 @@ void Equipment::PrintEquipment ()
 	}
 
 	return;
+}
+
+void Equipment::MakeChoise (int MenuState)
+{
+	if (*Ptr[MenuState-1] >=0)
+		UnWearItem (MenuState);
+	if (*Ptr[MenuState-1] < 0)
+		WearItem (MenuState);
+	return;
+
+}
+
+void Equipment::WearItem (int MenuState)
+{
+
+}
+
+void Equipment::UnWearItem (int MenuState)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	Gamer *MyGamer;
+	MyGamer = MyGame->GetGamer();
+	Inventory *MyInventory;
+	MyInventory = MyGamer->GetInventory();
+	terminal_clear ();
+	terminal_color (0xAAFFFFFF);
+	terminal_printf (MenuX, MenuY, L"Вы действительно хотите снять");
+	terminal_color (0xFFFFFFFF);
+	string Temp;
+	Temp = MyItems->GetNameById (*Ptr[MenuState-1])+'?';
+	terminal_printf (MenuX, MenuY+2, Temp.c_str());
+	terminal_color (0xAAFFFFFF);
+	terminal_printf (MenuX, MenuY+4, L"ДА (Y) или НЕТ (N) - нажмите клавишу");
+	terminal_refresh();
+	int a;
+	a = terminal_read();
+	if (a== TK_N)
+		return;
+	if (a == TK_Y)
+	{
+		MyInventory ->PutItemInVector (*Ptr[MenuState-1],0,1);
+		*Ptr[MenuState-1] = -1;
+		return;
+	}
+	
+
 }
