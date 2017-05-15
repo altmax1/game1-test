@@ -49,10 +49,18 @@ public:
 	int QuantityWeaponItems ();
 	int GetTypeOfWeapon (int ID);
 	int GetTypeOfArmour (int ID);
+	int GetType2OfArmour (int ID);
+	int GetDefenseOfArmour (int ID);
+	int GetDefense2OfArmour (int ID);
+	int GetTypeOfDef2Armour (int ID);
 	bool GetStackable (int ID);
 	string GetNameOfWeapon (int ID);
 	string GetNameOfArmour (int ID);
 	string GetNameById (int ID);
 	int GetTypeById (int ID);
+	int GetType2ById (int ID);
+	int GetDefenseById (int ID);
+	int GetDefense2ById (int ID);
+	int GetTypeOfDefense2 (int ID);
 };
 

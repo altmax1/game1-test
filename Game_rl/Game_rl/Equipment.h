@@ -25,5 +25,12 @@ public:
 	void MakeChoise (int MenuState);
 	void WearItem (int MenuState);
 	void UnWearItem (int MenuState);
+	int GetHeadDef();
+	int GetBodyDef();
+	int GetArmsDef();
+	int GetGlovesDef();
+	int GetLegsDef();
+	int GetBootsDef();
+
 };
 

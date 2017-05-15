@@ -106,6 +106,61 @@ int Items::GetTypeOfArmour (int ID)
 
 }
 
+int Items::GetType2OfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->Type2;
+		p++;
+	}
+	return -1;
+}
+
+int Items::GetDefenseOfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->Defense;
+		p++;
+	}
+	return -1;
+}
+
+int Items::GetDefense2OfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->Defense2;
+		p++;
+	}
+	return -1;
+}
+
+int Items::GetTypeOfDef2Armour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->TypeOfDefense2;
+		p++;
+	}
+	return -1;
+
+}
+
+
+
 
 void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
 {
@@ -170,4 +225,32 @@ int Items::GetTypeById (int ID)
 		return GetTypeOfArmour (ID);
 	return -1;
 
+}
+
+int Items::GetType2ById (int ID)
+{
+	if (ID >=1000000 && ID < 2000000)
+		return GetType2OfArmour (ID);
+	return -1;
+}
+
+int Items::GetDefenseById (int ID)
+{
+	if (ID>=1000000 && ID < 2000000)
+		return GetDefenseOfArmour (ID);
+	return -1;
+}
+
+int Items::GetDefense2ById (int ID)
+{
+	if (ID>=1000000 && ID < 2000000)
+		return GetDefense2OfArmour (ID);
+	return -1;
+}
+
+int Items::GetTypeOfDefense2 (int ID)
+{
+	if (ID >=1000000 && ID < 2000000)
+		return GetTypeOfDef2Armour (ID);
+	return -1;
 }

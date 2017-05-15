@@ -239,3 +239,77 @@ void Equipment::UnWearItem (int MenuState)
 	
 
 }
+
+int Equipment::GetHeadDef()
+{
+	if (HeadEq >=0)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		return MyItems->GetDefenseById (HeadEq);
+	}
+	return 0;
+}
+int Equipment::GetBodyDef()
+{
+	if (BodyEq >=0)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		return MyItems->GetDefenseById (BodyEq);
+	}
+	return 0;
+}
+int Equipment::GetArmsDef()
+{
+	if (ArmsEq >=0)
+	{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	return MyItems->GetDefenseById (ArmsEq);
+	}
+	return 0;
+}
+int Equipment::GetGlovesDef()
+{
+	if (GlovesEq >=0)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		return MyItems->GetDefenseById (GlovesEq);
+	}
+	return 0;
+}
+int Equipment::GetLegsDef()
+{
+	if (LegsEq >=0)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		return MyItems->GetDefenseById (LegsEq);
+	}
+	return 0;
+}
+int Equipment::GetBootsDef()
+{
+	if (BootsEq >=0)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		return MyItems->GetDefenseById (BootsEq);
+	}
+	return 0;
+}
+
