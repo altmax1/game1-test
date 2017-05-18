@@ -30,5 +30,6 @@ public:
 	//int FindIdByNumber (int nubmer);
 	Inventory(void);
 	~Inventory(void);
+	void FindItemsByType ( vector<int> &temp, int GlobalType, int Type);
 };
 

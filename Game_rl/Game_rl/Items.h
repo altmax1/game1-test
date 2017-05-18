@@ -62,5 +62,6 @@ public:
 	int GetDefenseById (int ID);
 	int GetDefense2ById (int ID);
 	int GetTypeOfDefense2 (int ID);
+	int GetGlobalType (int ID);
 };
 

@@ -254,3 +254,12 @@ int Items::GetTypeOfDefense2 (int ID)
 		return GetTypeOfDef2Armour (ID);
 	return -1;
 }
+
+int Items::GetGlobalType (int ID)
+{
+	if (ID >=0 && ID < 1000000)
+		return 0; // 0 - оружие
+	if (ID >= 1000000 && ID < 2000000)
+		return 1; // 1 - броня и одежда
+	return -1;
+}

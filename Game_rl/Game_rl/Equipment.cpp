@@ -203,6 +203,28 @@ void Equipment::MakeChoise (int MenuState)
 
 void Equipment::WearItem (int MenuState)
 {
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Inventory *MyInventory;
+	Gamer *MyGamer;
+	MyGamer = MyGame->GetGamer();
+	MyInventory = MyGamer->GetInventory();
+	vector<int> temp;
+	MyInventory->FindItemsByType (temp,1,MenuState-1);
+	if (temp.size() == 0)
+		NothingToWear ();
+	
+
+}
+
+void Equipment::NothingToWear ()
+{
+	terminal_clear();
+	terminal_wprint (MenuX, MenuY, L"Нет подходящего предмета для данного слота.");
+	terminal_wprint (MenuX, MenuY+2, L"Вам нечего туда надеть");
+	terminal_refresh();
+	while ( terminal_read())
+		return;
 
 }
 

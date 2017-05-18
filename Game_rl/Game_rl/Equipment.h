@@ -24,6 +24,7 @@ public:
 	void PrintBorder (int MenuState);
 	void MakeChoise (int MenuState);
 	void WearItem (int MenuState);
+	void NothingToWear ();
 	void UnWearItem (int MenuState);
 	int GetHeadDef();
 	int GetBodyDef();

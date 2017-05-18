@@ -257,3 +257,22 @@ void Inventory::DropItem ()
 	return;
 
 }
+
+void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Type)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	vector <InventoryCell>::iterator p;
+	p = MyInventory.begin();
+	int IterC = 0;
+	while (p!=MyInventory.end())
+	{
+		if ( (MyItems->GetGlobalType (p->ID) == GlobalType) && (MyItems->GetTypeById (p->ID) == Type))
+			temp.push_back (IterC);
+		p++;
+		IterC++;
+		return;	
+	}
+}
