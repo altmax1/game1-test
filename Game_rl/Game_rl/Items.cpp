@@ -179,13 +179,13 @@ void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
 		MapPtr = p->find("Type");
 		TempArmour.Type = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Type2");
-		TempArmour.Type = atoi(MapPtr->second.c_str());
+		TempArmour.Type2 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Weight");
 		TempArmour.Weight = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Defense");
 		TempArmour.Defense = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Defense2");
-		TempArmour.Defense = atoi(MapPtr->second.c_str());
+		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("TypeOfDefense2");
 		TempArmour.TypeOfDefense2 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Stackable");

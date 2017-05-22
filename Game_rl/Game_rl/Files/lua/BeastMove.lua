@@ -3,7 +3,7 @@ BeastMove = function (Game, Beast)
 a = Game:LOS (Game.GamerX, Game.GamerY, Beast.CoordX, Beast.CoordY)
 c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
 b = Game:PathFind (Beast.CoordX, Beast.CoordY,Game.GamerX, Game.GamerY)
-print (a, c)
+--print (a, c)
 MGamerX = Game.GamerX
 MGamerY = Game.GamerY
 MBeastX = Beast.CoordX
@@ -47,7 +47,7 @@ if a==0 and c==0 then
 MoveByMemory (Game, Beast)
 end
 
-print (Beast.CoordX)
+--print (Beast.CoordX)
 
 end
 
@@ -88,7 +88,7 @@ end
 end
 
 MoveByMemory = function (Game, Beast)
-print ("Size of NextSteps",Beast:GetStepsSize())
+--print ("Size of NextSteps",Beast:GetStepsSize())
 if Beast:GetStepsSize()==0 then
 	return
 end

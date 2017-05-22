@@ -131,6 +131,7 @@ void Equipment::SelectEquipment ()
 		if (a == TK_ENTER)
 			MakeChoise (MenuState);
 		
+		
 	
 	}
 }
@@ -210,7 +211,7 @@ void Equipment::WearItem (int MenuState)
 	MyGamer = MyGame->GetGamer();
 	MyInventory = MyGamer->GetInventory();
 	vector<int> temp;
-	MyInventory->FindItemsByType (temp,1,MenuState-1);
+	MyInventory->FindItemsByType (temp,1,MenuState);
 	if (temp.size() == 0)
 		NothingToWear ();
 	

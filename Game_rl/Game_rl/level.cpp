@@ -407,8 +407,8 @@ int level::PathFind ( int StartX, int StartY, int EndX, int EndY)
 
 	
 	}
-	cout << "Time: "<< clock()-a<<endl;
-	cout << "Iteration: " <<iteration<<endl;
+	//cout << "Time: "<< clock()-a<<endl;
+	//cout << "Iteration: " <<iteration<<endl;
 
 	if (WayHasFind == 0)
 		return 0;

@@ -271,8 +271,11 @@ void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Type)
 	{
 		if ( (MyItems->GetGlobalType (p->ID) == GlobalType) && (MyItems->GetTypeById (p->ID) == Type))
 			temp.push_back (IterC);
+		
 		p++;
 		IterC++;
-		return;	
+		//temp.push_back (22);
+		//return;	
 	}
+	return;
 }
