@@ -31,5 +31,8 @@ public:
 	Inventory(void);
 	~Inventory(void);
 	void FindItemsByType ( vector<int> &temp, int GlobalType, int Type);
+	int GetNumOfSlots ();
+	int GetIdByNum (int Num);
+	int GetQuantityByNum( int Num);
 };
 

@@ -274,8 +274,27 @@ void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Type)
 		
 		p++;
 		IterC++;
-		//temp.push_back (22);
-		//return;	
+			
 	}
 	return;
 }
+
+int Inventory::GetNumOfSlots ()
+{
+	return MyInventory.size();
+}
+
+int Inventory::GetIdByNum (int Num)
+{	
+	if ( Num>=0 && Num < MyInventory.size ()) 
+		return MyInventory[Num].ID;
+	return -1;
+}
+
+int Inventory::GetQuantityByNum (int Num)
+{
+	if ( Num>0 && Num < MyInventory.size ()) 
+		return MyInventory[Num].Quantity;
+	return -1;
+}
+

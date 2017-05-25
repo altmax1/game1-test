@@ -21,6 +21,9 @@ public:
 	void PrintItems ();
 	void PrintEquipment ();
 	void SelectEquipment ();
+	void SelectEqToWear (std::vector<int> &temp);
+	void PrintEqToWear (std::vector <int> &temp, int MenuState);
+	void WearThisItem (int Num);
 	void PrintBorder (int MenuState);
 	void MakeChoise (int MenuState);
 	void WearItem (int MenuState);

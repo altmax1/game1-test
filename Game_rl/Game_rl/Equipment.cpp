@@ -6,9 +6,9 @@
 Equipment::Equipment(void)
 {
 	HeadEq = 1000000;
-	BodyEq = -1;
-	ArmsEq = 1000001;
-	GlovesEq = -1;
+	BodyEq = 1000000;
+	ArmsEq = 1000000;
+	GlovesEq = 1000000;
 	BodyEq = -1;
 	LegsEq = -1;
 	BootsEq = -1;
@@ -136,6 +136,85 @@ void Equipment::SelectEquipment ()
 	}
 }
 
+void Equipment::SelectEqToWear (std::vector<int> &temp)
+{
+	
+	int menustate = 1;
+	int MaxMenuState = temp.size();
+	while (1)
+	{
+		terminal_clear();
+		terminal_color (0xAAFFFFFF);
+		terminal_wprint (MenuX, MenuY, L"Выберите предмет, который хотите надеть:");
+		PrintEqToWear (temp, menustate);
+		terminal_refresh();
+		int a = terminal_read();
+		if (a == TK_UP && menustate >1)
+			menustate--;
+		if (a == TK_DOWN && menustate < MaxMenuState)
+			menustate++;
+		if (a == TK_ENTER)
+		{
+			WearThisItem (temp[menustate-1]);
+			return;
+		}
+		if (a==TK_ESCAPE)
+			return;
+
+	
+	}
+
+}
+
+void Equipment::WearThisItem (int Num)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Inventory *MyInventory;
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	Gamer *MyGamer;
+	MyGamer = MyGame->GetGamer();
+	MyInventory = MyGamer->GetInventory();
+
+	int ID = MyInventory->GetIdByNum (Num);
+	int Type = MyItems->GetTypeById (ID);
+	if (Type >0 && Type <=8)
+		*Ptr [Type-1] = ID;  
+	MyInventory->RemoveItemFromVector (Num,1);
+	return;
+}
+
+void Equipment::PrintEqToWear (std::vector<int> &temp, int MenuState)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Inventory *MyInventory;
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	Gamer *MyGamer;
+	MyGamer = MyGame->GetGamer();
+	MyInventory = MyGamer->GetInventory();
+	vector<int>::iterator p;
+	int itera = 1;
+	p = temp.begin();
+	while (p!= temp.end())
+	{
+		int ID = MyInventory->GetIdByNum (*p);
+		string stemp = MyItems->GetNameById (ID);
+		if (itera==MenuState)
+			terminal_color (0xFFFFFFFF);
+		terminal_print (MenuX,MenuY+1+itera, stemp.c_str());
+		if (itera==MenuState)
+			terminal_color (0xAAFFFFFF);
+		p++;
+		itera++;
+	
+	}
+
+	return;
+}
+
 void Equipment::PrintItems ()
 {
 	Game *MyGame;
@@ -213,8 +292,12 @@ void Equipment::WearItem (int MenuState)
 	vector<int> temp;
 	MyInventory->FindItemsByType (temp,1,MenuState);
 	if (temp.size() == 0)
-		NothingToWear ();
-	
+		{
+			NothingToWear ();
+			return;
+		}
+	SelectEqToWear (temp);
+	return;	
 
 }
 
