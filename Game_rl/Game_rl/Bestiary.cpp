@@ -141,3 +141,91 @@ void Bestiary::MakeBeastsMove ()
 	}
 	return;
 }
+
+void Bestiary::SetIsDead (int Num, int a)
+{
+	BeastsOfLevel[Num].SetIsDead (a);
+	return;
+}
+
+int Bestiary::GetIsDead (int Num)
+{
+	return BeastsOfLevel[Num].GetIsDead ();
+}
+
+void Bestiary::SetID (int Num, int ID)
+{
+	BeastsOfLevel[Num].SetID (ID);
+	return;
+}
+
+int Bestiary::GetID (int Num)
+{
+	return BeastsOfLevel[Num].GetID ();
+}
+
+void Bestiary::SetCoordX (int Num, int x)
+{
+	BeastsOfLevel[Num].SetCoordX (x);
+	return;
+}
+
+int Bestiary::GetCoordX (int Num)
+{
+	return BeastsOfLevel[Num].GetCoordX ();
+}
+
+void Bestiary::SetCoordY (int Num, int y)
+{
+	BeastsOfLevel[Num].SetCoordY (y);
+	return;
+}
+
+int Bestiary::GetCoordY (int Num)
+{
+	return BeastsOfLevel[Num].GetCoordY();
+}
+
+void Bestiary::SetHP (int Num, int HP)
+{
+	BeastsOfLevel[Num].SetHP (HP);
+	return;
+}
+
+int Bestiary::GetHP (int Num)
+{
+	return BeastsOfLevel[Num].GetHP();
+}
+
+void Bestiary::SetDefense (int Num, int Def)
+{
+	BeastsOfLevel[Num].SetDefense (Def);
+	return;
+}
+
+int Bestiary::GetDefense (int Num)
+{
+	return BeastsOfLevel[Num].GetDefence();
+}
+
+void Bestiary::SetDex (int Num, int Dex)
+{
+	BeastsOfLevel[Num].SetDex (Dex);
+	return;
+}
+
+int Bestiary::GetDex (int Num)
+{
+	return BeastsOfLevel[Num].GetDex();
+}
+
+void Bestiary::SetStr (int Num, int Str)
+{
+	BeastsOfLevel[Num].SetStr (Str);
+	return;
+}
+
+int Bestiary::GetStr (int Num)
+{
+	return BeastsOfLevel[Num].GetStr();
+}

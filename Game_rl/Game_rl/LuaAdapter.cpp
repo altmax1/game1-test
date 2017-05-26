@@ -35,6 +35,22 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("AttackBeastByNum", &LuaAdapter::AttackBeastByNum)
 			.addFunction ("LOS", &LuaAdapter::LOS)
 			.addFunction ("PathFind", &LuaAdapter::PathFind)
+			.addFunction ("GetBeastHP", &LuaAdapter::GetBeastHP)
+			.addFunction ("SetBeastHP", &LuaAdapter::SetBeastHP)
+			.addFunction ("GetBeastCoordX", &LuaAdapter::GetBeastCoordX)
+			.addFunction ("GetBeastCoordY", &LuaAdapter::GetBeastCoordY)
+			.addFunction ("SetBeastCoordX", &LuaAdapter::SetBeastCoordX)
+			.addFunction ("SetBeastCoordY", &LuaAdapter::SetBeastCoordY)
+			.addFunction ("GetBeastID", &LuaAdapter::GetBeastID)
+			.addFunction ("SetBeastID", &LuaAdapter::SetBeastID)
+			.addFunction ("GetBeastIsDead", &LuaAdapter::GetBeastIsDead)
+			.addFunction ("SetBeastIsDead", &LuaAdapter::SetBeastIsDead)
+			.addFunction ("GetBeastDefense", &LuaAdapter::GetBeastDefense)
+			.addFunction ("SetBeastDefense", &LuaAdapter::SetBeastDefense)
+			.addFunction ("GetBeastDex", &LuaAdapter::GetBeastDex)
+			.addFunction ("SetBeastDex", &LuaAdapter::SetBeastDex)
+			.addFunction ("GetBeastStr", &LuaAdapter::GetBeastStr)
+			.addFunction ("SetBeastStr", &LuaAdapter::SetBeastStr)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -275,4 +291,92 @@ void LuaAdapter::AttackBeastByNum (int Num)
 int LuaAdapter::LOS (int x1, int y1, int x2, int y2)
 {
 	return MyLevel->LOS (x1, y1, x2, y2);
+}
+
+void LuaAdapter::SetBeastHP (int Num, int HP)
+{
+	MyBestiary->SetHP (Num, HP);
+	return;
+}
+
+int LuaAdapter::GetBeastHP (int Num)
+{
+	return MyBestiary->GetHP (Num);
+}
+
+void LuaAdapter::SetBeastCoordX (int Num, int x)
+{
+	MyBestiary->SetCoordX (Num, x);
+	return;
+}
+
+void LuaAdapter::SetBeastCoordY (int Num, int y)
+{
+	MyBestiary->SetCoordY (Num,y);
+	return;
+}
+
+int LuaAdapter::GetBeastCoordX (int Num)
+{
+	return MyBestiary->GetCoordX(Num);
+}
+
+int LuaAdapter::GetBeastCoordY (int Num)
+{
+	return MyBestiary->GetCoordY (Num);
+}
+
+void LuaAdapter::SetBeastID (int Num, int ID)
+{
+	MyBestiary->SetID (Num,ID);
+	return;
+}
+
+int LuaAdapter::GetBeastID (int Num)
+{
+	return MyBestiary->GetID (Num);
+}
+
+void LuaAdapter::SetBeastIsDead (int Num, int a)
+{
+	MyBestiary->SetIsDead (Num, a);
+	return;
+}
+
+int LuaAdapter::GetBeastIsDead (int Num)
+{
+	return MyBestiary->GetIsDead (Num);
+}
+
+void LuaAdapter::SetBeastDefense (int Num, int Def)
+{
+	MyBestiary->SetDefense (Num,Def);
+	return;
+}
+
+int LuaAdapter::GetBeastDefense (int Num)
+{
+	return MyBestiary->GetDefense (Num);
+}
+
+void LuaAdapter::SetBeastDex (int Num, int Dex)
+{
+	MyBestiary->SetDex (Num,Dex);
+	return;
+}
+
+int LuaAdapter::GetBeastDex (int Num)
+{
+	return MyBestiary->GetDex (Num);
+}
+
+void LuaAdapter::SetBeastStr (int Num, int Str)
+{
+	MyBestiary->SetStr (Num, Str);
+	return;
+}
+
+int LuaAdapter::GetBeastStr (int Num)
+{
+	return MyBestiary->GetStr (Num);
 }

@@ -9,7 +9,6 @@ Equipment::Equipment(void)
 	BodyEq = 1000000;
 	ArmsEq = 1000000;
 	GlovesEq = 1000000;
-	BodyEq = -1;
 	LegsEq = -1;
 	BootsEq = -1;
 	LeftArmWeapon = -1;
@@ -274,7 +273,10 @@ void Equipment::PrintEquipment ()
 void Equipment::MakeChoise (int MenuState)
 {
 	if (*Ptr[MenuState-1] >=0)
+	{
 		UnWearItem (MenuState);
+		return;
+	}
 	if (*Ptr[MenuState-1] < 0)
 		WearItem (MenuState);
 	return;
