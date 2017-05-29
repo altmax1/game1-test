@@ -145,6 +145,45 @@ int Items::GetDefense2OfArmour (int ID)
 	return -1;
 }
 
+int Items::GetDefense3OfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->Defense3;
+		p++;
+	}
+	return -1;
+}
+
+int Items::GetDefense4OfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->Defense4;
+		p++;
+	}
+	return -1;
+}
+
+int Items::GetDefense5OfArmour (int ID)
+{
+	vector <Armour>::iterator p;
+	p = Armours.begin();
+	while (p!= Armours.end())
+	{
+		if (p->ID == ID)
+			return p->Defense5;
+		p++;
+	}
+	return -1;
+}
+
 int Items::GetTypeOfDef2Armour (int ID)
 {
 	vector <Armour>::iterator p;
@@ -186,6 +225,12 @@ void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
 		TempArmour.Defense = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Defense2");
 		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense3");
+		TempArmour.Defense3 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense4");
+		TempArmour.Defense4 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense5");
+		TempArmour.Defense5 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("TypeOfDefense2");
 		TempArmour.TypeOfDefense2 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Stackable");
@@ -238,15 +283,37 @@ int Items::GetDefenseById (int ID)
 {
 	if (ID>=1000000 && ID < 2000000)
 		return GetDefenseOfArmour (ID);
-	return -1;
+	return 0;
 }
 
 int Items::GetDefense2ById (int ID)
 {
 	if (ID>=1000000 && ID < 2000000)
 		return GetDefense2OfArmour (ID);
-	return -1;
+	return 0;
 }
+
+int Items::GetDefense3ById (int ID)
+{
+	if (ID>=1000000 && ID < 2000000)
+		return GetDefense3OfArmour (ID);
+	return 0;
+}
+
+int Items::GetDefense4ById (int ID)
+{
+	if (ID>=1000000 && ID < 2000000)
+		return GetDefense4OfArmour (ID);
+	return 0;
+}
+
+int Items::GetDefense5ById (int ID)
+{
+	if (ID>=1000000 && ID < 2000000)
+		return GetDefense5OfArmour (ID);
+	return 0;
+}
+
 
 int Items::GetTypeOfDefense2 (int ID)
 {

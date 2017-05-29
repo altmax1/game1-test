@@ -114,6 +114,47 @@ void Gamer::SetDefense (int a)
 	Defense = a;
 	return;
 }
+
+int Gamer::GetDefense2 () const
+{
+	return Defense2;
+}
+void Gamer::SetDefense2 (int a)
+{
+	Defense2 = a;
+	return;
+}
+
+int Gamer::GetDefense3 () const
+{
+	return Defense3;
+}
+void Gamer::SetDefense3 (int a)
+{
+	Defense3 = a;
+	return;
+}
+
+int Gamer::GetDefense4 () const
+{
+	return Defense4;
+}
+void Gamer::SetDefense4 (int a)
+{
+	Defense4 = a;
+	return;
+}
+
+int Gamer::GetDefense5 () const
+{
+	return Defense5;
+}
+void Gamer::SetDefense5 (int a)
+{
+	Defense5 = a;
+	return;
+}
+
 int Gamer::GetRegenHP () const
 {
 	return RegenHP;
@@ -256,4 +297,29 @@ Inventory* Gamer::GetInventory ()
 Equipment* Gamer::GetEquipment ()
 {
 	return MyEquipment;
+}
+
+int Gamer::GetDefenseFromEquipment (int NumOfSlot)
+{
+	return MyEquipment->GetDefBySlot (NumOfSlot);
+}
+
+int Gamer::GetDefense2FromEquipment (int NumOfSlot)
+{
+	return MyEquipment->GetDef2BySlot (NumOfSlot);
+}
+
+int Gamer::GetDefense3FromEquipment (int NumOfSlot)
+{
+	return MyEquipment->GetDef3BySlot (NumOfSlot);
+}
+
+int Gamer::GetDefense4FromEquipment (int NumOfSlot)
+{
+	return MyEquipment->GetDef4BySlot (NumOfSlot);
+}
+
+int Gamer::GetDefense5FromEquipment (int NumOfSlot)
+{
+	return MyEquipment->GetDef5BySlot (NumOfSlot);
 }

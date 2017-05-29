@@ -17,7 +17,11 @@ private:
 	int MaxEnergy;
 	int MaxAttack;
 	int MinAttack;
-	int Defense;
+	int Defense;  // физическая защита
+	int Defense2; // ментальная защита
+	int Defense3; // защита от огня
+	int Defense4; // защита от яда, биолог. защита, от кислоты
+	int Defense5; // защита от холода
 	int RegenHP;
 	int RegenEnergy;
 	level *MyLevel;
@@ -50,6 +54,14 @@ public:
 	void SetDex (int a);
 	int GetDefense () const;
 	void SetDefense (int a);
+	int GetDefense2 () const;
+	void SetDefense2 (int a);
+	int GetDefense3 () const;
+	void SetDefense3 (int a);
+	int GetDefense4 () const;
+	void SetDefense4 (int a);
+	int GetDefense5 () const;
+	void SetDefense5 (int a);
 	int GetRegenHP () const;
 	void SetRegenHP (int a);
 	int GetRegenEnergy () const;
@@ -57,7 +69,11 @@ public:
 	void GamerPlacing ();
 	Inventory* GetInventory ();
 	Equipment* GetEquipment ();
-
+	int GetDefenseFromEquipment (int NumOfSlot);
+	int GetDefense2FromEquipment (int NumOfSlot);
+	int GetDefense3FromEquipment (int NumOfSlot);
+	int GetDefense4FromEquipment (int NumOfSlot);
+	int GetDefense5FromEquipment (int NumOfSlot);
 	
 };
 

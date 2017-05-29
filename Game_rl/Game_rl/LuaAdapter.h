@@ -7,6 +7,7 @@ private:
 	level *MyLevel;
 	Gamer *MyGamer;
 	Bestiary *MyBestiary;
+	
 public:
 	void LuaDesc (lua_State *L);
 	char GetTileBaseType (int x, int y) const;
@@ -37,6 +38,14 @@ public:
 	void SetGamerMaxEnergy (int a);
 	int GetGamerDefense () const;
 	void SetGamerDefense (int a);
+	int GetGamerDefense2 () const;
+	void SetGamerDefense2 (int a);
+	int GetGamerDefense3 () const;
+	void SetGamerDefense3 (int a);
+	int GetGamerDefense4 () const;
+	void SetGamerDefense4 (int a);
+	int GetGamerDefense5 () const;
+	void SetGamerDefense5 (int a);
 	int GetGamerRegenHP () const;
 	void SetGamerRegenHP (int a);
 	int GetGamerRegenEnergy () const;
@@ -62,6 +71,11 @@ public:
 	int GetBeastDex (int Num);
 	void SetBeastStr (int Num, int Str);
 	int GetBeastStr (int Num);
+	int GetDefenseBySlot (int NumOfSlot);
+	int GetDefense2BySlot (int NumOfSlot);
+	int GetDefense3BySlot (int NumOfSlot);
+	int GetDefense4BySlot (int NumOfSlot);
+	int GetDefense5BySlot (int NumOfSlot);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

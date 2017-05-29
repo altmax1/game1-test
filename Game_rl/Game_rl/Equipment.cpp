@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Equipment.h"
 #include "Game.h"
+#include "LuaAdapter.h"
 
 
 Equipment::Equipment(void)
@@ -181,6 +182,7 @@ void Equipment::WearThisItem (int Num)
 	if (Type >0 && Type <=8)
 		*Ptr [Type-1] = ID;  
 	MyInventory->RemoveItemFromVector (Num,1);
+	LuaMakeSumOfDef();
 	return;
 }
 
@@ -342,6 +344,7 @@ void Equipment::UnWearItem (int MenuState)
 	{
 		MyInventory ->PutItemInVector (*Ptr[MenuState-1],0,1);
 		*Ptr[MenuState-1] = -1;
+		LuaMakeSumOfDef();
 		return;
 	}
 	
@@ -421,3 +424,94 @@ int Equipment::GetBootsDef()
 	return 0;
 }
 
+int Equipment::GetDefBySlot (int Num)
+{
+	if (Num>0 && Num <=8)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		int ID = *Ptr[Num-1];
+		return MyItems->GetDefenseById (ID);	
+	}
+	return 0;
+}
+
+int Equipment::GetDef2BySlot (int Num)
+{
+	if (Num>0 && Num <=8)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		int ID = *Ptr[Num-1];
+		return MyItems->GetDefense2ById (ID);	
+	}
+	return 0;
+}
+
+int Equipment::GetDef3BySlot (int Num)
+{
+	if (Num>0 && Num <=8)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		int ID = *Ptr[Num-1];
+		return MyItems->GetDefense3ById (ID);	
+	}
+	return 0;
+}
+
+int Equipment::GetDef4BySlot (int Num)
+{
+	if (Num>0 && Num <=8)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		int ID = *Ptr[Num-1];
+		return MyItems->GetDefense4ById (ID);	
+	}
+	return 0;
+}
+
+int Equipment::GetDef5BySlot (int Num)
+{
+	if (Num>0 && Num <=8)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Items *MyItems;
+		MyItems = MyGame->GetItems();
+		int ID = *Ptr[Num-1];
+		return MyItems->GetDefense5ById (ID);	
+	}
+	return 0;
+}
+
+void Equipment::LuaMakeSumOfDef ()
+{
+using namespace luabridge;
+
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\Equipment.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef MakeSumOfEq = getGlobal(L, "MakeSumOfEq");
+	  //
+	try {
+            MakeSumOfEq (Luaad);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
+
+
+}
