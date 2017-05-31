@@ -63,7 +63,7 @@ void level::PrintWeapons (int x, int y, int linear)
 	MyItems = MyGame->GetItems();
 	int TypeOfWeapon=0;
 	if (ID < 1000000)
-		TypeOfWeapon = MyItems->GetTypeOfWeapon (ID);
+		TypeOfWeapon = MyItems->GetTypeOfWeapon (1);
 	if (TypeOfWeapon == 0)
 		terminal_put (x,y,92);
 	else if ((TypeOfWeapon == 1) || (TypeOfWeapon == 2))
@@ -88,12 +88,15 @@ void level::PlaceWeapons (int Quantity)
 		coords = rand () % (LevelWidth*LevelHeight);
 		basetype = cells[coords].GetBaseType();
 		} while (basetype!= '.');
-		int QuantityTypes = MyItems->QuantityWeaponItems();
+		//int QuantityTypes = MyItems->QuantityWeaponItems();
+		int QuantityTypes = MyItems->QuantityUniqueWeapon ();
 		int WeaponType;
 		bool Stackable;
 		WeaponType = rand() % QuantityTypes;
-		Stackable = MyItems->GetStackable (WeaponType);
-		cells[coords].AddItems(WeaponType, Stackable, 1);
+		int Id = MyItems->GetIdForCreation (WeaponType);
+		cout<< "Id="<<Id<<endl;
+		Stackable = 0;
+		cells[coords].AddItems(Id, Stackable, 1);
 	}
 }
 void level::PlaceItems()

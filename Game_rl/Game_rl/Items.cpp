@@ -5,6 +5,8 @@
 using namespace std;
 Items::Items(void)
 {
+	GetUniqueWeaponsFromFile ();
+	GetCommonWeaponsFromFile ();
 }
 
 
@@ -13,29 +15,42 @@ Items::~Items(void)
 }
 int Items::GetTypeOfWeapon ( int ID)
 {
-	if (ID<1000000)
-		return Weapons[ID].Type;
+	if (ID<900000)
+		return WeaponFromLevel[ID].Type;
+	if (ID >=900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].Type;
 }
 
 bool Items::GetStackable (int ID)
 {
 
-	return Weapons[ID].Stackable;
+	if (ID<900000)
+		return WeaponFromLevel[ID].Stackable;
+	if (ID >=900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].Stackable;
 }
 
 string Items::GetNameOfWeapon (int ID)
 {
-	return Weapons[ID].RName;
+	if (ID<900000)
+		return WeaponFromLevel[ID].RName;
+	if (ID >=900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].RName;
 }
 
-int Items::QuantityWeaponItems()
+
+void Items::GetUniqueWeaponsFromFile ()
 {
-	return Weapons.size();
+	vector <map<string,string>> Temp;
+	FileContent Content;
+	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\UniqueWeapon.ini", Content);
+	X_File::X_ParseIniFile (Content, Temp);
+	InsertUniqueWeaponsInStorage (Temp);
+	return;
 }
 
-void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
+void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 {
-
 	vector <map<string,string>>::iterator p;
 	p = Temp.begin();
 	while (p!= Temp.end())
@@ -58,23 +73,104 @@ void Items::InsertWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Stackable");
 		TempWeapon.Stackable = atoi(MapPtr->second.c_str());
-		Weapons.push_back (TempWeapon);
+		MapPtr = p->find("Unique");
+		TempWeapon.Unique = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("NeedsAmmo");
+		TempWeapon.NeedsAmmo = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("IsAmmo");
+		TempWeapon.IsAmmo = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("Caliber");
+		TempWeapon.Caliber = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("AmmoQuantity");
+		TempWeapon.AmmoQuantity = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("Destroyed");
+		TempWeapon.Destroyed = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("Range");
+		TempWeapon.Range = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("BlastRadius");
+		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
+		UniqueWeapon.push_back (TempWeapon);
 		p++;
 
 	}
-
 }
 
-void Items::GetWeaponsFromFile()
+void Items::GetCommonWeaponsFromFile ()
 {
 	vector <map<string,string>> Temp;
 	FileContent Content;
-	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\Weapons.ini", Content);
+	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\UniqueWeapon.ini", Content);
 	X_File::X_ParseIniFile (Content, Temp);
-	InsertWeaponsInStorage (Temp);
-	
+	InsertCommonWeaponsInStorage (Temp);
 	return;
+}
 
+void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
+{
+	vector <map<string,string>>::iterator p;
+	p = Temp.begin();
+	while (p!= Temp.end())
+	{
+		map <string,string>::iterator MapPtr;
+		Weapon TempWeapon;
+		MapPtr = p->find("ID");
+		TempWeapon.ID = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Name");
+		TempWeapon.Name = MapPtr->second;
+		MapPtr = p->find("RName");
+		TempWeapon.RName = MapPtr->second;
+		MapPtr = p->find("Type");
+		TempWeapon.Type = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Weight");
+		TempWeapon.Weight = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("MinDamage");
+		TempWeapon.MinDamage = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("MaxDamage");
+		TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Stackable");
+		TempWeapon.Stackable = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Unique");
+		TempWeapon.Unique = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("NeedsAmmo");
+		TempWeapon.NeedsAmmo = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("IsAmmo");
+		TempWeapon.IsAmmo = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("Caliber");
+		TempWeapon.Caliber = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("AmmoQuantity");
+		TempWeapon.AmmoQuantity = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("Destroyed");
+		TempWeapon.Destroyed = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("Range");
+		TempWeapon.Range = atoi (MapPtr->second.c_str());
+		MapPtr = p->find("BlastRadius");
+		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
+		CommonWeapon.push_back (TempWeapon);
+		p++;
+
+	}
+}
+
+int Items::QuantityUniqueWeapon ()
+{
+	return UniqueWeapon.size();
+}
+
+int Items::QuantityCommonWeapon ()
+{
+	return CommonWeapon.size();
+}
+
+int Items::GetIdForCreation (int Id)
+{
+	if (Id>=900000 && Id<1000000)
+		return Id;
+	if (Id>=0 && Id<900000)
+	{
+		int size = WeaponFromLevel.size();
+		WeaponFromLevel.push_back (UniqueWeapon[Id]);
+		return size;
+	}
 }
 
 string Items::GetNameOfArmour (int ID)

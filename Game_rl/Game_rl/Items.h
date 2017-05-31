@@ -1,22 +1,29 @@
 #pragma once
 using namespace std;
 
-struct Weapon
-{
+struct Item{
 	int ID;
+	int Weight;
+	bool Unique;
 	string Name;
 	string RName;
-	int Type; // 0-рубящее, 1 - клинковое длинное, 2 - к. короткое, 3 - дробящее
-	int Weight;
+	bool Stackable;
+	int Type;
+};
+
+struct Weapon: public Item
+{
 	int MaxDamage;
 	int MinDamage;
-	bool Stackable;
-	//int Range;
-	//bool Distant;
-	//int BlastRadius; //радиус поражения
-	//bool NeedsAmmo;
-	//int AmmoID;
-	//int Accuracy; //кучность
+	bool NeedsAmmo; //нужны ли патроны
+	bool IsAmmo; //является ли зарядом/патроном
+	int Caliber; //калибр
+	int AmmoQuantity; // max количество патронов в обойме
+	vector <int> Ammo; //патроны здесь - пихаем их ID
+	int Quality; //качество - износ мб, если батарея, то заряд.
+	bool Destroyed; //если разрушено оружие, ставим 1. у not unique не учитывать.
+	int Range;  // дистанция поражения (стрельбы)
+	int BlastRadius; //радиус поражения
 };
 
 struct Armour
@@ -40,16 +47,23 @@ struct Armour
 class Items
 {
 private:
-	vector <Weapon> Weapons;
-	vector <Armour> Armours;
+	//vector <Weapon> Weapons; //удалить после рефакторинга
+	vector <Armour> Armours; // и это тоже удалить
+	vector <Weapon> UniqueWeapon;
+	vector <Weapon> CommonWeapon;
+	vector <Weapon> WeaponFromLevel;
 public:
 	Items(void);
 	~Items(void);
-	void GetWeaponsFromFile ();
-	void InsertWeaponsInStorage (vector <map<string,string>> Temp);
+	void GetUniqueWeaponsFromFile ();
+	void GetCommonWeaponsFromFile ();
+	void InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp);
+	void InsertCommonWeaponsInStorage (vector <map<string,string>> Temp);
 	void GetArmoursFromFile ();
 	void InsertArmoursInStorage ( vector <map <string, string>> Temp);
-	int QuantityWeaponItems ();
+	int QuantityUniqueWeapon();
+	int QuantityCommonWeapon ();
+	int GetIdForCreation (int Id);
 	int GetTypeOfWeapon (int ID);
 	int GetTypeOfArmour (int ID);
 	int GetType2OfArmour (int ID);

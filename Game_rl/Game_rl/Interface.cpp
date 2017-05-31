@@ -146,7 +146,7 @@ void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
 	Items *MyItems;
 	MyItems = MyGame->GetItems();
 	
-	int ItemType = MyItems ->GetTypeOfWeapon (ItemID);
+	int ItemType = MyItems ->GetTypeOfWeapon (ItemID); //подправлено ItemId на 1 временно.
 	if (ItemType == 0)
 		terminal_put (FOVX,FOVY,92);
 	else if ((ItemType == 1) || (ItemType == 2))
