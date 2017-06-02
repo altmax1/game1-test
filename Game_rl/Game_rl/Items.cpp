@@ -7,19 +7,15 @@ Items::Items(void)
 {
 	GetUniqueWeaponsFromFile ();
 	GetCommonWeaponsFromFile ();
+	GetUniqueArmourFromFile();
+	GetCommonArmourFromFile();
 }
 
 
 Items::~Items(void)
 {
 }
-int Items::GetTypeOfWeapon ( int ID)
-{
-	if (ID<900000)
-		return WeaponFromLevel[ID].Type;
-	if (ID >=900000 && ID < 1000000)
-		return CommonWeapon[ID-900000].Type;
-}
+
 
 bool Items::GetStackable (int ID)
 {
@@ -28,14 +24,11 @@ bool Items::GetStackable (int ID)
 		return WeaponFromLevel[ID].Stackable;
 	if (ID >=900000 && ID < 1000000)
 		return CommonWeapon[ID-900000].Stackable;
-}
-
-string Items::GetNameOfWeapon (int ID)
-{
-	if (ID<900000)
-		return WeaponFromLevel[ID].RName;
-	if (ID >=900000 && ID < 1000000)
-		return CommonWeapon[ID-900000].RName;
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Stackable;
+	if (ID >= 1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Stackable;
+	return 0;
 }
 
 
@@ -89,6 +82,13 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.Range = atoi (MapPtr->second.c_str());
 		MapPtr = p->find("BlastRadius");
 		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
+		try{
+		if (TempWeapon.ID != UniqueWeapon.size())
+			throw "BAD_ID_IN_UniqueWeapon";}
+		catch(char *str)//сюда передастся строка
+		{
+		    cout << str << endl;
+		}
 		UniqueWeapon.push_back (TempWeapon);
 		p++;
 
@@ -99,7 +99,7 @@ void Items::GetCommonWeaponsFromFile ()
 {
 	vector <map<string,string>> Temp;
 	FileContent Content;
-	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\UniqueWeapon.ini", Content);
+	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\CommonWeapon.ini", Content);
 	X_File::X_ParseIniFile (Content, Temp);
 	InsertCommonWeaponsInStorage (Temp);
 	return;
@@ -145,11 +145,144 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.Range = atoi (MapPtr->second.c_str());
 		MapPtr = p->find("BlastRadius");
 		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
+		try{
+		if (TempWeapon.ID-900000 != CommonWeapon.size())
+			throw "BAD_ID_IN_CommonWeapon";}
+		catch(char *str)//сюда передастся строка
+		{
+		    cout << str << endl;
+		}
 		CommonWeapon.push_back (TempWeapon);
 		p++;
 
 	}
 }
+
+void Items::GetCommonArmourFromFile ()
+{
+	vector <map<string,string>> Temp;
+	FileContent Content;
+	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\CommonArmour.ini", Content);
+	X_File::X_ParseIniFile (Content, Temp);
+	InsertCommonArmourInStorage (Temp);
+	return;
+}
+
+void Items::GetUniqueArmourFromFile ()
+{
+	vector <map<string,string>> Temp;
+	FileContent Content;
+	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\UniqueArmour.ini", Content);
+	X_File::X_ParseIniFile (Content, Temp);
+	InsertUniqueArmourInStorage (Temp);
+	return;
+}
+
+void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
+{
+	vector <map<string,string>>::iterator p;
+	p = Temp.begin();
+	while (p!= Temp.end())
+	{
+		map <string,string>::iterator MapPtr;
+		Armour TempArmour;
+		MapPtr = p->find("ID");
+		TempArmour.ID = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Name");
+		TempArmour.Name = MapPtr->second;
+		MapPtr = p->find("RName");
+		TempArmour.RName = MapPtr->second;
+		MapPtr = p->find("Type");
+		TempArmour.Type = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Weight");
+		TempArmour.Weight = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Unique");
+		TempArmour.Unique = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Stackable");
+		TempArmour.Stackable = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Type2");
+		TempArmour.Type2 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense");
+		TempArmour.Defense = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense2");
+		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense3");
+		TempArmour.Defense3 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense4");
+		TempArmour.Defense4 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense5");
+		TempArmour.Defense5 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("CanBuiltedIn");
+		TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("NumOfBuiltedInSlots");
+		TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("BuiltInType");
+		TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
+		try{
+		if (TempArmour.ID-1900000 != CommonArmour.size())
+			throw "BAD_ID_IN_ComonArmour";}
+		catch(char *str)//сюда передастся строка
+		{
+		    cout << str << endl;
+		}
+		CommonArmour.push_back (TempArmour);
+		p++;
+	}
+}
+
+void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
+{
+	vector <map<string,string>>::iterator p;
+	p = Temp.begin();
+	while (p!= Temp.end())
+	{
+		map <string,string>::iterator MapPtr;
+		Armour TempArmour;
+		MapPtr = p->find("ID");
+		TempArmour.ID = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Name");
+		TempArmour.Name = MapPtr->second;
+		MapPtr = p->find("RName");
+		TempArmour.RName = MapPtr->second;
+		MapPtr = p->find("Type");
+		TempArmour.Type = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Weight");
+		TempArmour.Weight = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Unique");
+		TempArmour.Unique = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Stackable");
+		TempArmour.Stackable = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Type2");
+		TempArmour.Type2 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense");
+		TempArmour.Defense = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense2");
+		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense3");
+		TempArmour.Defense3 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense4");
+		TempArmour.Defense4 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("Defense5");
+		TempArmour.Defense5 = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("CanBuiltedIn");
+		TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("NumOfBuiltedInSlots");
+		TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
+		MapPtr = p->find("BuiltInType");
+		TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
+		try{
+		if (TempArmour.ID-1000000 != UniqueArmour.size())
+			throw "BAD_ID_IN_UniqueArmour";}
+		catch(char *str)//сюда передастся строка
+		{
+		    cout << str << endl;
+		}
+		UniqueArmour.push_back (TempArmour);
+		p++;
+	}
+}
+
+
 
 int Items::QuantityUniqueWeapon ()
 {
@@ -171,189 +304,39 @@ int Items::GetIdForCreation (int Id)
 		WeaponFromLevel.push_back (UniqueWeapon[Id]);
 		return size;
 	}
-}
-
-string Items::GetNameOfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!=Armours.end ())
+	if (Id>=1900000 && Id<2000000)
+		return Id;
+	if (Id>=1000000 && Id< 1900000)
 	{
-		if (p->ID == ID)
-			return p->RName;
-		p++;
-	
+		int size = ArmourFromLevel.size();
+		ArmourFromLevel.push_back (UniqueArmour[Id-1000000]);
+		return size+1000000;
 	}
-	return "Not found in Armour";
 }
 
-int Items::GetTypeOfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!=Armours.end ())
-	{
-		if (p->ID == ID)
-			return p->Type;
-		p++;
-	
-	}
-	return -1;
 
-}
+
 
 int Items::GetType2OfArmour (int ID)
 {
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->Type2;
-		p++;
-	}
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Type2;
+	if (ID >=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Type2;
 	return -1;
 }
 
-int Items::GetDefenseOfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->Defense;
-		p++;
-	}
-	return -1;
-}
-
-int Items::GetDefense2OfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->Defense2;
-		p++;
-	}
-	return -1;
-}
-
-int Items::GetDefense3OfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->Defense3;
-		p++;
-	}
-	return -1;
-}
-
-int Items::GetDefense4OfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->Defense4;
-		p++;
-	}
-	return -1;
-}
-
-int Items::GetDefense5OfArmour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->Defense5;
-		p++;
-	}
-	return -1;
-}
-
-int Items::GetTypeOfDef2Armour (int ID)
-{
-	vector <Armour>::iterator p;
-	p = Armours.begin();
-	while (p!= Armours.end())
-	{
-		if (p->ID == ID)
-			return p->TypeOfDefense2;
-		p++;
-	}
-	return -1;
-
-}
-
-
-
-
-void Items::InsertArmoursInStorage ( vector <map<string,string>> Temp)
-{
-	vector <map<string,string>>::iterator p;
-	p = Temp.begin();
-	while (p!= Temp.end())
-	{
-		map <string,string>::iterator MapPtr;
-		Armour TempArmour;
-		MapPtr = p->find("ID");
-		TempArmour.ID = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Name");
-		TempArmour.Name = MapPtr->second;
-		MapPtr = p->find("RName");
-		TempArmour.RName = MapPtr->second;
-		MapPtr = p->find("Type");
-		TempArmour.Type = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Type2");
-		TempArmour.Type2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Weight");
-		TempArmour.Weight = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense");
-		TempArmour.Defense = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense2");
-		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense3");
-		TempArmour.Defense3 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense4");
-		TempArmour.Defense4 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense5");
-		TempArmour.Defense5 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("TypeOfDefense2");
-		TempArmour.TypeOfDefense2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Stackable");
-		TempArmour.Stackable = atoi(MapPtr->second.c_str());
-		Armours.push_back (TempArmour);
-		p++;
-
-	}
-	return;
-}
-
-void Items::GetArmoursFromFile ()
-{
-	vector <map<string,string>> Temp;
-	FileContent Content;
-	X_File::X_ReadFile ( (LPCTSTR)L".\\Files\\Armours.ini", Content);
-	X_File::X_ParseIniFile (Content, Temp);
-	InsertArmoursInStorage (Temp);
-	return;
-}
 
 string Items::GetNameById (int ID)
 {
-	if (ID>=0 && ID <1000000)
-		return GetNameOfWeapon (ID);
-	if (ID >= 1000000 && ID < 2000000)
-		return GetNameOfArmour (ID);
+	if (ID>=0 && ID <900000)
+		return WeaponFromLevel[ID].RName;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].RName;
+	if (ID >= 1000000 && ID <1900000)
+		return ArmourFromLevel[ID-1000000].RName;
+	if (ID >= 1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].RName;
 	return "NOT FOUND";
 
 }
@@ -361,9 +344,13 @@ string Items::GetNameById (int ID)
 int Items::GetTypeById (int ID)
 {
 	if (ID>=0 && ID <1000000)
-		return GetTypeOfWeapon (ID);
-	if (ID >= 1000000 && ID < 2000000)
-		return GetTypeOfArmour (ID);
+		return WeaponFromLevel[ID].Type;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].Type;
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Type;
+	if (ID >=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Type;
 	return -1;
 
 }
@@ -377,46 +364,50 @@ int Items::GetType2ById (int ID)
 
 int Items::GetDefenseById (int ID)
 {
-	if (ID>=1000000 && ID < 2000000)
-		return GetDefenseOfArmour (ID);
+	if (ID>=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Defense;
+	if (ID>=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Defense;
 	return 0;
 }
 
 int Items::GetDefense2ById (int ID)
 {
-	if (ID>=1000000 && ID < 2000000)
-		return GetDefense2OfArmour (ID);
+	if (ID>=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Defense2;
+	if (ID>=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Defense2;
 	return 0;
 }
 
 int Items::GetDefense3ById (int ID)
 {
-	if (ID>=1000000 && ID < 2000000)
-		return GetDefense3OfArmour (ID);
+	if (ID>=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Defense3;
+	if (ID>=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Defense3;
 	return 0;
 }
 
 int Items::GetDefense4ById (int ID)
 {
-	if (ID>=1000000 && ID < 2000000)
-		return GetDefense4OfArmour (ID);
+	if (ID>=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Defense4;
+	if (ID>=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Defense4;
 	return 0;
 }
 
 int Items::GetDefense5ById (int ID)
 {
-	if (ID>=1000000 && ID < 2000000)
-		return GetDefense5OfArmour (ID);
+	if (ID>=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Defense5;
+	if (ID>=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Defense5;
 	return 0;
 }
 
 
-int Items::GetTypeOfDefense2 (int ID)
-{
-	if (ID >=1000000 && ID < 2000000)
-		return GetTypeOfDef2Armour (ID);
-	return -1;
-}
 
 int Items::GetGlobalType (int ID)
 {

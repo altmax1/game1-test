@@ -26,32 +26,32 @@ struct Weapon: public Item
 	int BlastRadius; //радиус поражения
 };
 
-struct Armour
+struct Armour: public Item
 {
-	int ID;
-	string Name;
-	string RName;
-	int Type; // слоты занимаемые, 1 - голова, 2 - перч, 3 - тело, 4 - руки
+	//int Type -  слоты занимаемые, 1 - голова, 2 - перч, 3 - тело, 4 - руки
 	int Type2; // доп слоты если большое
-	int Weight;
 	int Defense; //физика
 	int Defense2; //ментальная
 	int Defense3; //огонь
 	int Defense4; //биологич, яд, кислота
 	int Defense5; //холод
-	int TypeOfDefense2;
-	bool Stackable;
+	bool CanBuiltedIn; //можно ли встроить что-либо
+	int NumOfBuiltedInSlots;
+	vector <int> SlotForBuiltIn;
+	int BuiltInType; // что встраивается
+		
 
 };
 
 class Items
 {
 private:
-	//vector <Weapon> Weapons; //удалить после рефакторинга
-	vector <Armour> Armours; // и это тоже удалить
 	vector <Weapon> UniqueWeapon;
 	vector <Weapon> CommonWeapon;
 	vector <Weapon> WeaponFromLevel;
+	vector <Armour> UniqueArmour;
+	vector <Armour> CommonArmour;
+	vector <Armour> ArmourFromLevel;
 public:
 	Items(void);
 	~Items(void);
@@ -59,23 +59,15 @@ public:
 	void GetCommonWeaponsFromFile ();
 	void InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp);
 	void InsertCommonWeaponsInStorage (vector <map<string,string>> Temp);
-	void GetArmoursFromFile ();
-	void InsertArmoursInStorage ( vector <map <string, string>> Temp);
-	int QuantityUniqueWeapon();
+	void GetUniqueArmourFromFile ();
+	void GetCommonArmourFromFile ();
+	void InsertUniqueArmourInStorage (vector <map<string,string>> Temp);
+	void InsertCommonArmourInStorage (vector <map<string,string>> Temp);
+	int QuantityUniqueWeapon ();
 	int QuantityCommonWeapon ();
 	int GetIdForCreation (int Id);
-	int GetTypeOfWeapon (int ID);
-	int GetTypeOfArmour (int ID);
 	int GetType2OfArmour (int ID);
-	int GetDefenseOfArmour (int ID);
-	int GetDefense2OfArmour (int ID);
-	int GetDefense3OfArmour (int ID);
-	int GetDefense4OfArmour (int ID);
-	int GetDefense5OfArmour (int ID);
-	int GetTypeOfDef2Armour (int ID);
 	bool GetStackable (int ID);
-	string GetNameOfWeapon (int ID);
-	string GetNameOfArmour (int ID);
 	string GetNameById (int ID);
 	int GetTypeById (int ID);
 	int GetType2ById (int ID);
@@ -84,7 +76,29 @@ public:
 	int GetDefense3ById (int ID);
 	int GetDefense4ById (int ID);
 	int GetDefense5ById (int ID);
-	int GetTypeOfDefense2 (int ID);
 	int GetGlobalType (int ID);
+	//-------ToDo
+	int GetWeightById (int Id);
+	int GetWeaponMaxDamage (int Id);
+	void SetWeaponMaxDamage (int Id, int MaxDamage);
+	int GetWeaponMinDamage (int Id);
+	void SetWeaponMinDamage (int Id, int MinDamage);
+	int GetWeaponNeedsAmmo (int Id);
+	int GetWeaponIsAmmo (int Id);
+	int GetWeaponCaliber (int Id);
+	int GetWeaponAmmoQuantity (int Id);
+	void SetWeaponAmmoQuantity (int Id, int Quantity);
+	int GetWeaponQuality (int Id);
+	void SetWeaponQuality (int Id, int Quality);
+	int GetWeaponIsDestroyed (int Id);
+	void SetWeaponIsDestroyed (int Id, int a);
+	int GetWeaponRange (int Id);
+	void SetWeaponRange (int Id, int Range);
+	int GetWeaponBlastRadius (int Id);
+	void SetWeaponBlastRadius (int Id, int Radius);
+	int GetWeaponNextAmmo (int Id);
+	void UnloadWeapon (int Id);
+	void ReloadWeapon (int Id);
+
 };
 

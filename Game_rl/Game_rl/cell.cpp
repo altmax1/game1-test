@@ -145,7 +145,7 @@ void X_cell::PrintItems ()
 		int nums = p->quantity;
 		_itoa (nums, tempnums, 10);
 		string stemp;
-		stemp = MyItems->GetNameOfWeapon (p->ID);
+		stemp = MyItems->GetNameById (p->ID);
 		terminal_print (startX, startY, temp);
 		terminal_print (startX+3, startY, stemp.c_str());
 		terminal_print (startX+20, startY, tempnums);

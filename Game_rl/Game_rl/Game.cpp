@@ -83,7 +83,7 @@ void Game::MakeItems()
 {
 	MyItems = new Items;
 	//MyItems->GetWeaponsFromFile();
-	MyItems->GetArmoursFromFile();
+	//MyItems->GetArmoursFromFile();
 	return;
 }
 

@@ -6,10 +6,10 @@
 
 Equipment::Equipment(void)
 {
-	HeadEq = 1000000;
-	BodyEq = 1000000;
-	ArmsEq = 1000000;
-	GlovesEq = 1000000;
+	HeadEq = -1;
+	BodyEq = -1;
+	ArmsEq = -1;
+	GlovesEq = -1;
 	LegsEq = -1;
 	BootsEq = -1;
 	LeftArmWeapon = -1;
@@ -48,7 +48,7 @@ void Equipment::PrintBorder (int MenuState)
 			terminal_wprint (MenuX, MenuY+2, L"Голова:");
 			if (HeadEq < 0)
 			terminal_wprint (MenuX+DeltaXName,MenuY+2, L"Нет");
-			else terminal_print (MenuX+DeltaXName, MenuY+2, MyItems->GetNameOfArmour (HeadEq).c_str());
+			else terminal_print (MenuX+DeltaXName, MenuY+2, MyItems->GetNameById (HeadEq).c_str());
 		}
 	
 		if (MenuState == 2)
@@ -56,7 +56,7 @@ void Equipment::PrintBorder (int MenuState)
 			terminal_wprint (MenuX, MenuY+3, L"Тело: ");
 			if (BodyEq < 0)
 			terminal_wprint (MenuX+DeltaXName,MenuY+3, L"Нет");
-			else terminal_print (MenuX+DeltaXName,MenuY+3, MyItems->GetNameOfArmour (BodyEq).c_str());
+			else terminal_print (MenuX+DeltaXName,MenuY+3, MyItems->GetNameById (BodyEq).c_str());
 		}
 	
 		if (MenuState == 3)
@@ -64,7 +64,7 @@ void Equipment::PrintBorder (int MenuState)
 			terminal_wprint (MenuX, MenuY+4, L"Руки:");
 			if (ArmsEq < 0)
 			terminal_wprint (MenuX+DeltaXName,MenuY+4, L"Нет");
-			else terminal_print (MenuX+DeltaXName, MenuY+4, MyItems->GetNameOfArmour (ArmsEq).c_str());
+			else terminal_print (MenuX+DeltaXName, MenuY+4, MyItems->GetNameById (ArmsEq).c_str());
 		}
 
 		if (MenuState == 4)
@@ -72,7 +72,7 @@ void Equipment::PrintBorder (int MenuState)
 			terminal_wprint (MenuX, MenuY+5, L"Перчатки:");
 			if (GlovesEq < 0)
 			terminal_wprint (MenuX+DeltaXName,MenuY+5, L"Нет");
-			else terminal_print (MenuX+DeltaXName,MenuY+5, MyItems->GetNameOfArmour (GlovesEq).c_str());
+			else terminal_print (MenuX+DeltaXName,MenuY+5, MyItems->GetNameById (GlovesEq).c_str());
 		}
 		
 		if (MenuState == 5)
@@ -80,14 +80,14 @@ void Equipment::PrintBorder (int MenuState)
 			terminal_wprint (MenuX, MenuY+6, L"Ноги:");
 			if (LegsEq < 0)
 			terminal_wprint (MenuX+DeltaXName,MenuY+6, L"Нет");
-			else terminal_print (MenuX+DeltaXName,MenuY+6, MyItems->GetNameOfArmour (LegsEq).c_str());
+			else terminal_print (MenuX+DeltaXName,MenuY+6, MyItems->GetNameById (LegsEq).c_str());
 		}
 		if (MenuState == 6)
 		{
 			terminal_wprint (MenuX, MenuY+7, L"Обувь:");
 			if (BootsEq < 0)
 			terminal_wprint (MenuX+DeltaXName,MenuY+7, L"Нет");
-			else terminal_print (MenuX+DeltaXName,MenuY+7, MyItems->GetNameOfArmour (BootsEq).c_str());
+			else terminal_print (MenuX+DeltaXName,MenuY+7, MyItems->GetNameById (BootsEq).c_str());
 		}
 		
 		if (MenuState == 7)
@@ -235,22 +235,22 @@ void Equipment::PrintItems ()
 
 	if (HeadEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+2, L"Нет");
-	else terminal_print (MenuX+DeltaXName, MenuY+2, MyItems->GetNameOfArmour (HeadEq).c_str());
+	else terminal_print (MenuX+DeltaXName, MenuY+2, MyItems->GetNameById (HeadEq).c_str());
 	if (BodyEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+3, L"Нет");
-	else terminal_print (MenuX+DeltaXName,MenuY+3, MyItems->GetNameOfArmour (BodyEq).c_str());
+	else terminal_print (MenuX+DeltaXName,MenuY+3, MyItems->GetNameById (BodyEq).c_str());
 	if (ArmsEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+4, L"Нет");
-	else terminal_print (MenuX+DeltaXName, MenuY+4, MyItems->GetNameOfArmour (ArmsEq).c_str());
+	else terminal_print (MenuX+DeltaXName, MenuY+4, MyItems->GetNameById (ArmsEq).c_str());
 	if (GlovesEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+5, L"Нет");
-	else terminal_print (MenuX+DeltaXName,MenuY+5, MyItems->GetNameOfArmour (GlovesEq).c_str());
+	else terminal_print (MenuX+DeltaXName,MenuY+5, MyItems->GetNameById (GlovesEq).c_str());
 	if (LegsEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+6, L"Нет");
-	else terminal_print (MenuX+DeltaXName,MenuY+6, MyItems->GetNameOfArmour (LegsEq).c_str());
+	else terminal_print (MenuX+DeltaXName,MenuY+6, MyItems->GetNameById (LegsEq).c_str());
 	if (BootsEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+7, L"Нет");
-	else terminal_print (MenuX+DeltaXName,MenuY+7, MyItems->GetNameOfArmour (BootsEq).c_str());
+	else terminal_print (MenuX+DeltaXName,MenuY+7, MyItems->GetNameById (BootsEq).c_str());
 }
 void Equipment::PrintEquipment ()
 {
