@@ -74,6 +74,6 @@ public:
 	int GetDefense3FromEquipment (int NumOfSlot);
 	int GetDefense4FromEquipment (int NumOfSlot);
 	int GetDefense5FromEquipment (int NumOfSlot);
-	
+	int GetItemIdBySlot (int Slot);
 };
 

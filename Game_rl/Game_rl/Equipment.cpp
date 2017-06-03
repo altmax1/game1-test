@@ -494,6 +494,22 @@ int Equipment::GetDef5BySlot (int Num)
 	return 0;
 }
 
+int Equipment::GetIdBySlot (int Slot)
+{
+	if (Slot >= 1 && Slot <=8)
+	{
+		return *Ptr[Slot-1];
+	}
+	try{
+		throw "BAD_SLOT_ID_IN_Equipment::GetIdBySlot";}
+	catch(char *str)//сюда передастся строка
+		{
+		    cout << str << endl;
+			return -1;
+		}
+
+}
+
 void Equipment::LuaMakeSumOfDef ()
 {
 using namespace luabridge;

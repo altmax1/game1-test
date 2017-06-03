@@ -7,6 +7,7 @@ private:
 	level *MyLevel;
 	Gamer *MyGamer;
 	Bestiary *MyBestiary;
+	Items *MyItems;
 	
 public:
 	void LuaDesc (lua_State *L);
@@ -76,6 +77,32 @@ public:
 	int GetDefense3BySlot (int NumOfSlot);
 	int GetDefense4BySlot (int NumOfSlot);
 	int GetDefense5BySlot (int NumOfSlot);
+
+	int GetItemIdBySlot (int SlotNum);
+	int GetTypeById (int ID);
+	int GetType2ById (int ID);
+	int GetWeightById (int Id);
+	int GetWeaponMaxDamage (int Id);
+	void SetWeaponMaxDamage (int Id, int MaxDamage);
+	int GetWeaponMinDamage (int Id);
+	void SetWeaponMinDamage (int Id, int MinDamage);
+	int GetWeaponNeedsAmmo (int Id);
+	int GetWeaponIsAmmo (int Id);
+	int GetWeaponCaliber (int Id);
+	int GetWeaponAmmoQuantity (int Id);
+	void SetWeaponAmmoQuantity (int Id, int Quantity);
+	int GetWeaponCurrentAmmoQuantity (int Id);
+	int GetQuality (int Id);
+	void SetQuality (int Id, int Quality);
+	int GetIsDestroyed (int Id);
+	void SetIsDestroyed (int Id, int a);
+	int GetWeaponRange (int Id);
+	void SetWeaponRange (int Id, int Range);
+	int GetWeaponBlastRadius (int Id);
+	void SetWeaponBlastRadius (int Id, int Radius);
+	int GetWeaponNextAmmo (int Id);
+	void UnloadWeapon (int Id);
+	void ReloadWeapon (int Id);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

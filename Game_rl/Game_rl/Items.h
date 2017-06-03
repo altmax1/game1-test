@@ -9,6 +9,8 @@ struct Item{
 	string RName;
 	bool Stackable;
 	int Type;
+	int Quality; //качество - износ мб, если батарея, то заряд.
+	bool Destroyed; //если разрушено, ставим 1. у not unique не учитывать.
 };
 
 struct Weapon: public Item
@@ -20,8 +22,6 @@ struct Weapon: public Item
 	int Caliber; //калибр
 	int AmmoQuantity; // max количество патронов в обойме
 	vector <int> Ammo; //патроны здесь - пихаем их ID
-	int Quality; //качество - износ мб, если батарея, то заряд.
-	bool Destroyed; //если разрушено оружие, ставим 1. у not unique не учитывать.
 	int Range;  // дистанция поражения (стрельбы)
 	int BlastRadius; //радиус поражения
 };
@@ -88,10 +88,11 @@ public:
 	int GetWeaponCaliber (int Id);
 	int GetWeaponAmmoQuantity (int Id);
 	void SetWeaponAmmoQuantity (int Id, int Quantity);
-	int GetWeaponQuality (int Id);
-	void SetWeaponQuality (int Id, int Quality);
-	int GetWeaponIsDestroyed (int Id);
-	void SetWeaponIsDestroyed (int Id, int a);
+	int GetWeaponCurrentAmmoQuantity (int Id);
+	int GetQuality (int Id);
+	void SetQuality (int Id, int Quality);
+	int GetIsDestroyed (int Id);
+	void SetIsDestroyed (int Id, int a);
 	int GetWeaponRange (int Id);
 	void SetWeaponRange (int Id, int Range);
 	int GetWeaponBlastRadius (int Id);

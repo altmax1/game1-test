@@ -343,7 +343,7 @@ string Items::GetNameById (int ID)
 
 int Items::GetTypeById (int ID)
 {
-	if (ID>=0 && ID <1000000)
+	if (ID>=0 && ID <900000)
 		return WeaponFromLevel[ID].Type;
 	if (ID >= 900000 && ID < 1000000)
 		return CommonWeapon[ID-900000].Type;
@@ -416,4 +416,213 @@ int Items::GetGlobalType (int ID)
 	if (ID >= 1000000 && ID < 2000000)
 		return 1; // 1 - броня и одежда
 	return -1;
+}
+
+int Items::GetWeightById (int ID)
+{
+	if (ID>=0 && ID <900000)
+		return WeaponFromLevel[ID].Weight;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].Weight;
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].Weight;
+	if (ID >=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].Weight;
+	return 0;
+}
+
+int Items::GetWeaponMaxDamage (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].MaxDamage;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].MaxDamage;
+	return 0;
+}
+
+void Items::SetWeaponMaxDamage (int Id, int MaxDamage)
+{
+	if (Id>=0 && Id<900000)
+		WeaponFromLevel[Id].MaxDamage = MaxDamage;
+	if (Id>=900000 && Id < 1000000)
+		CommonWeapon[Id-900000].MaxDamage = MaxDamage;
+}
+
+int Items::GetWeaponMinDamage (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].MinDamage;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].MinDamage;
+	return 0;
+}
+
+void Items::SetWeaponMinDamage (int Id, int MinDamage)
+{
+	if (Id>=0 && Id<900000)
+		WeaponFromLevel[Id].MinDamage = MinDamage;
+	if (Id>=900000 && Id < 1000000)
+		CommonWeapon[Id-900000].MinDamage = MinDamage;
+}
+
+int Items::GetWeaponNeedsAmmo (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].NeedsAmmo;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].NeedsAmmo;
+	return 0;
+}
+
+int Items::GetWeaponIsAmmo (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].IsAmmo;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].IsAmmo;
+	return 0;
+}
+
+int Items::GetWeaponCaliber (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].Caliber;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].Caliber;
+	return 0;
+}
+
+int Items::GetWeaponAmmoQuantity (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].AmmoQuantity;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].AmmoQuantity;
+	return 0;
+}
+
+void Items::SetWeaponAmmoQuantity (int Id, int Quantity)
+{
+	if (Id>=0 && Id<900000)
+		WeaponFromLevel[Id].AmmoQuantity = Quantity;
+	if (Id>=900000 && Id < 1000000)
+		CommonWeapon[Id-900000].AmmoQuantity = Quantity;
+}
+
+int  Items::GetWeaponCurrentAmmoQuantity (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].Ammo.size();
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].Ammo.size();
+	return 0;
+}
+
+int Items::GetQuality (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].Quality;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].Quality;
+	return 0;
+}
+
+void Items::SetQuality (int Id, int Quality)
+{
+	if (Id>=0 && Id<900000)
+		WeaponFromLevel[Id].Quality = Quality;
+	if (Id>=900000 && Id < 1000000)
+		CommonWeapon[Id-900000].Quality = Quality;
+}
+
+//void Items::SetWeaponAmmoQuantity (int Id, int Quality)
+//{
+//	if (Id>=0 && Id<900000)
+//		WeaponFromLevel[Id].Quality = Quality;
+//	if (Id>=900000 && Id < 1000000)
+//		CommonWeapon[Id-900000].Quality = Quality;
+//}
+
+int Items::GetIsDestroyed (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].Destroyed;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].Destroyed;
+	return 0;
+}
+
+void Items::SetIsDestroyed (int Id, int a)
+{
+	if (Id>=0 && Id<900000)
+	{	
+		if (a==0)
+			WeaponFromLevel[Id].Destroyed = 0;
+		else 
+			WeaponFromLevel[Id].Destroyed = 1;
+	}
+	if (Id>=900000 && Id < 1000000)
+	{
+		if (a==0)
+			CommonWeapon[Id-900000].Destroyed = 0;
+		else
+			CommonWeapon[Id-900000].Destroyed = 1;
+	}
+}
+
+int Items::GetWeaponRange (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].Range;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].Range;
+	return 0;
+}
+
+void Items::SetWeaponRange (int Id, int Range)
+{
+	if (Id>=0 && Id<900000)
+		WeaponFromLevel[Id].Range = Range;
+	if (Id>=900000 && Id < 1000000)
+		CommonWeapon[Id-900000].Range = Range;
+}
+
+int Items::GetWeaponBlastRadius (int Id)
+{
+	if (Id>=0 && Id<900000)
+		return WeaponFromLevel[Id].BlastRadius;
+	if (Id>=900000 && Id<1000000)
+		return CommonWeapon[Id-900000].BlastRadius;
+	return 0;
+}
+
+void Items::SetWeaponBlastRadius (int Id, int Radius)
+{
+	if (Id>=0 && Id<900000)
+		WeaponFromLevel[Id].BlastRadius = Radius;
+	if (Id>=900000 && Id < 1000000)
+		CommonWeapon[Id-900000].BlastRadius = Radius;
+}
+
+int Items::GetWeaponNextAmmo (int Id)
+{
+	if (Id>=0 && Id<900000)
+		if (WeaponFromLevel[Id].Ammo.size()>0)
+			return WeaponFromLevel[Id].Ammo.back();
+		else return -1;
+	if (Id>=900000 && Id<1000000)
+		if (CommonWeapon[Id-900000].Ammo.size()>0)
+			return CommonWeapon[Id-900000].Ammo.back();
+		else return -1;
+	return 0;
+}
+
+void Items::UnloadWeapon (int Id)
+{
+	return;
+}
+
+void Items::ReloadWeapon (int Id)
+{
+	return;
 }

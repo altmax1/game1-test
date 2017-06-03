@@ -40,6 +40,7 @@ public:
 	int GetDef3BySlot (int Num);
 	int GetDef4BySlot (int Num);
 	int GetDef5BySlot (int Num);
+	int GetIdBySlot (int Slot);
 	void LuaMakeSumOfDef ();
 
 };

@@ -9,6 +9,7 @@ LuaAdapter::LuaAdapter(void)
 	MyLevel = MyGame->GetLevel();
 	MyGamer = MyGame->GetGamer();
 	MyBestiary = MyGame->GetBestiary();
+	MyItems = MyGame->GetItems();
 	
 }
 
@@ -35,7 +36,6 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetCreature", &LuaAdapter::SetCreature)
 			.addFunction ("AttackBeastByNum", &LuaAdapter::AttackBeastByNum)
 			.addFunction ("LOS", &LuaAdapter::LOS)
-			.addFunction ("PathFind", &LuaAdapter::PathFind)
 			.addFunction ("GetBeastHP", &LuaAdapter::GetBeastHP)
 			.addFunction ("SetBeastHP", &LuaAdapter::SetBeastHP)
 			.addFunction ("GetBeastCoordX", &LuaAdapter::GetBeastCoordX)
@@ -57,6 +57,31 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetDefense3OfSlot", &LuaAdapter::GetDefense3BySlot)
 			.addFunction ("GetDefense4OfSlot", &LuaAdapter::GetDefense4BySlot)
 			.addFunction ("GetDefense5OfSlot", &LuaAdapter::GetDefense5BySlot)
+			.addFunction ("GetIdByGamerSlot", &LuaAdapter::GetItemIdBySlot)
+			.addFunction ("GetItemTypeById", &LuaAdapter::GetTypeById)
+			.addFunction ("GetItemType2ById", &LuaAdapter::GetType2ById)
+			.addFunction ("GetItemWeightById", &LuaAdapter::GetWeightById)
+			.addFunction ("GetWeaponMaxDamage", &LuaAdapter::GetWeaponMaxDamage)
+			.addFunction ("SetWeaponMaxDamage", &LuaAdapter::SetWeaponMaxDamage)
+			.addFunction ("GetWeaponMinDamage", &LuaAdapter::GetWeaponMinDamage)
+			.addFunction ("SetWeaponMinDamage", &LuaAdapter::SetWeaponMinDamage)
+			.addFunction ("GetWeaponNeedsAmmo", &LuaAdapter::GetWeaponNeedsAmmo)
+			.addFunction ("GetWeaponIsAmmo", &LuaAdapter::GetWeaponIsAmmo)
+			.addFunction ("GetWeaponCalober", &LuaAdapter::GetWeaponCaliber)
+			.addFunction ("GetWeaponAmmoQuantity", &LuaAdapter::GetWeaponAmmoQuantity)
+			.addFunction ("SetWeaponAmmoQuantity", &LuaAdapter::SetWeaponAmmoQuantity)
+			.addFunction ("GetWeaponCurrentAmmuQuantity", &LuaAdapter::GetWeaponCurrentAmmoQuantity)
+			.addFunction ("GetItemQuality", &LuaAdapter::GetQuality)
+			.addFunction ("SetItemQuality", &LuaAdapter::SetQuality)
+			.addFunction ("GetIsDestroyed", &LuaAdapter::GetIsDestroyed)
+			.addFunction ("SetIsDestroyed", &LuaAdapter::SetIsDestroyed)
+			.addFunction ("GetWeaponRange", &LuaAdapter::GetWeaponRange)
+			.addFunction ("SetWeaponRange", &LuaAdapter::SetWeaponRange)
+			.addFunction ("GetWeaponBlastRadius", &LuaAdapter::GetWeaponBlastRadius)
+			.addFunction ("SetWeaponBlastRadius", &LuaAdapter::SetWeaponBlastRadius)
+			.addFunction ("GetWeaponNextAmmo", &LuaAdapter::GetWeaponNextAmmo)
+			.addFunction ("UnloadWeapon", &LuaAdapter::UnloadWeapon)
+			.addFunction ("ReloadWeapon", &LuaAdapter::ReloadWeapon)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -450,4 +475,129 @@ int LuaAdapter::GetDefense4BySlot (int NumOfSlot)
 int LuaAdapter::GetDefense5BySlot (int NumOfSlot)
 {
 	return MyGamer->GetDefense5FromEquipment (NumOfSlot);
+}
+
+int LuaAdapter::GetItemIdBySlot (int Slot)
+{
+	return MyGamer->GetItemIdBySlot (Slot);
+}
+
+int LuaAdapter::GetWeightById (int Id)
+{
+	return MyItems->GetWeightById (Id);
+}
+
+int LuaAdapter::GetTypeById (int Id)
+{
+	return MyItems->GetTypeById (Id);
+}
+
+int LuaAdapter::GetType2ById (int Id)
+{
+	return MyItems->GetType2ById (Id);
+}
+
+int LuaAdapter::GetWeaponMaxDamage (int Id)
+{
+	return MyItems->GetWeaponMaxDamage (Id);
+}
+
+void LuaAdapter::SetWeaponMaxDamage (int Id, int MaxDamage)
+{
+	MyItems->SetWeaponMaxDamage (Id, MaxDamage);
+}
+
+int LuaAdapter::GetWeaponMinDamage (int Id)
+{
+	return MyItems->GetWeaponMinDamage (Id);
+}
+
+void LuaAdapter::SetWeaponMinDamage (int Id, int MinDamage)
+{
+	MyItems->SetWeaponMinDamage (Id,MinDamage);
+}
+
+int LuaAdapter::GetWeaponNeedsAmmo (int Id)
+{
+	return MyItems->GetWeaponNeedsAmmo (Id);
+}
+
+int LuaAdapter::GetWeaponIsAmmo (int Id)
+{
+	return MyItems->GetWeaponIsAmmo(Id);
+}
+
+int LuaAdapter::GetWeaponCaliber (int Id)
+{
+	return MyItems->GetWeaponCaliber(Id);
+}
+
+int LuaAdapter::GetWeaponAmmoQuantity (int Id)
+{
+	return MyItems->GetWeaponAmmoQuantity (Id);
+}
+
+void LuaAdapter::SetWeaponAmmoQuantity (int Id, int Quantity)
+{
+	MyItems->SetWeaponAmmoQuantity(Id,Quantity);
+}
+
+int LuaAdapter::GetWeaponCurrentAmmoQuantity (int Id)
+{
+	return MyItems->GetWeaponCurrentAmmoQuantity (Id);
+}
+
+int LuaAdapter::GetQuality (int Id)
+{
+	return MyItems->GetQuality (Id);
+}
+
+void LuaAdapter::SetQuality (int Id, int Quality)
+{
+	MyItems->SetQuality (Id, Quality);
+}
+
+int LuaAdapter::GetIsDestroyed (int Id)
+{
+	return MyItems->GetIsDestroyed (Id);
+}
+
+void LuaAdapter::SetIsDestroyed (int Id, int a)
+{
+	MyItems->SetIsDestroyed (Id, a);
+}
+
+int LuaAdapter::GetWeaponRange (int Id)
+{
+	return MyItems->GetWeaponRange (Id);
+}
+
+void LuaAdapter::SetWeaponRange (int Id, int Range)
+{
+	MyItems->SetWeaponRange (Id, Range);
+}
+
+int LuaAdapter::GetWeaponBlastRadius (int Id)
+{
+	return MyItems->GetWeaponBlastRadius (Id);
+}
+
+void LuaAdapter::SetWeaponBlastRadius (int Id, int Radius)
+{
+	MyItems->SetWeaponBlastRadius (Id, Radius);
+}
+
+int LuaAdapter::GetWeaponNextAmmo (int Id)
+{
+	return MyItems->GetWeaponNextAmmo (Id);
+}
+
+void LuaAdapter::UnloadWeapon (int Id)
+{
+	MyItems->UnloadWeapon (Id);
+}
+
+void LuaAdapter::ReloadWeapon (int Id)
+{
+	MyItems->ReloadWeapon (Id);
 }

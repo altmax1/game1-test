@@ -323,3 +323,8 @@ int Gamer::GetDefense5FromEquipment (int NumOfSlot)
 {
 	return MyEquipment->GetDef5BySlot (NumOfSlot);
 }
+
+int Gamer::GetItemIdBySlot (int Slot)
+{
+	return MyEquipment->GetIdBySlot (Slot);
+}
