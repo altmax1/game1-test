@@ -193,6 +193,8 @@ void Interface::PrintFOV ()
 			{
 				terminal_layer (10);
 				terminal_put (x+1,y+1, 64);
+				GamerCoordXInTerminal = x+1;
+				GamerCoordYInTerminal = y+1;
 				terminal_layer (0);
 			}
 			ItemCounter = Mylevel->GetQuantityItemsOnCell (x+LeftUpX,y+LeftUpY);
@@ -209,4 +211,46 @@ void Interface::PrintFOV ()
 	PrintBorder();
 	PrintMiniMap ();
 	return;
+}
+
+int Interface::SelectTarget ()
+{
+	terminal_layer(100);
+	int TempX = GamerCoordXInTerminal;
+	int TempY = GamerCoordYInTerminal;
+	while (1)
+	{
+		terminal_put (TempX, TempY, 0x1000);
+		terminal_refresh();
+		int a = terminal_read();
+		if (a == TK_ESCAPE)
+		{
+			terminal_clear_area(1,1,FOVWidth, FOVHeight);
+			terminal_layer (0);
+			return 0;
+		}
+		if (a==TK_RIGHT || a== TK_KP_6)
+			if (TempX < FOVWidth)
+				TempX++;
+		if (a==TK_LEFT || a == TK_KP_4)
+			if (TempX>1)
+				TempX--;
+		if (a== TK_DOWN || a == TK_KP_2)
+			if (TempY < FOVHeight)
+				TempY++;
+		if (a == TK_UP || a == TK_KP_8)
+			if (TempY>1)
+				TempY--;
+		terminal_clear_area(1,1,FOVWidth, FOVHeight);
+		if (a == TK_ENTER)
+		{
+			int DeltaX = TempX-GamerCoordXInTerminal;
+			int DeltaY = TempY-GamerCoordYInTerminal;
+			int TargetX = GamerCoordX+DeltaX;
+			int TargetY = GamerCoordY+DeltaY;
+			return TargetX*1000+TargetY;
+		}
+
+	}
+	return 0;
 }

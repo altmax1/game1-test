@@ -129,6 +129,10 @@ void Game::GameInit()
 	KeyCode = terminal_read();
 	if (KeyCode == TK_ESCAPE)
 		break;
+	if (KeyCode == TK_F)
+	{
+		MyInterface->SelectTarget ();
+	}
 	MyGamer->Move(KeyCode);
 	MakeAIMove();
 	}

@@ -15,6 +15,8 @@ private:
 	int GamerCoordY;
 	int MiniMapCoordX;		//координаты миникарты
 	int MiniMapCoordY;
+	int GamerCoordXInTerminal;
+	int GamerCoordYInTerminal;
 
 public:
 	void ReadIniFile ();
@@ -25,6 +27,7 @@ public:
 	void CorrectLeftUp (int &x, int &y);
 	void PrintItems (int BaseX, int BaseY, int FOVX, int FOVY);
 	void PrintMiniMapBorder ();
+	int SelectTarget ();
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
 	Interface(void);
 	~Interface(void);
