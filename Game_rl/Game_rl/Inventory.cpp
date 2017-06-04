@@ -258,7 +258,7 @@ void Inventory::DropItem ()
 
 }
 
-void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Type)
+void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Slot)
 {
 	Game *MyGame;
 	MyGame = Game::GetGameInstance();
@@ -267,15 +267,31 @@ void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Type)
 	vector <InventoryCell>::iterator p;
 	p = MyInventory.begin();
 	int IterC = 0;
+	if (Slot>=1 && Slot <=6)
+	{
 	while (p!=MyInventory.end())
 	{
-		if ( (MyItems->GetGlobalType (p->ID) == GlobalType) && (MyItems->GetTypeById (p->ID) == Type))
+		if ( (MyItems->GetGlobalType (p->ID) == GlobalType) && (MyItems->GetTypeById (p->ID) == Slot))
 			temp.push_back (IterC);
 		
 		p++;
 		IterC++;
 			
 	}
+	}
+	if (Slot==7 || Slot==8)
+	{
+		while (p!=MyInventory.end())
+	{
+		if (( MyItems->GetGlobalType (p->ID)) == 0 && (MyItems->GetTypeById (p->ID)) >=0 && 
+			(MyItems->GetTypeById (p->ID) <100))
+				temp.push_back (IterC);
+		p++;
+		IterC++;
+		
+	}
+	}
+
 	return;
 }
 

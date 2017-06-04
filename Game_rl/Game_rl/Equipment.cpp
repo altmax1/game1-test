@@ -24,8 +24,8 @@ Equipment::Equipment(void)
 	Ptr[3] = &GlovesEq;
 	Ptr[4] = &LegsEq;
 	Ptr[5] = &BootsEq;
-	Ptr[6] = &LeftArmWeapon;
-	Ptr[7] = &RightArmWeapon;
+	Ptr[7] = &LeftArmWeapon;
+	Ptr[6] = &RightArmWeapon;
 
 }
 
@@ -93,10 +93,19 @@ void Equipment::PrintBorder (int MenuState)
 		if (MenuState == 7)
 		{
 			terminal_wprint (MenuX, MenuY+11, L"Правая рука:");
+			if (RightArmWeapon <0 )
+				terminal_wprint (MenuX+DeltaXName, MenuY+11, L"Нет");
+			else 
+				terminal_print (MenuX+DeltaXName, MenuY+11, MyItems->GetNameById (RightArmWeapon).c_str());
+
 		}
 		if (MenuState == 8)
 		{
-			terminal_wprint (MenuX, MenuY+12, L"ГЛевая рука:");
+			terminal_wprint (MenuX, MenuY+12, L"Левая рука:");
+			if (LeftArmWeapon <0 )
+				terminal_wprint (MenuX+DeltaXName, MenuY+12, L"Нет");
+			else 
+				terminal_print (MenuX+DeltaXName, MenuY+12, MyItems->GetNameById (LeftArmWeapon).c_str());
 		}
 		
 		terminal_refresh();
@@ -179,8 +188,11 @@ void Equipment::WearThisItem (int Num)
 
 	int ID = MyInventory->GetIdByNum (Num);
 	int Type = MyItems->GetTypeById (ID);
-	if (Type >0 && Type <=8)
+	int GlobalType = MyItems->GetGlobalType (ID);
+	if (Type >0 && Type <=8 && GlobalType == 1)
 		*Ptr [Type-1] = ID;  
+	if (GlobalType==0)
+		*Ptr [6] = ID;
 	MyInventory->RemoveItemFromVector (Num,1);
 	LuaMakeSumOfDef();
 	return;
@@ -231,7 +243,7 @@ void Equipment::PrintItems ()
 	terminal_wprint (MenuX, MenuY+7, L"Обувь:");
 	terminal_wprint (MenuX, MenuY+9, L"Оборудование/вооружение:");
 	terminal_wprint (MenuX, MenuY+11, L"Правая рука:");
-	terminal_wprint (MenuX, MenuY+12, L"ГЛевая рука:");
+	terminal_wprint (MenuX, MenuY+12, L"Левая рука:");
 
 	if (HeadEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+2, L"Нет");
@@ -251,6 +263,14 @@ void Equipment::PrintItems ()
 	if (BootsEq < 0)
 		terminal_wprint (MenuX+DeltaXName,MenuY+7, L"Нет");
 	else terminal_print (MenuX+DeltaXName,MenuY+7, MyItems->GetNameById (BootsEq).c_str());
+	if (RightArmWeapon<0)
+		terminal_wprint (MenuX+DeltaXName,MenuY+11, L"Нет");
+	else
+		terminal_print (MenuX+DeltaXName,MenuY+11, MyItems->GetNameById (RightArmWeapon).c_str());
+	if (LeftArmWeapon<0)
+		terminal_wprint (MenuX+DeltaXName,MenuY+12, L"Нет");
+	else
+		terminal_print (MenuX+DeltaXName,MenuY+12, MyItems->GetNameById (LeftArmWeapon).c_str());
 }
 void Equipment::PrintEquipment ()
 {
