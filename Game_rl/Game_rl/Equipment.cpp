@@ -96,7 +96,19 @@ void Equipment::PrintBorder (int MenuState)
 			if (RightArmWeapon <0 )
 				terminal_wprint (MenuX+DeltaXName, MenuY+11, L"Нет");
 			else 
+			{
 				terminal_print (MenuX+DeltaXName, MenuY+11, MyItems->GetNameById (RightArmWeapon).c_str());
+				if (MyItems->GetWeaponNeedsAmmo(RightArmWeapon) == 1)
+				{
+					int AmmoQuantity = MyItems->GetWeaponCurrentAmmoQuantity (RightArmWeapon);
+					string temp = MyItems->GetNameById (RightArmWeapon).c_str();
+					char *tempchar = new char [4];
+					_itoa (AmmoQuantity, tempchar, 10);
+					temp = temp+'('+tempchar+')';
+					delete [] tempchar;
+					terminal_print (MenuX+DeltaXName, MenuY+11, temp.c_str());
+				}
+			}
 
 		}
 		if (MenuState == 8)

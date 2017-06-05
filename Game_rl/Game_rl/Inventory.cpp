@@ -62,13 +62,23 @@ void Inventory::PrintItems()
 		_itoa (nums, tempnums, 10);
 		string stemp;
 		stemp = MyItems->GetNameById (p->ID);
+		if (MyItems->GetGlobalType(p->ID) == 0) // если с патронами - рисуем количество
+			if (MyItems->GetWeaponNeedsAmmo(p->ID) == 1)
+			{
+				int NumAmmo = MyItems->GetWeaponCurrentAmmoQuantity (p->ID);
+				char *temp3 = new char [4];
+				_itoa (NumAmmo, temp3, 10);
+				stemp = stemp +'('+temp3+')';
+				delete [] temp3;
+			}
 		terminal_print (startX, startY, temp);
 		terminal_print (startX+3, startY, stemp.c_str());
-		terminal_print (startX+20, startY, tempnums);
+		terminal_print (startX+30, startY, tempnums);
 		p++;
 		startY++; startY++;
 		iter++;
 		delete [] temp ;
+		delete [] tempnums;
 	
 	}
 	return;
@@ -309,8 +319,29 @@ int Inventory::GetIdByNum (int Num)
 
 int Inventory::GetQuantityByNum (int Num)
 {
-	if ( Num>0 && Num < MyInventory.size ()) 
+	if ( Num>=0 && Num < MyInventory.size ()) 
 		return MyInventory[Num].Quantity;
 	return -1;
+}
+
+void Inventory::FindItemsByCaliber (vector <int> &temp, int Caliber)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Items *MyItems;
+	MyItems = MyGame->GetItems();
+	vector <InventoryCell>::iterator p;
+	p = MyInventory.begin();
+	int IterC=0;
+	while (p!=MyInventory.end())
+	{
+		if (MyItems->GetGlobalType (p->ID) == 0)
+			if (MyItems->GetWeaponIsAmmo (p->ID) == 1)
+				if (MyItems->GetWeaponCaliber(p->ID) == Caliber)
+					temp.push_back (IterC);
+		p++;
+		IterC++;
+	
+	}
 }
 

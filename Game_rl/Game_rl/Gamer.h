@@ -2,6 +2,7 @@
 #include "level.h"
 #include "Inventory.h"
 #include "Equipment.h"
+#include "Items.h"
 
 class Gamer
 {
@@ -27,6 +28,7 @@ private:
 	level *MyLevel;
 	Inventory *MyInventory;
 	Equipment *MyEquipment;
+	Items *MyItems;
 public:
 	Gamer(void);
 	Gamer (level *LevelPtr);
@@ -75,5 +77,6 @@ public:
 	int GetDefense4FromEquipment (int NumOfSlot);
 	int GetDefense5FromEquipment (int NumOfSlot);
 	int GetItemIdBySlot (int Slot);
+	void ReloadWeapon ();
 };
 

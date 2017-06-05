@@ -622,7 +622,9 @@ void Items::UnloadWeapon (int Id)
 	return;
 }
 
-void Items::ReloadWeapon (int Id)
+void Items::LoadWeapon (int Id, int AmmoId, int AmmoQuantity)
 {
+	for (int i=0;i<AmmoQuantity; i++)
+		WeaponFromLevel[Id].Ammo.push_back (AmmoId);
 	return;
 }

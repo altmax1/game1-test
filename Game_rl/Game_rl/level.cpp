@@ -98,6 +98,19 @@ void level::PlaceWeapons (int Quantity)
 		Stackable = 0;
 		cells[coords].AddItems(Id, Stackable, 1);
 	}
+
+	for (int i = 0; i< 10; i++)
+	{
+		int coords;
+		char basetype;
+		do {
+		coords = rand () % (LevelWidth*LevelHeight);
+		basetype = cells[coords].GetBaseType();
+		} while (basetype!= '.');
+		int Quant2 = rand () %20;
+		cells[coords].AddItems(900001,1,Quant2);
+
+	}
 }
 void level::PlaceItems()
 {

@@ -599,5 +599,5 @@ void LuaAdapter::UnloadWeapon (int Id)
 
 void LuaAdapter::ReloadWeapon (int Id)
 {
-	MyItems->ReloadWeapon (Id);
+	MyGamer->ReloadWeapon();
 }

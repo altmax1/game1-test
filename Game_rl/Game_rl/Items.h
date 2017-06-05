@@ -99,7 +99,7 @@ public:
 	void SetWeaponBlastRadius (int Id, int Radius);
 	int GetWeaponNextAmmo (int Id);
 	void UnloadWeapon (int Id);
-	void ReloadWeapon (int Id);
+	void LoadWeapon (int Id, int AmmoId, int AmmoQuantity);
 
 };
 

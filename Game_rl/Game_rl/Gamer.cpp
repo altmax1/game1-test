@@ -14,6 +14,9 @@ Gamer::Gamer (level *LevelPtr)
 	MyInventory = new Inventory;
 	MyEquipment = new Equipment;
 	 MyLevel= LevelPtr;
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyItems = MyGame->GetItems();
 }
 
 Gamer::~Gamer(void)
@@ -225,6 +228,9 @@ void Gamer::Move (int Direction)
 		return;
 	}
 
+	if (Direction == TK_R)
+		ReloadWeapon();
+
 	GamerMoveLua (Direction);
 
 	/*if (Direction == TK_UP || Direction == TK_KP_8)
@@ -327,4 +333,46 @@ int Gamer::GetDefense5FromEquipment (int NumOfSlot)
 int Gamer::GetItemIdBySlot (int Slot)
 {
 	return MyEquipment->GetIdBySlot (Slot);
+}
+
+void Gamer::ReloadWeapon ()
+{
+	int Id = MyEquipment->GetIdBySlot (7);
+	if (Id<0)
+		return;
+	if (MyItems->GetGlobalType(Id) !=0)
+		return;
+	if (MyItems->GetWeaponNeedsAmmo(Id) == 0)
+		return;
+	int CurrentAmmo = MyItems->GetWeaponCurrentAmmoQuantity(Id);
+	int AmmoQuantity = MyItems->GetWeaponAmmoQuantity(Id);
+	int DeltaAmmo = AmmoQuantity-CurrentAmmo;
+	if (CurrentAmmo >= AmmoQuantity)
+		return;
+	vector<int> temp;
+	MyInventory->FindItemsByCaliber (temp, MyItems->GetWeaponCaliber (Id));
+	if (temp.size() ==0)
+		return;
+	vector<int>::iterator p;
+	p = temp.begin ();
+	while (p!= temp.end())
+	{
+		int AmmoInventoryQuantity = MyInventory->GetQuantityByNum (*p);
+		if (AmmoInventoryQuantity>= DeltaAmmo)
+		{
+			int AmmoId = MyInventory->GetIdByNum (*p);
+			MyInventory->RemoveItemFromVector (*p, DeltaAmmo);
+			MyItems->LoadWeapon (Id, AmmoId, DeltaAmmo);
+			break;
+		}
+
+		if (AmmoInventoryQuantity<DeltaAmmo)
+		{
+			int AmmoId = MyInventory->GetIdByNum (*p);
+			MyInventory->RemoveItemFromVector (*p, AmmoInventoryQuantity);
+			MyItems->LoadWeapon (Id, AmmoId,AmmoInventoryQuantity);
+		}
+		p++;
+	}
+	return;
 }

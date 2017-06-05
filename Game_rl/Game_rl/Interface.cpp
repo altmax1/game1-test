@@ -151,6 +151,10 @@ void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
 		terminal_put (FOVX,FOVY,92);
 	else if ((ItemType == 1) || (ItemType == 2))
 		terminal_put (FOVX,FOVY,124);
+	else if (ItemType>=10 && ItemType<20)
+		terminal_put (FOVX, FOVY,0x00B6);
+	else if (ItemType>=20 && ItemType<30)
+		terminal_put (FOVX, FOVY, 0x00B9);
 	else terminal_put (FOVX,FOVY, 37);
 	if ((Mylevel->GetQuantityItemsOnCell(BaseX, BaseY))>1)
 	{
