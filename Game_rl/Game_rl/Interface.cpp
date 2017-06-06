@@ -252,6 +252,7 @@ int Interface::SelectTarget ()
 			int DeltaY = TempY-GamerCoordYInTerminal;
 			int TargetX = GamerCoordX+DeltaX;
 			int TargetY = GamerCoordY+DeltaY;
+			terminal_layer(0);
 			return TargetX*1000+TargetY;
 		}
 

@@ -35,6 +35,7 @@ public:
 	~Gamer(void);
 	void Move(int Direction);
 	void GamerMoveLua (int KeyCode);
+	void GamerDistantAttackLua ();
 	void GamerPrint ();
 	int GetCoordX () const;
 	int GetCoordY () const;
@@ -78,5 +79,6 @@ public:
 	int GetDefense5FromEquipment (int NumOfSlot);
 	int GetItemIdBySlot (int Slot);
 	void ReloadWeapon ();
+	void UnloadWeapon ();
 };
 

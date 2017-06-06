@@ -1,5 +1,5 @@
 MakeCreatures = function (Game)
-for i = 1,1 do
+for i = 1,30 do
 x = 0
 y = 0
 levelwidth = Game:GetLevelWidth ()

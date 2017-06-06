@@ -34,6 +34,7 @@ public:
 	level *GetLevel();
 	Gamer* GetGamer();
 	Bestiary* GetBestiary();
+	Interface* GetInterface();
 	
 };
 

@@ -30,6 +30,7 @@ void Beast::LuaReg (lua_State* L)
 		.addProperty ("Energy", &Beast::GetEnergy, &Beast::SetEnergy)
 		.addProperty ("Speed", &Beast::GetSpeed, &Beast::SetSpeed)
 		.addProperty ("RegenHP", &Beast::GetRegenHp, &Beast::SetRegenHP)
+		.addProperty ("RangeOfSight", &Beast::GetRangeOfSight, &Beast::SetRangeOfSight)
 		.addProperty ("RegenEnergy", &Beast::GetRegenEnergy, &Beast::SetRegenEnergy)
 		.addProperty ("LevelOfBeast", &Beast::GetLevelOfBeast)
 		.addProperty ("Def", &Beast::GetDefence, &Beast::SetDefense)
@@ -56,6 +57,16 @@ void Beast::MakeMove()
 {
 	if (IsDead == 1)
 		return;
+	if (HP <= 0)
+		{
+			Game *MyGame;
+			MyGame= Game::GetGameInstance();
+			level *MyLevel;
+			MyLevel = MyGame->GetLevel ();
+			IsDead = 1;
+			MyLevel->RemoveCreature (CoordX,CoordY);
+			return;
+		}
 	using namespace luabridge;
 
 	lua_State* L = luaL_newstate();

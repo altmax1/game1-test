@@ -10,7 +10,7 @@ LuaAdapter::LuaAdapter(void)
 	MyGamer = MyGame->GetGamer();
 	MyBestiary = MyGame->GetBestiary();
 	MyItems = MyGame->GetItems();
-	
+	MyInterface = MyGame->GetInterface();
 }
 
 
@@ -82,6 +82,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetWeaponNextAmmo", &LuaAdapter::GetWeaponNextAmmo)
 			.addFunction ("UnloadWeapon", &LuaAdapter::UnloadWeapon)
 			.addFunction ("ReloadWeapon", &LuaAdapter::ReloadWeapon)
+			.addFunction ("SelectTarget", &LuaAdapter::SelectTarget)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -594,10 +595,15 @@ int LuaAdapter::GetWeaponNextAmmo (int Id)
 
 void LuaAdapter::UnloadWeapon (int Id)
 {
-	MyItems->UnloadWeapon (Id);
+	MyGamer->UnloadWeapon();
 }
 
 void LuaAdapter::ReloadWeapon (int Id)
 {
 	MyGamer->ReloadWeapon();
+}
+
+int LuaAdapter::SelectTarget ()
+{
+	return MyInterface->SelectTarget();
 }

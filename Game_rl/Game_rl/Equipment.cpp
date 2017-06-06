@@ -374,7 +374,8 @@ void Equipment::UnWearItem (int MenuState)
 		return;
 	if (a == TK_Y)
 	{
-		MyInventory ->PutItemInVector (*Ptr[MenuState-1],0,1);
+		int Stackable = MyItems->GetStackable (*Ptr[MenuState-1]);
+		MyInventory ->PutItemInVector (*Ptr[MenuState-1],Stackable,1);
 		*Ptr[MenuState-1] = -1;
 		LuaMakeSumOfDef();
 		return;

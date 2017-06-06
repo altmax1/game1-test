@@ -8,6 +8,7 @@ private:
 	Gamer *MyGamer;
 	Bestiary *MyBestiary;
 	Items *MyItems;
+	Interface *MyInterface;
 	
 public:
 	void LuaDesc (lua_State *L);
@@ -103,6 +104,7 @@ public:
 	int GetWeaponNextAmmo (int Id);
 	void UnloadWeapon (int Id);
 	void ReloadWeapon (int Id);
+	int SelectTarget ();
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

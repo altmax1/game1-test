@@ -51,6 +51,10 @@ Bestiary* Game::GetBestiary()
 	return MyBestiary;
 }
 
+Interface* Game::GetInterface ()
+{
+	return MyInterface;
+}
 
 void Game::MakeLevel (int Type, int Width, int Height, int Density)
 {
@@ -122,17 +126,11 @@ void Game::GameInit()
 	{
 	terminal_color (0xFFDFDFA9);
 	MyInterface->PrintFOV();
-	//MyLevel->LevelPrint();
 	terminal_color ("white");
-	//MyGamer->GamerPrint();
 	terminal_refresh();
 	KeyCode = terminal_read();
 	if (KeyCode == TK_ESCAPE)
 		break;
-	if (KeyCode == TK_F)
-	{
-		MyInterface->SelectTarget ();
-	}
 	MyGamer->Move(KeyCode);
 	MakeAIMove();
 	}

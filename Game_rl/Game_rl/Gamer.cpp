@@ -229,7 +229,12 @@ void Gamer::Move (int Direction)
 	}
 
 	if (Direction == TK_R)
-		ReloadWeapon();
+		if (terminal_check(TK_SHIFT))
+			UnloadWeapon();
+		else
+			ReloadWeapon();
+	if (Direction == TK_F)
+		GamerDistantAttackLua();
 
 	GamerMoveLua (Direction);
 
@@ -282,7 +287,26 @@ void Gamer::GamerMoveLua (int KeyCode)
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;
         }
+}
 
+void Gamer::GamerDistantAttackLua ()
+{
+	using namespace luabridge;
+
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\GamerDistAttack.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef GamerDistAttack = getGlobal(L, "GamerDistAttack");
+	  //
+	try {
+            GamerDistAttack (Luaad);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
 
 }
 
@@ -373,6 +397,26 @@ void Gamer::ReloadWeapon ()
 			MyItems->LoadWeapon (Id, AmmoId,AmmoInventoryQuantity);
 		}
 		p++;
+	}
+	return;
+}
+
+void Gamer::UnloadWeapon ()
+{
+	int Id = MyEquipment->GetIdBySlot (7);
+	if (Id<0)
+		return;
+	if (MyItems->GetGlobalType(Id) !=0)
+		return;
+	if (MyItems->GetWeaponNeedsAmmo(Id) == 0)
+		return;
+	int CurrentAmmo = MyItems->GetWeaponCurrentAmmoQuantity(Id);
+	for (int i = CurrentAmmo; i>0; i--)
+	{
+		int NextAmmoId = MyItems->GetWeaponNextAmmo(Id);
+		int Stackable = MyItems->GetStackable(NextAmmoId);
+		MyInventory->PutItemInVector (NextAmmoId, Stackable, 1);
+		MyItems->UnloadWeapon(Id);
 	}
 	return;
 }

@@ -619,6 +619,8 @@ int Items::GetWeaponNextAmmo (int Id)
 
 void Items::UnloadWeapon (int Id)
 {
+	if (WeaponFromLevel[Id].Ammo.size()>0)
+		WeaponFromLevel[Id].Ammo.pop_back();
 	return;
 }
 

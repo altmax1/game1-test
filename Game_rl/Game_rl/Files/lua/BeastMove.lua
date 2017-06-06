@@ -1,8 +1,8 @@
 
 BeastMove = function (Game, Beast)
-a = Game:LOS (Game.GamerX, Game.GamerY, Beast.CoordX, Beast.CoordY)
-c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
-b = Game:PathFind (Beast.CoordX, Beast.CoordY,Game.GamerX, Game.GamerY)
+--a = Game:LOS (Game.GamerX, Game.GamerY, Beast.CoordX, Beast.CoordY)
+--c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
+--b = Game:PathFind (Beast.CoordX, Beast.CoordY,Game.GamerX, Game.GamerY)
 --print (a, c)
 MGamerX = Game.GamerX
 MGamerY = Game.GamerY
@@ -10,8 +10,13 @@ MBeastX = Beast.CoordX
 MBeastY = Beast.CoordY
 
 distance = ((MGamerX-MBeastX)^2+(MGamerY-MBeastY)^2)^0.5 -- Расстояние между ГГ и мобом
+if distance < Beast.RangeOfSight then
+	a = Game:LOS (Game.GamerX, Game.GamerY, Beast.CoordX, Beast.CoordY)
+	c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
+	end
+
 if a == 1 or c == 1 then  -- если моб видит ГГ
-	if distance > 1.5 then
+	if distance > 1.5 and distance<= Beast.RangeOfSight then
 	TempCoords = MGamerY*1000+MGamerX
 	Beast:ClearAllSteps()
 	Beast:SetNextStep (TempCoords)
