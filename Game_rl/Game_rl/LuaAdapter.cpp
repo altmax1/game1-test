@@ -70,7 +70,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetWeaponCalober", &LuaAdapter::GetWeaponCaliber)
 			.addFunction ("GetWeaponAmmoQuantity", &LuaAdapter::GetWeaponAmmoQuantity)
 			.addFunction ("SetWeaponAmmoQuantity", &LuaAdapter::SetWeaponAmmoQuantity)
-			.addFunction ("GetWeaponCurrentAmmuQuantity", &LuaAdapter::GetWeaponCurrentAmmoQuantity)
+			.addFunction ("GetWeaponCurrentAmmoQuantity", &LuaAdapter::GetWeaponCurrentAmmoQuantity)
 			.addFunction ("GetItemQuality", &LuaAdapter::GetQuality)
 			.addFunction ("SetItemQuality", &LuaAdapter::SetQuality)
 			.addFunction ("GetIsDestroyed", &LuaAdapter::GetIsDestroyed)
@@ -83,6 +83,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("UnloadWeapon", &LuaAdapter::UnloadWeapon)
 			.addFunction ("ReloadWeapon", &LuaAdapter::ReloadWeapon)
 			.addFunction ("SelectTarget", &LuaAdapter::SelectTarget)
+			.addFunction ("PrintMessage", &LuaAdapter::PrintMessage)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -606,4 +607,9 @@ void LuaAdapter::ReloadWeapon (int Id)
 int LuaAdapter::SelectTarget ()
 {
 	return MyInterface->SelectTarget();
+}
+
+void LuaAdapter::PrintMessage (string MyMessage)
+{
+	MyInterface->SetMessage (MyMessage);
 }

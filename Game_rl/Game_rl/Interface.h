@@ -18,6 +18,9 @@ private:
 	int GamerCoordXInTerminal;
 	int GamerCoordYInTerminal;
 
+	int MessageExist;
+	string Message;
+
 public:
 	void ReadIniFile ();
 	void GetGamerAndLevel ();
@@ -29,6 +32,8 @@ public:
 	void PrintMiniMapBorder ();
 	int SelectTarget ();
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
+	void SetMessage (string Message);
+	void PrintMessage ();
 	Interface(void);
 	~Interface(void);
 };

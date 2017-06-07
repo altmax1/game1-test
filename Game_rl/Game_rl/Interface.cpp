@@ -9,6 +9,7 @@
 Interface::Interface(void)
 {
 	ReadIniFile();
+	MessageExist = 0;
 }
 
 
@@ -214,6 +215,7 @@ void Interface::PrintFOV ()
 		}
 	PrintBorder();
 	PrintMiniMap ();
+	PrintMessage ();
 	return;
 }
 
@@ -259,3 +261,20 @@ int Interface::SelectTarget ()
 	}
 	return 0;
 }
+
+void Interface::SetMessage (string CurrentMessage)
+{
+	MessageExist = 1;
+	Message = CurrentMessage;
+}
+
+void Interface::PrintMessage ()
+{
+	if (MessageExist == 1)
+	{
+		MessageExist = 0;
+		terminal_print_ext (2,30,40,5,TK_ALIGN_DEFAULT, Message.c_str());
+		
+	}
+}
+
