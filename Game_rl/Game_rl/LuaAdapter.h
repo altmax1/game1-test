@@ -106,6 +106,7 @@ public:
 	void ReloadWeapon (int Id);
 	int SelectTarget ();
 	void PrintMessage (string MyMessage);
+	int GetKeyCode ();
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

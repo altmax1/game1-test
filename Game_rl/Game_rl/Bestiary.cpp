@@ -72,7 +72,14 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetRangeOfSight (atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ID");
 		int ID = (atoi (MapPtr->second.c_str()));
-
+		MapPtr = MyCreatures[i].find ("CharCode");
+		MyBeast.SetCharCode ( atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find ("ColorVisible");
+		MyBeast.SetColorVisible (strtol (MapPtr->second.c_str(), NULL, 0));
+		MapPtr = MyCreatures[i].find ("ColorNotVisible");
+		MyBeast.SetColorNotVisible (strtol (MapPtr->second.c_str(), NULL, 0));
+		MapPtr = MyCreatures[i].find ("Speed");
+		MyBeast.SetSpeed (atoi (MapPtr->second.c_str()));
 		Creatures.resize (ID+1);
 		Creatures[i] = MyBeast;
 	}
@@ -80,7 +87,7 @@ void Bestiary::FillCreatures ()
 
 void Bestiary::MakeCreature (int ID, int x, int y)
 
-{
+{	
 	BeastsOfLevel.push_back(Creatures[ID]);
 	int size = BeastsOfLevel.size();
 	BeastsOfLevel[size-1].SetCoordX (x);
@@ -228,4 +235,48 @@ void Bestiary::SetStr (int Num, int Str)
 int Bestiary::GetStr (int Num)
 {
 	return BeastsOfLevel[Num].GetStr();
+}
+
+int Bestiary::GetCharCode (int Num)
+{
+	return BeastsOfLevel[Num].GetCharCode ();
+}
+
+void Bestiary::SetCharCode (int Num, int Code)
+{
+	BeastsOfLevel[Num].SetCharCode(Code);
+	return;
+}
+
+int Bestiary::GetColorVisible (int Num)
+{
+	return BeastsOfLevel[Num].GetColorVisible ();
+}
+
+void Bestiary::SetColorVisible (int Num, int Color)
+{
+	BeastsOfLevel[Num].SetColorVisible (Color);
+	return;
+}
+
+int Bestiary::GetColorNotVisible (int Num)
+{
+	return BeastsOfLevel[Num].GetColorNotVisible ();
+}
+
+void Bestiary::SetColorNotVisible (int Num, int Color)
+{
+	BeastsOfLevel[Num].SetColorNotVisible (Color);
+	return;
+}
+
+int Bestiary::GetSpeed (int Num)
+{
+	return BeastsOfLevel[Num].GetSpeed();
+}
+
+void Bestiary::SetSpeed (int Num, int Speed)
+{
+	BeastsOfLevel[Num].SetSpeed (Speed);
+	return;
 }

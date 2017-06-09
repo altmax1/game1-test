@@ -32,6 +32,16 @@ public:
 	void SetDex (int Num, int Dex);
 	int GetStr (int Num);
 	void SetStr (int Num, int Str);
+	int GetCharCode (int Num);
+	void SetCharCode (int Num, int Code);
+	int GetColorVisible (int Num);
+	void SetColorVisible (int Num, int Color);
+	int GetColorNotVisible (int Num);
+	void SetColorNotVisible (int Num, int Color);
+	int GetSpeed (int Num);
+	void SetSpeed (int Num, int Speed);
+	int GetMovePoints (int Num) {return BeastsOfLevel[Num].GetMovePoints();}
+	void SetMovePoints (int Num, int Points) {BeastsOfLevel[Num].SetMovePoints(Points);}
 	
 };
 

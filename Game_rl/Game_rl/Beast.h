@@ -31,6 +31,11 @@ private:
 	std::vector <int> Effects; // наложенные эффекты
 	std::vector <int> EffectsTime; // время эффектов
 	std::list <int> NextStep; // следующее действие
+	int CharCode;
+	int ColorVisible;
+	int ColorNotVisible;
+	int MovePoints;
+	
 
 public:
 	Beast(void);
@@ -103,6 +108,14 @@ public:
 	int GetNextStep ();
 	void RemoveFirstStep ();
 	int GetNextStepSize ();
+	int GetCharCode () const;
+	void SetCharCode (int Code);
+	int GetColorVisible () const;
+	void SetColorVisible (int Color);
+	int GetColorNotVisible () const;
+	void SetColorNotVisible (int Color);
+	int GetMovePoints () const;
+	void SetMovePoints (int Points);
 
 };
 

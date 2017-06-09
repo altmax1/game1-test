@@ -83,6 +83,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("UnloadWeapon", &LuaAdapter::UnloadWeapon)
 			.addFunction ("ReloadWeapon", &LuaAdapter::ReloadWeapon)
 			.addFunction ("SelectTarget", &LuaAdapter::SelectTarget)
+			.addFunction ("GetKeyCode", &LuaAdapter::GetKeyCode)
 			.addFunction ("PrintMessage", &LuaAdapter::PrintMessage)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
@@ -123,6 +124,8 @@ void LuaAdapter::LuaDesc (lua_State *L)
 		.addProperty ("MinAttack", &Beast::GetMinAttack, &Beast::SetMinAttack)
 		.addProperty ("AttackType", &Beast::GetAttackType, &Beast::SetAttackType)
 		.addProperty ("IsDead", &Beast::GetIsDead, &Beast::SetIsDead)
+		.addProperty ("CharCode", &Beast::GetCharCode, &Beast::SetCharCode)
+		.addProperty ("MovePoints", &Beast::GetMovePoints, &Beast::SetMovePoints)
 		.addFunction ("GetNextStep", &Beast::GetNextStep)
 		.addFunction ("SetNextStep", &Beast::SetNextStep)
 		.addFunction ("ClearAllSteps", &Beast::ClearAllSteps)
@@ -612,4 +615,9 @@ int LuaAdapter::SelectTarget ()
 void LuaAdapter::PrintMessage (string MyMessage)
 {
 	MyInterface->SetMessage (MyMessage);
+}
+
+int LuaAdapter::GetKeyCode ()
+{
+	return terminal_read();
 }

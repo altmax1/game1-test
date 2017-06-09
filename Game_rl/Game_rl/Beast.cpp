@@ -11,6 +11,7 @@ using namespace luabridge;
 Beast::Beast(void)
 {
 	IsDead = 0;
+	MovePoints = 10;
 }
 
 
@@ -43,6 +44,8 @@ void Beast::LuaReg (lua_State* L)
 		.addProperty ("Behavior", &Beast::GetBehavior, &Beast::SetBehavior)
 		.addProperty ("IsMagic", &Beast::GetMagic, &Beast::SetMagic)
 		.addProperty ("NumOfEffects", &Beast::GetNumEffects)
+		.addProperty ("CharCode", &Beast::GetCharCode, &Beast::SetCharCode)
+		.addProperty ("MovePoints", &Beast::GetMovePoints, &Beast::SetMovePoints)
 		.addFunction ("EffectByNum", &Beast::GetEffectByNum)
 		.addFunction ("FindEffectByID", &Beast::FindEffectById)
 		.addFunction ("AffEffect", &Beast::SetEffects)
@@ -437,4 +440,48 @@ int Beast::GetID () const
 	int Beast::GetNextStepSize ()
 	{
 		return NextStep.size();
+	}
+
+	int Beast::GetCharCode () const
+	{
+		return CharCode;
+	}
+
+	void Beast::SetCharCode (int Code)
+	{
+		CharCode = Code;
+		return;
+	}
+
+	int Beast::GetColorVisible () const
+	{
+		return ColorVisible;
+	}
+
+	void Beast::SetColorVisible (int Color)
+	{
+		ColorVisible = Color;
+		return;
+	}
+
+	int Beast::GetColorNotVisible () const
+	{
+		return ColorNotVisible;
+	}
+
+	void Beast::SetColorNotVisible (int Color)
+	{
+		ColorNotVisible = Color;
+		return;
+	}
+
+	int Beast::GetMovePoints () const
+	{
+		return MovePoints;
+	}
+
+	void Beast::SetMovePoints (int Points)
+	{
+		MovePoints = Points;
+		return;
 	}

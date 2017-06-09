@@ -4,6 +4,12 @@ BeastMove = function (Game, Beast)
 --c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
 --b = Game:PathFind (Beast.CoordX, Beast.CoordY,Game.GamerX, Game.GamerY)
 --print (a, c)
+Beast.MovePoints = Beast.MovePoints+Beast.Speed
+--if Beast.MovePoints < 10 then --учитываем скорость
+--	return
+--end
+
+--Beast.MovePoints = Beast.MovePoints - 10 --делаем ход - вычитаем 10 очков движения
 MGamerX = Game.GamerX
 MGamerY = Game.GamerY
 MBeastX = Beast.CoordX
@@ -37,23 +43,33 @@ if a == 1 or c == 1 then  -- если моб видит ГГ
 		if dy < 0 then
 			NextCoordY = Beast.CoordY-1
 		end
-	HaveMoved = Beast:Move (NextCoordX, NextCoordY,0)
-	if HaveMoved == 0 then
-		TryToMove (Game, Beast, Game.GamerX, Game.GamerY)
+	if Beast.MovePoints>=10 then
+		Beast.MovePoints = Beast.MovePoints-10
+		print (Beast.MovePoints)
+		HaveMoved = Beast:Move (NextCoordX, NextCoordY,0)
+		if HaveMoved == 0 then
+			TryToMove (Game, Beast, Game.GamerX, Game.GamerY)
+		end
+		return
 	end
+	return
 	end
+	
 	if distance < 1.5 then
 		BeastAttack (Game, Beast)
+		return
 	end
 	print ("GamerHP", Game.GamerHP)
+	
 end
 
 if a==0 and c==0 then
-MoveByMemory (Game, Beast)
+	MoveByMemory (Game, Beast)
+	return
 end
 
 --print (Beast.CoordX)
-
+Beast.MovePoints = 10
 end
 
 BeastAttack = function (Game, Beast)
