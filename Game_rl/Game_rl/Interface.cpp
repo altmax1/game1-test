@@ -278,3 +278,16 @@ void Interface::PrintMessage ()
 	}
 }
 
+void Interface::PrintMessageNow (string Message)
+{
+	terminal_clear_area ( 2, 30, 40, 5);
+	terminal_print_ext (2,30,40,5,TK_ALIGN_DEFAULT, Message.c_str());
+	terminal_refresh();
+
+}
+
+void Interface::PrintCreature (int x, int y, int NumOfCreature)
+{
+	return;
+
+}

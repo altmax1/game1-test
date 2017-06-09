@@ -5,11 +5,10 @@ BeastMove = function (Game, Beast)
 --b = Game:PathFind (Beast.CoordX, Beast.CoordY,Game.GamerX, Game.GamerY)
 --print (a, c)
 Beast.MovePoints = Beast.MovePoints+Beast.Speed
---if Beast.MovePoints < 10 then --учитываем скорость
---	return
---end
 
---Beast.MovePoints = Beast.MovePoints - 10 --делаем ход - вычитаем 10 очков движения
+
+
+
 MGamerX = Game.GamerX
 MGamerY = Game.GamerY
 MBeastX = Beast.CoordX
@@ -45,7 +44,6 @@ if a == 1 or c == 1 then  -- если моб видит ГГ
 		end
 	if Beast.MovePoints>=10 then
 		Beast.MovePoints = Beast.MovePoints-10
-		print (Beast.MovePoints)
 		HaveMoved = Beast:Move (NextCoordX, NextCoordY,0)
 		if HaveMoved == 0 then
 			TryToMove (Game, Beast, Game.GamerX, Game.GamerY)
@@ -55,16 +53,21 @@ if a == 1 or c == 1 then  -- если моб видит ГГ
 	return
 	end
 	
+	
+	
 	if distance < 1.5 then
 		BeastAttack (Game, Beast)
 		return
 	end
-	print ("GamerHP", Game.GamerHP)
+	
 	
 end
 
-if a==0 and c==0 then
+--if a==0 and c==0 and Beast.MovePoints >= 10 then
+if Beast.MovePoints>=10 then
+
 	MoveByMemory (Game, Beast)
+	Beast.MovePoints = Beast.MovePoints-10
 	return
 end
 
@@ -73,11 +76,12 @@ Beast.MovePoints = 10
 end
 
 BeastAttack = function (Game, Beast)
-	print ("UnderAttack!!!")
+	
 	TempCoords = MGamerY*1000+MGamerX
 	Beast:ClearAllSteps()
 	Beast:SetNextStep (TempCoords)
 	Game.GamerHP = Game.GamerHP-1
+	Beast.MovePoints = 10 --обнуляем счётчик скорости
 end
 
 TryToMove = function (Game, Beast, DestX, DestY)
@@ -109,15 +113,13 @@ end
 end
 
 MoveByMemory = function (Game, Beast)
---print ("Size of NextSteps",Beast:GetStepsSize())
+
 if Beast:GetStepsSize()==0 then
 	return
 end
 TempCoords1 = Beast:GetNextStep()
 TempX = TempCoords1%1000
 TempY = (TempCoords1-TempX)/1000
-print ("NextStepX:", TempX, "NextStepY:", TempY)
-print ("BeastX:", Beast.CoordX, "BeastY:", Beast.CoordY)
 dx = (Beast.CoordX-TempX)*-1
 dy = (Beast.CoordY-TempY)*-1
 Num = Game:GetBeastNumber (Beast.CoordX, Beast.CoordY)
@@ -137,7 +139,6 @@ Num = Game:GetBeastNumber (Beast.CoordX, Beast.CoordY)
 		end
 	HaveMoved = Beast:Move (NextCoordX, NextCoordY,0)
 	if HaveMoved == 0 then
-	print ("I cant MOVE!!!!!")
 	TryToMove (Game, Beast, TempX, TempY)
 	end
 TempCoords1 = Beast:GetNextStep()
@@ -148,10 +149,12 @@ Beast:ClearAllSteps()
 end
 a = Game:LOS (Game.GamerX, Game.GamerY, Beast.CoordX, Beast.CoordY)
 c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
-if a==1 or c == 1 then
-TempCoords = MGamerY*1000+MGamerX
-	Beast:ClearAllSteps()
-	Beast:SetNextStep (TempCoords)
+if a==1 or c == 1  then
+	if distance<=Beast.RangeOfSight then
+		TempCoords = MGamerY*1000+MGamerX
+		Beast:ClearAllSteps()
+		Beast:SetNextStep (TempCoords)
+	end
 end
 
 end

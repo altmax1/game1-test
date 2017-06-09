@@ -15,12 +15,14 @@ if Distance>WeaponRange then -- проверяем дистанцию до це�
 	return
 end
 NeedsAmmo = Game:GetWeaponNeedsAmmo (WeaponID)
-AmmoQuantity = Game:GetWeaponCurrentAmmuQuantity (WeaponID)
+AmmoQuantity = Game:GetWeaponCurrentAmmoQuantity (WeaponID)
 if NeedsAmmo == 1 and AmmoQuantity == 0 then -- проверяем патроны/заряды
 	Game:PrintMessage ('Ваше оружие не заряжено. Зарядите его')
 	return;
 end
 if BeastID<0 then
+	Game:PrintMessageNow ("Там никого нет. Вы действительно хотите туда выстрелить? (Y для выстрела)")
+	Code = Game:GetKeyCode()
 	return
 	end
 

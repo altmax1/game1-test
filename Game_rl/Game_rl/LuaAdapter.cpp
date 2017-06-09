@@ -85,6 +85,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SelectTarget", &LuaAdapter::SelectTarget)
 			.addFunction ("GetKeyCode", &LuaAdapter::GetKeyCode)
 			.addFunction ("PrintMessage", &LuaAdapter::PrintMessage)
+			.addFunction ("PrintMessageNow", &LuaAdapter::PrintMessageNow)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -620,4 +621,9 @@ void LuaAdapter::PrintMessage (string MyMessage)
 int LuaAdapter::GetKeyCode ()
 {
 	return terminal_read();
+}
+
+void LuaAdapter::PrintMessageNow (string Message)
+{
+	MyInterface->PrintMessageNow (Message);
 }

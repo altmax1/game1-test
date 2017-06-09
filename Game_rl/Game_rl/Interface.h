@@ -34,6 +34,8 @@ public:
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
 	void SetMessage (string Message);
 	void PrintMessage ();
+	void PrintMessageNow (string Message);
+	void PrintCreature (int x, int y, int NumOfCreature); 
 	Interface(void);
 	~Interface(void);
 };

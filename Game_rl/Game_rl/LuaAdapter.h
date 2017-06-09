@@ -107,6 +107,7 @@ public:
 	int SelectTarget ();
 	void PrintMessage (string MyMessage);
 	int GetKeyCode ();
+	void PrintMessageNow (string Message);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };
