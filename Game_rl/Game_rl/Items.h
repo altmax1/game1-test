@@ -24,6 +24,7 @@ struct Weapon: public Item
 	vector <int> Ammo; //патроны здесь - пихаем их ID
 	int Range;  // дистанци€ поражени€ (стрельбы)
 	int BlastRadius; //радиус поражени€
+	int ShotsPerStep; //выстрелов в очереди
 };
 
 struct Armour: public Item
@@ -100,6 +101,9 @@ public:
 	int GetWeaponNextAmmo (int Id);
 	void UnloadWeapon (int Id);
 	void LoadWeapon (int Id, int AmmoId, int AmmoQuantity);
+	void WeaponMakeOneShot (int Id);
+	int GetWeaponShotPerStep (int Id);
+	void SetWeaponShotPerStep (int Id, int Shots);
 
 };
 

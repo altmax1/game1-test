@@ -3,6 +3,7 @@
 #include "Inventory.h"
 #include "Equipment.h"
 #include "Items.h"
+//#include "Game.h"
 
 class Gamer
 {
@@ -29,6 +30,7 @@ private:
 	Inventory *MyInventory;
 	Equipment *MyEquipment;
 	Items *MyItems;
+	//Game *MyGame;
 public:
 	Gamer(void);
 	Gamer (level *LevelPtr);

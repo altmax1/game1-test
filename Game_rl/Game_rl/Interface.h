@@ -35,7 +35,7 @@ public:
 	void SetMessage (string Message);
 	void PrintMessage ();
 	void PrintMessageNow (string Message);
-	void PrintCreature (int x, int y, int NumOfCreature); 
+	void PrintCreature (int x, int y,int LevelX, int LevelY, int NumOfCreature); 
 	Interface(void);
 	~Interface(void);
 };

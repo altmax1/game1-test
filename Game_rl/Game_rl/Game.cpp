@@ -11,7 +11,7 @@ Game* Game::MyGame = 0;
 
 Game::Game(void)
 {
-	
+	DeveloperMode = 0;
 }
 
 Game* Game::GetGameInstance ()
@@ -138,3 +138,18 @@ void Game::GameInit()
 		
 
 }	
+
+void Game::ChangeGameMode ()
+{
+	if (DeveloperMode == 0)
+	{
+		DeveloperMode = 1;
+		MyInterface->SetMessage ("Developer Mode ON");
+	}
+	else
+	{
+		DeveloperMode = 0;
+		MyInterface->SetMessage ("Developer Mode OFF");
+	}
+	return;
+}

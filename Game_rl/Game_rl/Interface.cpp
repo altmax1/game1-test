@@ -208,7 +208,8 @@ void Interface::PrintFOV ()
 			if ((Mylevel->GetCreature(x+LeftUpX,y+LeftUpY))>=0)
 			{
 				terminal_layer (0);
-				terminal_put (x+1,y+1, 82);
+				//terminal_put (x+1,y+1, 82);
+				PrintCreature (x+1,y+1,x+LeftUpX,y+LeftUpY,Mylevel->GetCreature(x+LeftUpX,y+LeftUpY));
 				terminal_layer (0);
 			}
 
@@ -286,8 +287,22 @@ void Interface::PrintMessageNow (string Message)
 
 }
 
-void Interface::PrintCreature (int x, int y, int NumOfCreature)
+void Interface::PrintCreature (int x, int y, int LevelX, int LevelY, int NumOfCreature)
 {
+	Bestiary *MyBestiary;
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyBestiary = MyGame->GetBestiary();
+	int CharCode = MyBestiary->GetCharCode (NumOfCreature);
+	int ColorVisible = MyBestiary->GetColorVisible(NumOfCreature);
+	int TempColor = terminal_state(TK_COLOR);
+	int ColorNotVisible = MyBestiary->GetColorNotVisible(NumOfCreature);
+			if ((Mylevel->GetFlagsFOV(LevelX,LevelY))&FOV_CELL_VISIBLE)
+			{
+				terminal_color (ColorVisible);
+				terminal_put(x,y,CharCode);
+			}
+	terminal_color(TempColor);
 	return;
 
 }

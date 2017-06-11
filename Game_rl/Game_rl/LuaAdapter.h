@@ -104,6 +104,9 @@ public:
 	int GetWeaponNextAmmo (int Id);
 	void UnloadWeapon (int Id);
 	void ReloadWeapon (int Id);
+	int GetWeaponShotsByStep (int Id);
+	void SetWeaponShotsByStep (int Id, int Shots);
+	void WeaponMakeOneShot (int Id);
 	int SelectTarget ();
 	void PrintMessage (string MyMessage);
 	int GetKeyCode ();

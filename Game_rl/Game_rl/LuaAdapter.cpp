@@ -83,6 +83,9 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("UnloadWeapon", &LuaAdapter::UnloadWeapon)
 			.addFunction ("ReloadWeapon", &LuaAdapter::ReloadWeapon)
 			.addFunction ("SelectTarget", &LuaAdapter::SelectTarget)
+			.addFunction ("GetWeaponShotsByStep", &LuaAdapter::GetWeaponShotsByStep)
+			.addFunction ("SetWeaponShotsByStep", &LuaAdapter::SetWeaponShotsByStep)
+			.addFunction ("WeaponMakeOneShot", &LuaAdapter::WeaponMakeOneShot)
 			.addFunction ("GetKeyCode", &LuaAdapter::GetKeyCode)
 			.addFunction ("PrintMessage", &LuaAdapter::PrintMessage)
 			.addFunction ("PrintMessageNow", &LuaAdapter::PrintMessageNow)
@@ -626,4 +629,20 @@ int LuaAdapter::GetKeyCode ()
 void LuaAdapter::PrintMessageNow (string Message)
 {
 	MyInterface->PrintMessageNow (Message);
+}
+
+int LuaAdapter::GetWeaponShotsByStep (int Id)
+{
+	return MyItems->GetWeaponShotPerStep (Id);
+}
+
+void LuaAdapter::SetWeaponShotsByStep (int Id, int Shots)
+{
+	MyItems->SetWeaponShotPerStep (Id, Shots);
+	return;
+}
+
+void LuaAdapter::WeaponMakeOneShot(int Id)
+{
+	MyItems->WeaponMakeOneShot(Id);
 }

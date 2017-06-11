@@ -82,6 +82,8 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.Range = atoi (MapPtr->second.c_str());
 		MapPtr = p->find("BlastRadius");
 		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("ShotsPerStep");
+		TempWeapon.ShotsPerStep = atoi (MapPtr->second.c_str());
 		try{
 		if (TempWeapon.ID != UniqueWeapon.size())
 			throw "BAD_ID_IN_UniqueWeapon";}
@@ -145,6 +147,8 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.Range = atoi (MapPtr->second.c_str());
 		MapPtr = p->find("BlastRadius");
 		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("ShotsPerStep");
+		TempWeapon.ShotsPerStep = atoi (MapPtr->second.c_str());
 		try{
 		if (TempWeapon.ID-900000 != CommonWeapon.size())
 			throw "BAD_ID_IN_CommonWeapon";}
@@ -629,4 +633,28 @@ void Items::LoadWeapon (int Id, int AmmoId, int AmmoQuantity)
 	for (int i=0;i<AmmoQuantity; i++)
 		WeaponFromLevel[Id].Ammo.push_back (AmmoId);
 	return;
+}
+
+void Items::WeaponMakeOneShot (int Id)
+{
+	if (WeaponFromLevel[Id].Ammo.size() >0)
+		WeaponFromLevel[Id].Ammo.pop_back();
+}
+
+void Items::SetWeaponShotPerStep (int Id, int Shots)
+{
+	if (Id>=0 && Id < 900000)
+		WeaponFromLevel[Id].ShotsPerStep = Shots;
+	if (Id >= 9000000 && Id < 1000000)
+		CommonWeapon[Id-900000].ShotsPerStep = Shots;
+	return;
+}
+
+int Items::GetWeaponShotPerStep (int Id)
+{
+	if (Id>=0 && Id < 900000)
+		return WeaponFromLevel[Id].ShotsPerStep;
+	else if (Id >= 9000000 && Id < 1000000)
+		return CommonWeapon[Id-900000].ShotsPerStep;
+	else return 0;
 }

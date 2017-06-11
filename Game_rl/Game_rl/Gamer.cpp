@@ -14,7 +14,7 @@ Gamer::Gamer (level *LevelPtr)
 	MyInventory = new Inventory;
 	MyEquipment = new Equipment;
 	 MyLevel= LevelPtr;
-	Game *MyGame;
+	 Game *MyGame;
 	MyGame = Game::GetGameInstance();
 	MyItems = MyGame->GetItems();
 }
@@ -235,6 +235,12 @@ void Gamer::Move (int Direction)
 			ReloadWeapon();
 	if (Direction == TK_F)
 		GamerDistantAttackLua();
+	if (Direction == TK_EQUALS && terminal_check(TK_SHIFT))
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		MyGame->ChangeGameMode();
+	}
 
 	GamerMoveLua (Direction);
 

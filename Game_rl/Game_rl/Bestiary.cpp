@@ -75,9 +75,9 @@ void Bestiary::FillCreatures ()
 		MapPtr = MyCreatures[i].find ("CharCode");
 		MyBeast.SetCharCode ( atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ColorVisible");
-		MyBeast.SetColorVisible (strtol (MapPtr->second.c_str(), NULL, 0));
+		MyBeast.SetColorVisible (strtoul (MapPtr->second.c_str(), NULL, 16));
 		MapPtr = MyCreatures[i].find ("ColorNotVisible");
-		MyBeast.SetColorNotVisible (strtol (MapPtr->second.c_str(), NULL, 0));
+		MyBeast.SetColorNotVisible (strtoul (MapPtr->second.c_str(), NULL, 16));
 		MapPtr = MyCreatures[i].find ("Speed");
 		MyBeast.SetSpeed (atoi (MapPtr->second.c_str()));
 		Creatures.resize (ID+1);

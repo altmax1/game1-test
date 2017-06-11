@@ -19,6 +19,7 @@ private:
 	Interface *MyInterface;
 	Bestiary *MyBestiary;
 	Game(void);
+	int DeveloperMode;
 
 public:
 	static Game* GetGameInstance ();
@@ -35,6 +36,7 @@ public:
 	Gamer* GetGamer();
 	Bestiary* GetBestiary();
 	Interface* GetInterface();
+	void ChangeGameMode ();
 	
 };
 

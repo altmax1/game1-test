@@ -8,6 +8,8 @@ if WeaponID == -1 then --проверяем наличие оружия
 	return
 end
 BeastID = Game:GetBeastNumber (CoordX, CoordY)
+print ("BeastID  "..BeastID)
+print (BeastID)
 Distance = ((Game.GamerX-CoordX)^2+(Game.GamerY-CoordY)^2)^0.5
 WeaponRange = Game:GetWeaponRange (WeaponID)
 if Distance>WeaponRange then -- проверяем дистанцию до цели
@@ -23,9 +25,58 @@ end
 if BeastID<0 then
 	Game:PrintMessageNow ("Там никого нет. Вы действительно хотите туда выстрелить? (Y для выстрела)")
 	Code = Game:GetKeyCode()
+	if Code ~= 28 then
+	return
+	end
+	shots = Game:GetWeaponShotsByStep(WeaponID)
+	for i = 1,shots do
+		print ("Shoting!!!")
+		Game:WeaponMakeOneShot (WeaponID)
+		if Game:GetWeaponCurrentAmmoQuantity(WeaponID)== 0 then
+			break
+		end
+	
+	end
 	return
 	end
 
-Game:SetBeastHP (BeastID,-1)
+if BeastID >= 0 then
+	ShotInMonster (Game, BeastID)
+end
+--Game:SetBeastHP (BeastID,-1)
 
+end
+
+ShotInMonster = function (Game, BeastID)
+WeaponID = Game:GetIdByGamerSlot(7)
+MaxAttack = Game:GetWeaponMaxDamage (WeaponID)
+MinAttack = Game:GetWeaponMinDamage (WeaponID)
+DeltaAttack = MaxAttack - MinAttack
+Damage = 0
+shots = Game:GetWeaponShotsByStep(WeaponID)
+	for i = 1,shots do
+	BulletId = Game:GetWeaponNextAmmo(WeaponID)
+	BulletMaxDamage = Game:GetWeaponMaxDamage (BulletId)
+	BulletMinDamage = Game:GetWeaponMinDamage (BulletId)
+	DeltaBulletDamage = BulletMaxDamage-BulletMinDamage
+	DamageWeapon = MinAttack+Game:MyRandom (DeltaAttack)
+	DamageBullet = BulletMinDamage+ Game:MyRandom (DeltaBulletDamage)
+	Damage = Damage+ DamageWeapon + DamageBullet
+	Game:WeaponMakeOneShot (WeaponID)
+	if Game:GetWeaponCurrentAmmoQuantity(WeaponID)== 0 then
+		break
+	end
+	end
+
+BeastHP = Game:GetBeastHP (BeastID);
+BeastHP = BeastHP - Damage
+if BeastHP <= 0 then
+	Game:PrintMessage ("Вы уничтожили эту тварь, нанеся ей "..Damage.." урона." )
+	Game:SetBeastHP (BeastID, BeastHP)
+end
+if BeastHP >0 then
+	Game:PrintMessage ("Вы нанесли по твари урон в размере  "..Damage)
+	Game:SetBeastHP (BeastID, BeastHP)
+end
+return
 end
