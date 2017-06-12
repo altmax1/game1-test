@@ -1,5 +1,11 @@
 GamerDistAttack = function (Game)
 Coords = Game:SelectTarget()
+OneShot = 0
+if Coords > 1000000000 then
+	Coords = Coords-1000000000
+	OneShot = 1
+end
+
 CoordX = math.floor(Coords/1000)
 CoordY = math.fmod (Coords,1000)
 WeaponID = Game:GetIdByGamerSlot(7)
@@ -29,6 +35,9 @@ if BeastID<0 then
 	return
 	end
 	shots = Game:GetWeaponShotsByStep(WeaponID)
+	if OneShot == 1 then
+		shots = 1
+	end
 	for i = 1,shots do
 		print ("Shoting!!!")
 		Game:WeaponMakeOneShot (WeaponID)
@@ -51,14 +60,17 @@ ShotInMonster = function (Game, BeastID)
 WeaponID = Game:GetIdByGamerSlot(7)
 MaxAttack = Game:GetWeaponMaxDamage (WeaponID)
 MinAttack = Game:GetWeaponMinDamage (WeaponID)
-DeltaAttack = MaxAttack - MinAttack
+DeltaAttack = MaxAttack - MinAttack+1
 Damage = 0
 shots = Game:GetWeaponShotsByStep(WeaponID)
-	for i = 1,shots do
+if OneShot == 1 then
+	shots = 1
+end
+	for i = 1,shots do --стреляем очередью и определяем суммарный урон.
 	BulletId = Game:GetWeaponNextAmmo(WeaponID)
 	BulletMaxDamage = Game:GetWeaponMaxDamage (BulletId)
 	BulletMinDamage = Game:GetWeaponMinDamage (BulletId)
-	DeltaBulletDamage = BulletMaxDamage-BulletMinDamage
+	DeltaBulletDamage = BulletMaxDamage-BulletMinDamage+1
 	DamageWeapon = MinAttack+Game:MyRandom (DeltaAttack)
 	DamageBullet = BulletMinDamage+ Game:MyRandom (DeltaBulletDamage)
 	Damage = Damage+ DamageWeapon + DamageBullet

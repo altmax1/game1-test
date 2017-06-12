@@ -26,6 +26,8 @@ public:
 	void SetCoordY (int Num, int y);
 	int GetHP (int Num);
 	void SetHP (int Num, int HP);
+	int GetMaxHP (int Num);
+	void SetMaxHP (int Num, int HP);
 	int GetDefense (int Num);
 	void SetDefense (int Num, int def);
 	int GetDex (int Num);

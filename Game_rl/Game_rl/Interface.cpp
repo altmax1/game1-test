@@ -249,6 +249,16 @@ int Interface::SelectTarget ()
 			if (TempY>1)
 				TempY--;
 		terminal_clear_area(1,1,FOVWidth, FOVHeight);
+		
+		if (a == TK_ENTER && terminal_check(TK_SHIFT))
+		{
+			int DeltaX = TempX-GamerCoordXInTerminal;
+			int DeltaY = TempY-GamerCoordYInTerminal;
+			int TargetX = GamerCoordX+DeltaX;
+			int TargetY = GamerCoordY+DeltaY;
+			terminal_layer(0);
+			return TargetX*1000+TargetY+1000000000;
+		}
 		if (a == TK_ENTER)
 		{
 			int DeltaX = TempX-GamerCoordXInTerminal;
@@ -301,8 +311,29 @@ void Interface::PrintCreature (int x, int y, int LevelX, int LevelY, int NumOfCr
 			{
 				terminal_color (ColorVisible);
 				terminal_put(x,y,CharCode);
+				PrintHealthBar (x,y,NumOfCreature,MyBestiary);
 			}
 	terminal_color(TempColor);
 	return;
 
+}
+
+void Interface::PrintHealthBar (int x, int y, int NumOfCreature, Bestiary *A)
+{
+	terminal_composition (TK_ON);
+	int MaxHP = A->GetMaxHP(NumOfCreature);
+	int HP = A->GetHP(NumOfCreature);
+	if (HP>MaxHP*0.3)
+		terminal_color ("green");
+	else
+		terminal_color ("red");
+	int step = (HP*100)/((MaxHP*100)/6)+1;
+	cout << "step "<<step<<endl;
+	int dx = -3;
+	for (int i=0; i<step; i++)
+	{
+		terminal_put_ext (x,y,dx+i,0,0x02D9);
+	}
+	terminal_composition (TK_OFF);
+	return;	
 }

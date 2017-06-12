@@ -10,6 +10,7 @@ private:
 	std::string RName;
 	std::string RDesc;
 	int HP;  // «доровье
+	int MaxHP;
 	int Energy;  // Ёнерги€ - аналог маны
 	int RangeOfSight; //рассто€ние на которое вид€т
 	int Speed; // —короость передвижени€
@@ -59,6 +60,8 @@ public:
 	std::string GetRName () const;
 	void SetRDesc (std::string S);
 	std::string GetRDesc () const;
+	int GetMaxHP () {return MaxHP;};
+	void SetMaxHP (int a) {MaxHP = a;};
 	void SetHP (int a);
 	int GetHP () const;
 	void SetEnergy (int a);

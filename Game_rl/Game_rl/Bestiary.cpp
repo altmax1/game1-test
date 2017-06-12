@@ -34,6 +34,8 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetRDesc(MapPtr->second);
 		MapPtr = MyCreatures[i].find ("HP");
 		MyBeast.SetHP(atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find ("MaxHP");
+		MyBeast.SetMaxHP(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("Energy");
 		MyBeast.SetEnergy(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("Speed");
@@ -202,6 +204,17 @@ void Bestiary::SetHP (int Num, int HP)
 int Bestiary::GetHP (int Num)
 {
 	return BeastsOfLevel[Num].GetHP();
+}
+
+void Bestiary::SetMaxHP (int Num, int HP)
+{
+	BeastsOfLevel[Num].SetMaxHP (HP);
+	return;
+}
+
+int Bestiary::GetMaxHP (int Num)
+{
+	return BeastsOfLevel[Num].GetMaxHP();
 }
 
 void Bestiary::SetDefense (int Num, int Def)

@@ -1,5 +1,6 @@
 #pragma once
 #include "level.h"
+#include "Bestiary.h"
 
 class Interface
 {
@@ -36,6 +37,7 @@ public:
 	void PrintMessage ();
 	void PrintMessageNow (string Message);
 	void PrintCreature (int x, int y,int LevelX, int LevelY, int NumOfCreature); 
+	void PrintHealthBar (int x, int y, int NumOfCreature, Bestiary *A);
 	Interface(void);
 	~Interface(void);
 };
