@@ -217,6 +217,7 @@ void Interface::PrintFOV ()
 	PrintBorder();
 	PrintMiniMap ();
 	PrintMessage ();
+	PrintHID();
 	return;
 }
 
@@ -336,4 +337,75 @@ void Interface::PrintHealthBar (int x, int y, int NumOfCreature, Bestiary *A)
 	}
 	terminal_composition (TK_OFF);
 	return;	
+}
+
+void Interface::PrintHID ()
+{
+	
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	Gamer *MyGamer;
+	MyGamer = MyGame->GetGamer();
+	PrintGamerHBar (MyGamer);
+	PrintGamerEBar (MyGamer);
+	
+}
+
+void Interface::PrintGamerHBar (Gamer *MyGamer)
+{
+	int HP = MyGamer->GetHP();
+	int MaxHP = MyGamer->GetMaxHP();
+	int steps = (HP*100)/(MaxHP*100/20);
+	char *p = new char[3];
+	_itoa (HP,p,10);
+	terminal_color ("white");
+	terminal_print (44,2, "HP:");
+	terminal_print (48,2, p);
+	terminal_color ("grey");
+	for (int i=0; i<20;i++)
+	{
+		terminal_put (51+i,2,0x2586);
+	}
+	if (HP<MaxHP*30/100)
+		terminal_color("red");
+	else if (HP>=MaxHP*30/100 && HP<MaxHP*50/100)
+		terminal_color ("yellow");
+	else
+		terminal_color ("green");
+	for (int i=0; i<steps; i++)
+	{
+		terminal_put (51+i, 2, 0x2586);
+	}
+	delete [] p;
+	return;
+
+}
+
+void Interface::PrintGamerEBar (Gamer *MyGamer)
+{
+	int EP = MyGamer->GetEnergy();
+	int MaxEP = MyGamer->GetMaxEnergy();
+	int steps = (EP*100)/(MaxEP*100/20);
+	char *p = new char[3];
+	_itoa (EP,p,10);
+	terminal_color ("white");
+	terminal_print (44,3, "EP:");
+	terminal_print (48,3, p);
+	terminal_color ("grey");
+	for (int i=0; i<20;i++)
+	{
+		terminal_put (51+i,3,0x2586);
+	}
+	if (EP<MaxEP*30/100)
+		terminal_color("red");
+	else if (EP>=MaxEP*30/100 && EP<MaxEP*50/100)
+		terminal_color ("yellow");
+	else
+		terminal_color ("green");
+	for (int i=0; i<steps; i++)
+	{
+		terminal_put (51+i, 3, 0x2586);
+	}
+	delete [] p;
+	return;
 }

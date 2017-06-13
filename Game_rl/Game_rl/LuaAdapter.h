@@ -65,6 +65,8 @@ public:
 	int GetBeastCoordY (int Num);
 	void SetBeastID (int Num, int ID);
 	int GetBeastID (int Num);
+	string GetBeastRName (int Num);
+	void SetBeastRName (int Num, string Name);
 	void SetBeastIsDead (int Num, int a);
 	int GetBeastIsDead (int Num);
 	void SetBeastDefense (int Num, int Def);

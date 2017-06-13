@@ -63,6 +63,7 @@ MinAttack = Game:GetWeaponMinDamage (WeaponID)
 DeltaAttack = MaxAttack - MinAttack+1
 Damage = 0
 shots = Game:GetWeaponShotsByStep(WeaponID)
+BeastDefense = Game:GetBeastDefense (BeastID)
 if OneShot == 1 then
 	shots = 1
 end
@@ -73,7 +74,11 @@ end
 	DeltaBulletDamage = BulletMaxDamage-BulletMinDamage+1
 	DamageWeapon = MinAttack+Game:MyRandom (DeltaAttack)
 	DamageBullet = BulletMinDamage+ Game:MyRandom (DeltaBulletDamage)
-	Damage = Damage+ DamageWeapon + DamageBullet
+	TempDamage = DamageWeapon + DamageBullet-BeastDefense
+	if TempDamage < 0 then
+		TempDamage = 0
+	end
+	Damage = Damage+ TempDamage
 	Game:WeaponMakeOneShot (WeaponID)
 	if Game:GetWeaponCurrentAmmoQuantity(WeaponID)== 0 then
 		break
@@ -82,12 +87,13 @@ end
 
 BeastHP = Game:GetBeastHP (BeastID);
 BeastHP = BeastHP - Damage
+BeastName = Game:GetBeastRName (BeastID)
 if BeastHP <= 0 then
-	Game:PrintMessage ("Вы уничтожили эту тварь, нанеся ей "..Damage.." урона." )
+	Game:PrintMessage ("Вы уничтожили <<"..BeastName..">>, нанеся ей "..Damage.." урона." )
 	Game:SetBeastHP (BeastID, BeastHP)
 end
 if BeastHP >0 then
-	Game:PrintMessage ("Вы нанесли по твари урон в размере  "..Damage)
+	Game:PrintMessage ("Вы нанесли по <<"..BeastName..">> урон в размере  "..Damage)
 	Game:SetBeastHP (BeastID, BeastHP)
 end
 return

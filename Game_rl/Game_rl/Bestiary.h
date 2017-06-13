@@ -20,6 +20,8 @@ public:
 	int GetIsDead (int Num);
 	int GetID (int Num);
 	void SetID (int Num, int ID);
+	string GetRName (int Num) {return BeastsOfLevel[Num].GetRName();};
+	void SetRName (int Num, string Name) {BeastsOfLevel[Num].SetRName(Name);};
 	int GetCoordX (int Num);
 	void SetCoordX (int Num, int x);
 	int GetCoordY (int Num);

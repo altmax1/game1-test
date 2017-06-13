@@ -44,6 +44,8 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetBeastCoordY", &LuaAdapter::SetBeastCoordY)
 			.addFunction ("GetBeastID", &LuaAdapter::GetBeastID)
 			.addFunction ("SetBeastID", &LuaAdapter::SetBeastID)
+			.addFunction ("GetBeastRName", &LuaAdapter::GetBeastRName)
+			.addFunction ("SetBeastRName", &LuaAdapter::SetBeastRName)
 			.addFunction ("GetBeastIsDead", &LuaAdapter::GetBeastIsDead)
 			.addFunction ("SetBeastIsDead", &LuaAdapter::SetBeastIsDead)
 			.addFunction ("GetBeastDefense", &LuaAdapter::GetBeastDefense)
@@ -382,6 +384,16 @@ void LuaAdapter::SetBeastHP (int Num, int HP)
 int LuaAdapter::GetBeastHP (int Num)
 {
 	return MyBestiary->GetHP (Num);
+}
+
+string LuaAdapter::GetBeastRName (int Num)
+{
+	return MyBestiary->GetRName (Num);
+}
+
+void LuaAdapter::SetBeastRName (int Num, string Name)
+{
+	MyBestiary->SetRName (Num, Name);
 }
 
 void LuaAdapter::SetBeastCoordX (int Num, int x)
