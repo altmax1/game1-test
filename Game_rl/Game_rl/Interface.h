@@ -42,6 +42,8 @@ public:
 	void PrintHID ();
 	void PrintGamerHBar (Gamer *MyGamer);
 	void PrintGamerEBar (Gamer *MyGamer);
+	void PrintOtherHIDs (Gamer *MyGamer);
+	void PrintInventory (Gamer *MyGamer);
 	Interface(void);
 	~Interface(void);
 };

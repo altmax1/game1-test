@@ -348,6 +348,8 @@ void Interface::PrintHID ()
 	MyGamer = MyGame->GetGamer();
 	PrintGamerHBar (MyGamer);
 	PrintGamerEBar (MyGamer);
+	PrintOtherHIDs (MyGamer);
+	PrintInventory (MyGamer);
 	
 }
 
@@ -356,7 +358,7 @@ void Interface::PrintGamerHBar (Gamer *MyGamer)
 	int HP = MyGamer->GetHP();
 	int MaxHP = MyGamer->GetMaxHP();
 	int steps = (HP*100)/(MaxHP*100/20);
-	char *p = new char[3];
+	char *p = new char[4];
 	_itoa (HP,p,10);
 	terminal_color ("white");
 	terminal_print (44,2, "HP:");
@@ -408,4 +410,103 @@ void Interface::PrintGamerEBar (Gamer *MyGamer)
 	}
 	delete [] p;
 	return;
+}
+
+void Interface::PrintOtherHIDs (Gamer *MyGamer)
+{
+	terminal_color ("white");
+	char *temp = new char [4];
+	int Str = MyGamer->GetStr ();
+	_itoa (Str, temp, 10);
+	terminal_print (44,5, "Str:");
+	terminal_print (49,5, temp);
+	int Dex = MyGamer->GetDex ();
+	_itoa (Dex, temp, 10);
+	terminal_print (44,6, "Dex:");
+	terminal_print (49,6, temp);
+	int Def = MyGamer->GetDefense ();
+	_itoa (Def, temp, 10);
+	terminal_print (44,7, "Def");
+	terminal_print (49,7, temp);
+	Equipment *MyEquipment;
+	MyEquipment = MyGamer->GetEquipment();
+	int RightHand = MyEquipment->GetIdBySlot(7);
+	int LeftHand = MyEquipment->GetIdBySlot (8);
+	string RHEquipment, LHEquipment;
+	Game *MyGame;
+	MyGame = Game::GetGameInstance ();
+	Items *MyItems;
+	MyItems = MyGame->GetItems ();
+	if (RightHand < 0)
+		RHEquipment = "---";
+	else
+	{
+		RHEquipment = MyItems->GetNameById (RightHand);
+		if (MyItems->GetWeaponNeedsAmmo(RightHand) == 1)
+		{
+			int Quantity = MyItems->GetWeaponCurrentAmmoQuantity (RightHand);
+			_itoa (Quantity, temp, 10);
+			RHEquipment = RHEquipment+" ("+temp+")";
+		}
+	}
+	if (LeftHand < 0)
+		LHEquipment = "---";
+	else
+	{
+		LHEquipment = MyItems->GetNameById (LeftHand);
+		if (MyItems->GetWeaponNeedsAmmo(LeftHand) == 1)
+		{
+			int Quantity = MyItems->GetWeaponCurrentAmmoQuantity (LeftHand);
+			_itoa (Quantity, temp, 10);
+			LHEquipment = LHEquipment+" ("+temp+")";
+		}
+	}
+	
+	terminal_print (44,10, L"ÏÐ:");
+	terminal_print_ext (49,10,30,2,TK_ALIGN_LEFT, RHEquipment.c_str());
+	terminal_print (44,12, L"ËÐ:");
+	terminal_print_ext (49,12,30,2,TK_ALIGN_LEFT, LHEquipment.c_str());
+	delete [] temp;
+	return;
+
+}
+
+void Interface::PrintInventory (Gamer *MyGamer)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance ();
+	Items *MyItems;
+	MyItems = MyGame->GetItems ();
+	terminal_print (44,27, L"Èíâåíòàðü:");
+	Inventory *MyInventory;
+	MyInventory = MyGamer->GetInventory();
+	int InventorySize = MyInventory->GetNumOfSlots();
+	if (InventorySize == 0 )
+		return;
+	char *temp = new char[3];
+	for (int x = 0; x<3; x++)
+	{
+		for (int y = 0;y<10; y++)
+		{
+			int Num = y+x*10;
+			if (Num >= InventorySize)
+				break;
+			int ID = MyInventory->GetIdByNum (Num);
+			int CharCode = MyItems->GetCharCode (ID);
+			int Stackable = MyItems->GetStackable (ID);
+			int Quantity = MyInventory->GetQuantityByNum (Num);
+			terminal_color ("white");
+			terminal_put (44+x*6,28+y, CharCode);
+			terminal_color (0x7fffffff);
+			if (Stackable == 0)
+				terminal_print (44+x*6+1,28+y, "----");
+			else if (Stackable != 0)
+			{
+				_itoa (Quantity, temp,10);
+				terminal_print (44+x*6+2,28+y, temp);
+			}
+
+		
+		}
+	}
 }

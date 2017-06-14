@@ -84,6 +84,12 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
 		MapPtr = p->find ("ShotsPerStep");
 		TempWeapon.ShotsPerStep = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("CharCode");
+		TempWeapon.CharCode = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("ColorVisible");
+		TempWeapon.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
+		MapPtr = p->find ("ColorNotVisible");
+		TempWeapon.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		try{
 		if (TempWeapon.ID != UniqueWeapon.size())
 			throw "BAD_ID_IN_UniqueWeapon";}
@@ -149,6 +155,12 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
 		MapPtr = p->find ("ShotsPerStep");
 		TempWeapon.ShotsPerStep = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("CharCode");
+		TempWeapon.CharCode = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("ColorVisible");
+		TempWeapon.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
+		MapPtr = p->find ("ColorNotVisible");
+		TempWeapon.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		try{
 		if (TempWeapon.ID-900000 != CommonWeapon.size())
 			throw "BAD_ID_IN_CommonWeapon";}
@@ -222,6 +234,12 @@ void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 		TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("BuiltInType");
 		TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
+		MapPtr = p->find ("CharCode");
+		TempArmour.CharCode = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("ColorVisible");
+		TempArmour.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
+		MapPtr = p->find ("ColorNotVisible");
+		TempArmour.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		try{
 		if (TempArmour.ID-1900000 != CommonArmour.size())
 			throw "BAD_ID_IN_ComonArmour";}
@@ -274,6 +292,12 @@ void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 		TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("BuiltInType");
 		TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
+		MapPtr = p->find ("CharCode");
+		TempArmour.CharCode = atoi (MapPtr->second.c_str());
+		MapPtr = p->find ("ColorVisible");
+		TempArmour.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
+		MapPtr = p->find ("ColorNotVisible");
+		TempArmour.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		try{
 		if (TempArmour.ID-1000000 != UniqueArmour.size())
 			throw "BAD_ID_IN_UniqueArmour";}
@@ -657,4 +681,70 @@ int Items::GetWeaponShotPerStep (int Id)
 	else if (Id >= 9000000 && Id < 1000000)
 		return CommonWeapon[Id-900000].ShotsPerStep;
 	else return 0;
+}
+
+int Items::GetCharCode (int ID)
+{
+	if (ID>=0 && ID <900000)
+		return WeaponFromLevel[ID].CharCode;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].CharCode;
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].CharCode;
+	if (ID >=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].CharCode;
+	return 0;
+}
+
+int Items::GetColorVisible (int ID)
+{
+	if (ID>=0 && ID <900000)
+		return WeaponFromLevel[ID].ColorVisible;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].ColorVisible;
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].ColorVisible;
+	if (ID >=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].ColorVisible;
+	return 0xFFFFFFFF;
+}
+
+int Items::GetColorNotVisible (int ID)
+{
+	if (ID>=0 && ID <900000)
+		return WeaponFromLevel[ID].ColorNotVisible;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID-900000].ColorNotVisible;
+	if (ID >=1000000 && ID < 1900000)
+		return ArmourFromLevel[ID-1000000].ColorNotVisible;
+	if (ID >=1900000 && ID < 2000000)
+		return CommonArmour[ID-1900000].ColorNotVisible;
+	return 0;
+}
+
+void Items::SetCharCode (int ID, int Code) 
+{
+	if (ID>=0 && ID <900000)
+		WeaponFromLevel[ID].CharCode = Code;
+	if (ID>=1000000 && ID<1900000)
+		ArmourFromLevel[ID-1000000].CharCode = Code;
+	return;
+}
+
+void Items::SetColorVisible (int ID, int Color)
+{
+	if (ID>=0 && ID <900000)
+		WeaponFromLevel[ID].ColorVisible = Color;
+	if (ID>=1000000 && ID<1900000)
+		ArmourFromLevel[ID-1000000].ColorVisible = Color;
+	return;
+}
+
+void Items::SetColorNotVisible (int ID, int Color)
+{
+	if (ID>=0 && ID <900000)
+		WeaponFromLevel[ID].ColorNotVisible = Color;
+	if (ID>=1000000 && ID<1900000)
+		ArmourFromLevel[ID-1000000].ColorNotVisible = Color;
+	return;
 }

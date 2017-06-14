@@ -11,6 +11,9 @@ struct Item{
 	int Type;
 	int Quality; //качество - износ мб, если батарея, то заряд.
 	bool Destroyed; //если разрушено, ставим 1. у not unique не учитывать.
+	int CharCode; //Символ для печати
+	int ColorVisible;
+	int ColorNotVisible;
 };
 
 struct Weapon: public Item
@@ -25,6 +28,9 @@ struct Weapon: public Item
 	int Range;  // дистанция поражения (стрельбы)
 	int BlastRadius; //радиус поражения
 	int ShotsPerStep; //выстрелов в очереди
+	int AfterEffectType; // тип последствий выстрела
+	int AfterEffectTime; // время последствий
+	int AfterEffectPower; // сила последствий
 };
 
 struct Armour: public Item
@@ -104,6 +110,12 @@ public:
 	void WeaponMakeOneShot (int Id);
 	int GetWeaponShotPerStep (int Id);
 	void SetWeaponShotPerStep (int Id, int Shots);
+	int GetCharCode (int Id);
+	void SetCharCode (int Id, int Code);
+	int GetColorVisible (int Id);
+	void SetColorVisible (int Id, int Color);
+	int GetColorNotVisible (int Id);
+	void SetColorNotVisible (int Id, int Color);
 
 };
 
