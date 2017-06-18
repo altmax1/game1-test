@@ -333,6 +333,7 @@ void Equipment::WearItem (int MenuState)
 			return;
 		}
 	SelectEqToWear (temp);
+	MyGame->SetPlayerMoved();
 	return;	
 
 }
@@ -378,6 +379,7 @@ void Equipment::UnWearItem (int MenuState)
 		MyInventory ->PutItemInVector (*Ptr[MenuState-1],Stackable,1);
 		*Ptr[MenuState-1] = -1;
 		LuaMakeSumOfDef();
+		MyGame->SetPlayerMoved();
 		return;
 	}
 	
@@ -471,7 +473,7 @@ int Equipment::GetDefBySlot (int Num)
 	return 0;
 }
 
-int Equipment::GetDef2BySlot (int Num)
+int Equipment::GetDefBySlotAdvansed (int Num, int NumOfDefense)
 {
 	if (Num>0 && Num <=8)
 	{
@@ -480,52 +482,12 @@ int Equipment::GetDef2BySlot (int Num)
 		Items *MyItems;
 		MyItems = MyGame->GetItems();
 		int ID = *Ptr[Num-1];
-		return MyItems->GetDefense2ById (ID);	
+		return MyItems->GetDefenseByIdAdvanced (ID, NumOfDefense);	
 	}
 	return 0;
 }
 
-int Equipment::GetDef3BySlot (int Num)
-{
-	if (Num>0 && Num <=8)
-	{
-		Game *MyGame;
-		MyGame = Game::GetGameInstance();
-		Items *MyItems;
-		MyItems = MyGame->GetItems();
-		int ID = *Ptr[Num-1];
-		return MyItems->GetDefense3ById (ID);	
-	}
-	return 0;
-}
 
-int Equipment::GetDef4BySlot (int Num)
-{
-	if (Num>0 && Num <=8)
-	{
-		Game *MyGame;
-		MyGame = Game::GetGameInstance();
-		Items *MyItems;
-		MyItems = MyGame->GetItems();
-		int ID = *Ptr[Num-1];
-		return MyItems->GetDefense4ById (ID);	
-	}
-	return 0;
-}
-
-int Equipment::GetDef5BySlot (int Num)
-{
-	if (Num>0 && Num <=8)
-	{
-		Game *MyGame;
-		MyGame = Game::GetGameInstance();
-		Items *MyItems;
-		MyItems = MyGame->GetItems();
-		int ID = *Ptr[Num-1];
-		return MyItems->GetDefense5ById (ID);	
-	}
-	return 0;
-}
 
 int Equipment::GetIdBySlot (int Slot)
 {

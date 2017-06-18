@@ -7,6 +7,7 @@ class Bestiary
 private:
 	vector <Beast> Creatures;
 	vector <Beast> BeastsOfLevel;
+	set<int> DeadBeasts;
 public:
 	void MakeCreatures ();
 	void FillCreatures ();
@@ -46,6 +47,7 @@ public:
 	void SetSpeed (int Num, int Speed);
 	int GetMovePoints (int Num) {return BeastsOfLevel[Num].GetMovePoints();}
 	void SetMovePoints (int Num, int Points) {BeastsOfLevel[Num].SetMovePoints(Points);}
+	void SetDeadBeast (int Num) {DeadBeasts.insert (Num);};
 	
 };
 

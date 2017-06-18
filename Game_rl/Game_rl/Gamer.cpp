@@ -199,6 +199,8 @@ void Gamer::GamerPlacing()
 
 void Gamer::Move (int Direction)
 {
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
 	int NextX, NextY;
 	int linear;
 	NextX = CoordX;
@@ -207,6 +209,7 @@ void Gamer::Move (int Direction)
 	if (Direction == TK_T)
 	{
 		MyInventory->PutItemInInventory();
+		MyGame->SetPlayerMoved();
 		return;
 	}
 
@@ -219,6 +222,7 @@ void Gamer::Move (int Direction)
 	if (Direction == TK_D)
 	{
 		MyInventory->DropItem ();
+		MyGame->SetPlayerMoved();
 		return;
 	}
 
@@ -230,11 +234,20 @@ void Gamer::Move (int Direction)
 
 	if (Direction == TK_R)
 		if (terminal_check(TK_SHIFT))
+		{
 			UnloadWeapon();
+			MyGame->SetPlayerMoved();
+		}
 		else
+		{
 			ReloadWeapon();
+			MyGame->SetPlayerMoved();
+		}
 	if (Direction == TK_F)
+	{
 		GamerDistantAttackLua();
+		MyGame->SetPlayerMoved();
+	}
 	if (Direction == TK_EQUALS && terminal_check(TK_SHIFT))
 	{
 		Game *MyGame;
@@ -340,25 +353,12 @@ int Gamer::GetDefenseFromEquipment (int NumOfSlot)
 	return MyEquipment->GetDefBySlot (NumOfSlot);
 }
 
-int Gamer::GetDefense2FromEquipment (int NumOfSlot)
+int Gamer::GetDefenseFromEquipmentAdvansed (int NumOfSlot, int NumOfDefense)
 {
-	return MyEquipment->GetDef2BySlot (NumOfSlot);
+	return MyEquipment->GetDefBySlotAdvansed (NumOfSlot, NumOfDefense);
 }
 
-int Gamer::GetDefense3FromEquipment (int NumOfSlot)
-{
-	return MyEquipment->GetDef3BySlot (NumOfSlot);
-}
 
-int Gamer::GetDefense4FromEquipment (int NumOfSlot)
-{
-	return MyEquipment->GetDef4BySlot (NumOfSlot);
-}
-
-int Gamer::GetDefense5FromEquipment (int NumOfSlot)
-{
-	return MyEquipment->GetDef5BySlot (NumOfSlot);
-}
 
 int Gamer::GetItemIdBySlot (int Slot)
 {

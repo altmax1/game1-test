@@ -55,10 +55,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetBeastStr", &LuaAdapter::GetBeastStr)
 			.addFunction ("SetBeastStr", &LuaAdapter::SetBeastStr)
 			.addFunction ("GetDefenseOfSlot", &LuaAdapter::GetDefenseBySlot)
-			.addFunction ("GetDefense2OfSlot", &LuaAdapter::GetDefense2BySlot)
-			.addFunction ("GetDefense3OfSlot", &LuaAdapter::GetDefense3BySlot)
-			.addFunction ("GetDefense4OfSlot", &LuaAdapter::GetDefense4BySlot)
-			.addFunction ("GetDefense5OfSlot", &LuaAdapter::GetDefense5BySlot)
+			.addFunction ("GetDefenseOfSlotAdvansed", &LuaAdapter::GetDefenseBySlotAdvansed)
 			.addFunction ("GetIdByGamerSlot", &LuaAdapter::GetItemIdBySlot)
 			.addFunction ("GetItemTypeById", &LuaAdapter::GetTypeById)
 			.addFunction ("GetItemType2ById", &LuaAdapter::GetType2ById)
@@ -91,6 +88,10 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetKeyCode", &LuaAdapter::GetKeyCode)
 			.addFunction ("PrintMessage", &LuaAdapter::PrintMessage)
 			.addFunction ("PrintMessageNow", &LuaAdapter::PrintMessageNow)
+			.addFunction ("GetMoves", &LuaAdapter::GetMoves)
+			.addFunction ("GetGamerMoved", &LuaAdapter::GetGamerMoved)
+			.addFunction ("SetGamerMoved", &LuaAdapter::SetGamerMoved)
+			.addFunction ("ResetGamerMoved", &LuaAdapter::ResetGamerMoved)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -478,24 +479,9 @@ int LuaAdapter::GetDefenseBySlot (int NumOfSlot)
 	return MyGamer->GetDefenseFromEquipment (NumOfSlot);
 }
 
-int LuaAdapter::GetDefense2BySlot (int NumOfSlot)
+int LuaAdapter::GetDefenseBySlotAdvansed (int NumOfSlot, int NumOfDefense)
 {
-	return MyGamer->GetDefense2FromEquipment (NumOfSlot);
-}
-
-int LuaAdapter::GetDefense3BySlot (int NumOfSlot)
-{
-	return MyGamer->GetDefense3FromEquipment (NumOfSlot);
-}
-
-int LuaAdapter::GetDefense4BySlot (int NumOfSlot)
-{
-	return MyGamer->GetDefense4FromEquipment (NumOfSlot);
-}
-
-int LuaAdapter::GetDefense5BySlot (int NumOfSlot)
-{
-	return MyGamer->GetDefense5FromEquipment (NumOfSlot);
+	return MyGamer->GetDefenseFromEquipmentAdvansed (NumOfSlot, NumOfDefense);
 }
 
 int LuaAdapter::GetItemIdBySlot (int Slot)
@@ -657,4 +643,24 @@ void LuaAdapter::SetWeaponShotsByStep (int Id, int Shots)
 void LuaAdapter::WeaponMakeOneShot(int Id)
 {
 	MyItems->WeaponMakeOneShot(Id);
+}
+
+int LuaAdapter::GetMoves ()
+{
+	return MyGame->GetMoves ();
+}
+
+int LuaAdapter::GetGamerMoved ()
+{
+	return MyGame->GetPlayerMoved();
+}
+
+void LuaAdapter::SetGamerMoved ()
+{
+	MyGame->SetPlayerMoved ();
+}
+
+void LuaAdapter::ResetGamerMoved ()
+{
+	MyGame->ResetPlayerMoved ();
 }

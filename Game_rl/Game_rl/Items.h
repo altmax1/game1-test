@@ -37,11 +37,7 @@ struct Armour: public Item
 {
 	//int Type -  слоты занимаемые, 1 - голова, 2 - перч, 3 - тело, 4 - руки
 	int Type2; // доп слоты если большое
-	int Defense; //физика
-	int Defense2; //ментальная
-	int Defense3; //огонь
-	int Defense4; //биологич, яд, кислота
-	int Defense5; //холод
+	int Defense[10]; 
 	bool CanBuiltedIn; //можно ли встроить что-либо
 	int NumOfBuiltedInSlots;
 	vector <int> SlotForBuiltIn;
@@ -79,10 +75,7 @@ public:
 	int GetTypeById (int ID);
 	int GetType2ById (int ID);
 	int GetDefenseById (int ID);
-	int GetDefense2ById (int ID);
-	int GetDefense3ById (int ID);
-	int GetDefense4ById (int ID);
-	int GetDefense5ById (int ID);
+	int GetDefenseByIdAdvanced (int Id, int NumOfDefense);
 	int GetGlobalType (int ID);
 	//-------ToDo
 	int GetWeightById (int Id);

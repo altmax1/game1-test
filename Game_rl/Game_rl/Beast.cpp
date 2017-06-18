@@ -68,6 +68,9 @@ void Beast::MakeMove()
 			MyLevel = MyGame->GetLevel ();
 			IsDead = 1;
 			MyLevel->RemoveCreature (CoordX,CoordY);
+			Bestiary *MyBestiary;
+			MyBestiary = MyGame->GetBestiary();
+			MyBestiary->SetDeadBeast (NumInVector);
 			return;
 		}
 	using namespace luabridge;
@@ -273,12 +276,26 @@ int Beast::GetID () const
 	}
 	void Beast::SetDefense (int a)
 	{
-		Defense = a;
+		Defense[0] = a;
 		return;
 	}
 	int Beast::GetDefence () const
 	{
-		return Defense;
+		return Defense[0];
+	}
+
+	void Beast::SetDefenseAdvansed (int Def, int NumOfDef)
+	{
+		if (NumOfDef>=1 && NumOfDef <=10)
+			Defense[NumOfDef-1] = Def;
+		return;
+	}
+
+	int Beast::GetDefenseAdvansed (int NumOfDef)
+	{
+		if (NumOfDef>=1 && NumOfDef <=10)
+			return Defense[NumOfDef-1];
+		return 0;
 	}
 
 	void Beast::SetMaxAttack (int a)

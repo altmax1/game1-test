@@ -75,10 +75,7 @@ public:
 	Inventory* GetInventory ();
 	Equipment* GetEquipment ();
 	int GetDefenseFromEquipment (int NumOfSlot);
-	int GetDefense2FromEquipment (int NumOfSlot);
-	int GetDefense3FromEquipment (int NumOfSlot);
-	int GetDefense4FromEquipment (int NumOfSlot);
-	int GetDefense5FromEquipment (int NumOfSlot);
+	int GetDefenseFromEquipmentAdvansed (int NumOfSlot, int NumOfDefense);
 	int GetItemIdBySlot (int Slot);
 	void ReloadWeapon ();
 	void UnloadWeapon ();

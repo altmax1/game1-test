@@ -146,22 +146,22 @@ void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
 	MyGame = Game::GetGameInstance ();
 	Items *MyItems;
 	MyItems = MyGame->GetItems();
+	level *MyLevel;
+	MyLevel = MyGame->GetLevel();
+	char flags = MyLevel->GetFlagsFOV(BaseX, BaseY);
 	
 	int ItemType = MyItems ->GetTypeById (ItemID); //подправлено ItemId на 1 временно.
-	if (ItemType == 0)
-		terminal_put (FOVX,FOVY,92);
-	else if ((ItemType == 1) || (ItemType == 2))
-		terminal_put (FOVX,FOVY,124);
-	else if (ItemType>=10 && ItemType<20)
-		terminal_put (FOVX, FOVY,0x00B6);
-	else if (ItemType>=20 && ItemType<30)
-		terminal_put (FOVX, FOVY, 0x00B9);
-	else terminal_put (FOVX,FOVY, 37);
+	int CharCode = MyItems->GetCharCode (ItemID);
+	if (flags&FOV_CELL_VISIBLE)
+		terminal_color (MyItems->GetColorVisible (ItemID));
+	else if (flags&FOV_CELL_VISITED)
+		terminal_color (MyItems->GetColorNotVisible (ItemID));
+	else return;
+	terminal_put (FOVX, FOVY, CharCode);
+	
 	if ((Mylevel->GetQuantityItemsOnCell(BaseX, BaseY))>1)
 	{
-		level *MyLevel;
-		MyLevel = MyGame->GetLevel();
-		char flags = MyLevel->GetFlagsFOV(BaseX, BaseY);
+		
 		if (flags&FOV_CELL_VISITED)
 		{
 		terminal_layer (2);
@@ -403,7 +403,7 @@ void Interface::PrintGamerEBar (Gamer *MyGamer)
 	else if (EP>=MaxEP*30/100 && EP<MaxEP*50/100)
 		terminal_color ("yellow");
 	else
-		terminal_color ("green");
+		terminal_color ("blue");
 	for (int i=0; i<steps; i++)
 	{
 		terminal_put (51+i, 3, 0x2586);
@@ -415,7 +415,7 @@ void Interface::PrintGamerEBar (Gamer *MyGamer)
 void Interface::PrintOtherHIDs (Gamer *MyGamer)
 {
 	terminal_color ("white");
-	char *temp = new char [4];
+	char *temp = new char [8];
 	int Str = MyGamer->GetStr ();
 	_itoa (Str, temp, 10);
 	terminal_print (44,5, "Str:");
@@ -466,6 +466,9 @@ void Interface::PrintOtherHIDs (Gamer *MyGamer)
 	terminal_print_ext (49,10,30,2,TK_ALIGN_LEFT, RHEquipment.c_str());
 	terminal_print (44,12, L"ЛР:");
 	terminal_print_ext (49,12,30,2,TK_ALIGN_LEFT, LHEquipment.c_str());
+	terminal_print (44,19, L"Время:");
+	_itoa (MyGame->GetMoves(), temp, 10);
+	terminal_print (51, 19, temp);
 	delete [] temp;
 	return;
 
@@ -480,11 +483,18 @@ void Interface::PrintInventory (Gamer *MyGamer)
 	terminal_print (44,27, L"Инвентарь:");
 	Inventory *MyInventory;
 	MyInventory = MyGamer->GetInventory();
+	terminal_color (0x5fffffff);
+	for (int x = 0; x<5; x++)
+		for (int y = 0; y <10; y++)
+		{
+			terminal_put (44+x*6,28+y, 0x0181);
+		}
 	int InventorySize = MyInventory->GetNumOfSlots();
 	if (InventorySize == 0 )
 		return;
 	char *temp = new char[3];
-	for (int x = 0; x<3; x++)
+	
+	for (int x = 0; x<5; x++)
 	{
 		for (int y = 0;y<10; y++)
 		{
@@ -495,7 +505,8 @@ void Interface::PrintInventory (Gamer *MyGamer)
 			int CharCode = MyItems->GetCharCode (ID);
 			int Stackable = MyItems->GetStackable (ID);
 			int Quantity = MyInventory->GetQuantityByNum (Num);
-			terminal_color ("white");
+			int Color = MyItems->GetColorVisible (ID);
+			terminal_color (Color);
 			terminal_put (44+x*6,28+y, CharCode);
 			terminal_color (0x7fffffff);
 			if (Stackable == 0)

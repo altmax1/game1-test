@@ -12,6 +12,8 @@ Game* Game::MyGame = 0;
 Game::Game(void)
 {
 	DeveloperMode = 0;
+	PlayerMoved = 0;
+	Moves = 0;
 }
 
 Game* Game::GetGameInstance ()
@@ -107,7 +109,11 @@ void Game::MakeBestiary()
 
 void Game::MakeAIMove ()
 {
+	if (PlayerMoved == 1)
+	{
 	MyBestiary->MakeBeastsMove ();
+	ResetPlayerMoved ();
+	}
 	return;
 }
 

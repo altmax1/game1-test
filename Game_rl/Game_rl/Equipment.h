@@ -36,10 +36,7 @@ public:
 	int GetLegsDef();
 	int GetBootsDef();
 	int GetDefBySlot (int Num);
-	int GetDef2BySlot (int Num);
-	int GetDef3BySlot (int Num);
-	int GetDef4BySlot (int Num);
-	int GetDef5BySlot (int Num);
+	int GetDefBySlotAdvansed (int Num, int NumOfDefense);
 	int GetIdBySlot (int Slot);
 	void LuaMakeSumOfDef ();
 

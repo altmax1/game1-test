@@ -196,6 +196,7 @@ void Items::GetUniqueArmourFromFile ()
 
 void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 {
+	char *temp = new char [3];
 	vector <map<string,string>>::iterator p;
 	p = Temp.begin();
 	while (p!= Temp.end())
@@ -219,15 +220,22 @@ void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 		MapPtr = p->find("Type2");
 		TempArmour.Type2 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Defense");
-		TempArmour.Defense = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense2");
-		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense3");
-		TempArmour.Defense3 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense4");
-		TempArmour.Defense4 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense5");
-		TempArmour.Defense5 = atoi(MapPtr->second.c_str());
+		TempArmour.Defense[0] = atoi(MapPtr->second.c_str());
+		
+		for (int i = 1; i <=10; i++)
+		{
+			int NumInVector = i-1;
+			_itoa (i, temp, 10);
+			string name2 = temp;
+			string name = "Defense"+name2;
+			if (p->count (name)>0)
+			{
+				MapPtr = p->find (name);
+				TempArmour.Defense[NumInVector] = atoi (MapPtr->second.c_str());
+			}
+		
+		}
+		
 		MapPtr = p->find("CanBuiltedIn");
 		TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("NumOfBuiltedInSlots");
@@ -250,10 +258,12 @@ void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 		CommonArmour.push_back (TempArmour);
 		p++;
 	}
+	delete [] temp;
 }
 
 void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 {
+	char *temp = new char [3];
 	vector <map<string,string>>::iterator p;
 	p = Temp.begin();
 	while (p!= Temp.end())
@@ -277,15 +287,23 @@ void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 		MapPtr = p->find("Type2");
 		TempArmour.Type2 = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("Defense");
-		TempArmour.Defense = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense2");
-		TempArmour.Defense2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense3");
-		TempArmour.Defense3 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense4");
-		TempArmour.Defense4 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense5");
-		TempArmour.Defense5 = atoi(MapPtr->second.c_str());
+		TempArmour.Defense[0] = atoi(MapPtr->second.c_str());
+		
+		for (int i = 1; i <=10; i++)
+		{
+			int NumInVector = i-1;
+			_itoa (i, temp, 10);
+			string name2 = temp;
+			string name = "Defense"+name2;
+			if (p->count (name)>0)
+			{
+			
+				MapPtr = p->find (name);
+				TempArmour.Defense[NumInVector] = atoi (MapPtr->second.c_str());
+			}
+		
+		}
+		
 		MapPtr = p->find("CanBuiltedIn");
 		TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
 		MapPtr = p->find("NumOfBuiltedInSlots");
@@ -308,6 +326,7 @@ void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 		UniqueArmour.push_back (TempArmour);
 		p++;
 	}
+	delete [] temp;
 }
 
 
@@ -393,48 +412,22 @@ int Items::GetType2ById (int ID)
 int Items::GetDefenseById (int ID)
 {
 	if (ID>=1000000 && ID < 1900000)
-		return ArmourFromLevel[ID-1000000].Defense;
+		return ArmourFromLevel[ID-1000000].Defense[0];
 	if (ID>=1900000 && ID < 2000000)
-		return CommonArmour[ID-1900000].Defense;
+		return CommonArmour[ID-1900000].Defense[0];
 	return 0;
 }
 
-int Items::GetDefense2ById (int ID)
+int Items::GetDefenseByIdAdvanced (int ID, int NumOfDefense)
 {
+	if (NumOfDefense >10 || NumOfDefense <1)
+		return 0;
 	if (ID>=1000000 && ID < 1900000)
-		return ArmourFromLevel[ID-1000000].Defense2;
+		return ArmourFromLevel[ID-1000000].Defense[NumOfDefense-1];
 	if (ID>=1900000 && ID < 2000000)
-		return CommonArmour[ID-1900000].Defense2;
+		return CommonArmour[ID-1900000].Defense[NumOfDefense-1];
 	return 0;
 }
-
-int Items::GetDefense3ById (int ID)
-{
-	if (ID>=1000000 && ID < 1900000)
-		return ArmourFromLevel[ID-1000000].Defense3;
-	if (ID>=1900000 && ID < 2000000)
-		return CommonArmour[ID-1900000].Defense3;
-	return 0;
-}
-
-int Items::GetDefense4ById (int ID)
-{
-	if (ID>=1000000 && ID < 1900000)
-		return ArmourFromLevel[ID-1000000].Defense4;
-	if (ID>=1900000 && ID < 2000000)
-		return CommonArmour[ID-1900000].Defense4;
-	return 0;
-}
-
-int Items::GetDefense5ById (int ID)
-{
-	if (ID>=1000000 && ID < 1900000)
-		return ArmourFromLevel[ID-1000000].Defense5;
-	if (ID>=1900000 && ID < 2000000)
-		return CommonArmour[ID-1900000].Defense5;
-	return 0;
-}
-
 
 
 int Items::GetGlobalType (int ID)

@@ -76,11 +76,8 @@ public:
 	void SetBeastStr (int Num, int Str);
 	int GetBeastStr (int Num);
 	int GetDefenseBySlot (int NumOfSlot);
-	int GetDefense2BySlot (int NumOfSlot);
-	int GetDefense3BySlot (int NumOfSlot);
-	int GetDefense4BySlot (int NumOfSlot);
-	int GetDefense5BySlot (int NumOfSlot);
-
+	int GetDefenseBySlotAdvansed (int NumOfSlot, int NumOfdefense);
+	int GetDefenseByID (int Id, int NumOfDefense);
 	int GetItemIdBySlot (int SlotNum);
 	int GetTypeById (int ID);
 	int GetType2ById (int ID);
@@ -113,6 +110,10 @@ public:
 	void PrintMessage (string MyMessage);
 	int GetKeyCode ();
 	void PrintMessageNow (string Message);
+	int GetMoves ();
+	void SetGamerMoved ();
+	void ResetGamerMoved ();
+	int GetGamerMoved ();
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

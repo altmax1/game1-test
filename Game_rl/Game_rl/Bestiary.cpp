@@ -18,6 +18,7 @@ Bestiary::~Bestiary(void)
 
 void Bestiary::FillCreatures ()
 {
+	char *temp = new char [4];
 	vector <map<string, string>> MyCreatures;
 	FileContent MyFile;
 	X_File::X_ReadFile ((LPCTSTR) L".\\Files\\Beasts.ini", MyFile);
@@ -48,6 +49,24 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetLevelOfBeast(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("Defense");
 		MyBeast.SetDefense(atoi (MapPtr->second.c_str()));
+
+		for (int a = 1; a <=10; a++)
+		{
+			int NumInVector = a-1;
+			_itoa (a, temp, 10);
+			string name2 = temp;
+			string name = "Defense"+name2;
+		
+			
+			if ( MyCreatures[i].count (name)  >0)
+			{
+				MapPtr = MyCreatures[i].find (name);
+				MyBeast.SetDefenseAdvansed (atoi (MapPtr->second.c_str()),i);
+									
+			}
+		
+		}
+
 		MapPtr = MyCreatures[i].find ("Str");
 		MyBeast.SetStr(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("Dex");
@@ -85,21 +104,38 @@ void Bestiary::FillCreatures ()
 		Creatures.resize (ID+1);
 		Creatures[i] = MyBeast;
 	}
+delete [] temp;
 }
 
 void Bestiary::MakeCreature (int ID, int x, int y)
 
 {	
-	BeastsOfLevel.push_back(Creatures[ID]);
+	int NumOfBeast;
+	if (DeadBeasts.empty())
+	{
+		BeastsOfLevel.push_back(Creatures[ID]);
+		NumOfBeast = BeastsOfLevel.size()-1;
+	}
+	else if (DeadBeasts.size()>0)
+	{
+		set<int>::iterator p;
+		p = DeadBeasts.begin();
+		NumOfBeast = *p;
+		DeadBeasts.erase (p);
+		BeastsOfLevel[NumOfBeast] = Creatures[ID];
+
+	}
 	int size = BeastsOfLevel.size();
-	BeastsOfLevel[size-1].SetCoordX (x);
-	BeastsOfLevel[size-1].SetCoordY (y);
-	BeastsOfLevel[size-1].SetID (ID);
+	BeastsOfLevel[NumOfBeast].SetCoordX (x);
+	BeastsOfLevel[NumOfBeast].SetCoordY (y);
+	BeastsOfLevel[NumOfBeast].SetID (ID);
+	BeastsOfLevel[NumOfBeast].SetNumInVector(NumOfBeast);
 	Game * MyGame;
 	MyGame = Game::GetGameInstance();
 	level *MyLevel;
 	MyLevel = MyGame->GetLevel();
-	MyLevel->SetCreature (size-1, x, y);
+	MyLevel->SetCreature (NumOfBeast, x, y);
+	
 	return;
 }
 

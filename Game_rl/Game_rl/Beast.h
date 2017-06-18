@@ -4,6 +4,7 @@ class Beast
 private:
 	int IsDead;
 	int ID;
+	int NumInVector;
 	int CoordX;
 	int CoordY;
 	std::string Name;
@@ -17,7 +18,7 @@ private:
 	int RegenHP; //Скорость регенерации здоровья
 	int RegenEnergy;  // Скорость регенерации энергии
 	int LevelOfBeast; //виртуальный уровень
-	int Defense;  //уровень защиты
+	int Defense[10];  //уровень защиты
 	int MaxAttack; // максимальная атака
 	int MinAttack; // минимальная атака
 	int AttackType; //тип атаки
@@ -78,6 +79,8 @@ public:
 	int GetLevelOfBeast () const;
 	void SetDefense (int a);
 	int GetDefence () const;
+	void SetDefenseAdvansed (int def, int NumOfDef);
+	int GetDefenseAdvansed (int NumOfDef);
 	void SetMaxAttack (int a);
 	int GetMaxAttack () const;
 	void SetMinAttack (int a);
@@ -119,6 +122,8 @@ public:
 	void SetColorNotVisible (int Color);
 	int GetMovePoints () const;
 	void SetMovePoints (int Points);
+	void SetNumInVector (int Num) {NumInVector = Num;};
+	int GetNumInVector () {return NumInVector;};
 
 };
 

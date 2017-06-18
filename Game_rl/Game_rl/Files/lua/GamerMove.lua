@@ -21,24 +21,32 @@ NextX = Game.GamerX
 NextY = Game.GamerY
 if (KeyCode == TK_RIGHT or KeyCode == TK_KP_6) then
 	NextX = NextX+1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_LEFT or KeyCode == TK_KP_4 then
 	NextX = NextX-1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_DOWN or KeyCode == TK_KP_2 then
 	NextY = NextY+1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_UP or KeyCode == TK_KP_8 then
 	NextY = NextY-1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_KP_3 then
 	NextY = NextY+1
 	NextX = NextX+1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_KP_1 then
 	NextY = NextY+1
 	NextX = NextX-1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_KP_9 then
 	NextY = NextY-1
 	NextX = NextX+1
+	Game:SetGamerMoved()
 elseif KeyCode == TK_KP_7 then
 	NextY = NextY-1
 	NextX = NextX-1
+	Game:SetGamerMoved()
 	end
 Passable = Game:GetCellPassable (NextX, NextY)
 if NextX >=0 and NextX < Game:GetLevelWidth () and NextY >= 0 and NextY < Game:GetLevelHeight () then
@@ -64,6 +72,7 @@ if CreatureNum >= 0 then
 	
 	end
 
+	
 end
 
 GamerAttack = function (Game, Beast, NumOfBeast)
