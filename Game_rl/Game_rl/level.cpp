@@ -3,6 +3,7 @@
 #include "cell.h"
 #include "Dungeon.h"
 #include "Game.h"
+#include "LuaAdapter.h"
 
 
 level::level()
@@ -109,6 +110,19 @@ void level::PlaceWeapons (int Quantity)
 		} while (basetype!= '.');
 		int Quant2 = rand () %20;
 		cells[coords].AddItems(900001,1,Quant2);
+
+	}
+
+	for (int i = 0; i< 10; i++)
+	{
+		int coords;
+		char basetype;
+		do {
+		coords = rand () % (LevelWidth*LevelHeight);
+		basetype = cells[coords].GetBaseType();
+		} while (basetype!= '.');
+		int Quant2 = rand () %20;
+		cells[coords].AddItems(900003,1,Quant2);
 
 	}
 }
@@ -461,4 +475,91 @@ void level::SetPassable (int x, int y, int passable)
 	int linear = DecartToLinear (x,y);
 	cells[linear].SetPassable (passable);
 	return;
+}
+
+void level::AddEffect (int x, int y, int Type, int Power, int Time)
+{
+	int linear = DecartToLinear (x,y);
+	cells[linear].AddEffect (Type,Power,Time);
+	CellsUnderEffects.insert (linear);
+}
+
+int level::GetNumOfEffects (int x, int y)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].GetNumOfEffects();
+}
+
+void level::CheckEffects (int x, int y)
+{
+	int linear = DecartToLinear (x,y);
+	cells[linear].CheckEffects();
+	if (cells[linear].GetNumOfEffects() == 0)
+		CellsUnderEffects.erase (linear);
+	return;
+}
+
+int level::GetEffectTypeByNum (int x, int y, int Num)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].GetEffectTypeByNum (Num);
+}
+
+int level::GetEffectPowerByNum (int x, int y, int Num)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].GetEffectPowerByNum (Num);
+}
+
+int level::GetEffectTimeByNum (int x, int y, int Num)
+{
+	int linear = DecartToLinear (x,y);
+	return cells[linear].GetEffectTimeByNum (Num);
+}
+
+void level::EffectTimeDesc (int x, int y)
+{
+	int linear = DecartToLinear (x,y);
+	cells[linear].EffectTimeDec ();
+	return;
+}
+
+void level::LevelProcessEffects ()
+{
+	set <int>::iterator p;
+	for (p = CellsUnderEffects.begin(); p!=CellsUnderEffects.end(); p++)
+	{
+		int linear = *p;
+		pair <int,int> coords;
+		coords = LinearToDecart (linear);
+		int x = coords.first;
+		int y = coords.second;
+
+		using namespace luabridge;
+
+		lua_State* L = luaL_newstate();
+		luaL_openlibs(L);
+		LuaAdapter Luaad;
+		Luaad.LuaDesc(L);
+		luaL_dofile(L, ".\\Files\\lua\\LevelProcess.lua");
+		lua_pcall(L, 0, 0, 0);
+		LuaRef LevelProcess = getGlobal(L, "LevelProcess");
+	  //
+		try {
+		      LevelProcess (Luaad,x,y);
+			  }
+			  catch (luabridge::LuaException const& e) {
+		      std::cout << "LuaException: " << e.what() << std::endl;
+			 }
+	
+	}
+}
+pair <int,int> level::LinearToDecart (int linear)
+{
+	int y = linear/LevelWidth+1;
+	int x = linear -(LevelWidth*y-1);
+	pair <int,int> coords;
+	coords = make_pair(x,y);
+	return coords;
+
 }

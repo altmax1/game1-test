@@ -262,3 +262,59 @@ void X_cell::SetPassable (int a)
 		passable = 1;
 	return;
 }
+
+void X_cell::AddEffect (int Type, int Power, int Time)
+{
+	Effect Temp;
+	Temp.Type = Type;
+	Temp.Power = Power;
+	Temp.Time = Time;
+	Effects.push_back (Temp);
+	return;
+}
+
+int X_cell::GetNumOfEffects ()
+{
+	return Effects.size();
+}
+
+void X_cell::CheckEffects ()
+{
+	if ( Effects.size() == 0)
+		return;
+	vector<Effect>::iterator p;
+	for ( p = Effects.begin(); p != Effects.end(); p++)
+	{
+		if (p->Time <= 0)
+			Effects.erase (p);
+	}
+	return;
+}
+
+int X_cell::GetEffectTypeByNum (int Num)
+{
+	if (Num >= Effects.size())
+		return Effects[Num-1].Type;
+	return -1;
+}
+
+int X_cell::GetEffectPowerByNum (int Num)
+{
+	if (Num >= Effects.size())
+		return Effects[Num-1].Power;
+	return -1;
+}
+
+int X_cell::GetEffectTimeByNum (int Num)
+{
+	if (Num >= Effects.size())
+		return Effects[Num-1].Time;
+	return -1;
+}
+
+void X_cell::EffectTimeDec ()
+{
+	for (int i = 0; i < Effects.size(); i++)
+		Effects[i].Time--;
+	return;
+}

@@ -8,6 +8,13 @@ struct CellItems
 
 };
 
+struct Effect
+{
+	int Type;
+	int Power;
+	int Time;
+};
+
 class X_cell
 {
 private:
@@ -19,6 +26,7 @@ private:
 	unsigned char passable:1;
 	unsigned char empty_cell:1;// 1 если тайл пустой и без эффектов
 	list <CellItems> items;
+	vector <Effect> Effects;
 	int creature;
 
 public:
@@ -46,5 +54,12 @@ public:
 	void SetOpaque (int a);
 	int GetPassable ();
 	void SetPassable (int a);
+	void AddEffect (int Type, int Power, int Time);
+	int GetNumOfEffects ();
+	void CheckEffects ();
+	int GetEffectTypeByNum (int Num);
+	int GetEffectPowerByNum (int Num);
+	int GetEffectTimeByNum (int Num);
+	void EffectTimeDec ();
 };
 

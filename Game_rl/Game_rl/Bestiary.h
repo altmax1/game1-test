@@ -33,6 +33,8 @@ public:
 	void SetMaxHP (int Num, int HP);
 	int GetDefense (int Num);
 	void SetDefense (int Num, int def);
+	int GetDefenseAdvansed (int Num, int TypeOfDef);
+	void SetDefenseAdvansed (int Num, int TypeOfDef, int Def);
 	int GetDex (int Num);
 	void SetDex (int Num, int Dex);
 	int GetStr (int Num);

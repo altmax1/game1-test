@@ -50,6 +50,8 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetBeastIsDead", &LuaAdapter::SetBeastIsDead)
 			.addFunction ("GetBeastDefense", &LuaAdapter::GetBeastDefense)
 			.addFunction ("SetBeastDefense", &LuaAdapter::SetBeastDefense)
+			.addFunction ("GetBeastDefenseAdvansed", &LuaAdapter::GetBeastDefenseAdvansed)
+			.addFunction ("SetBeastDefenseAdvansed", &LuaAdapter::SetBeastDefenseAdvansed)
 			.addFunction ("GetBeastDex", &LuaAdapter::GetBeastDex)
 			.addFunction ("SetBeastDex", &LuaAdapter::SetBeastDex)
 			.addFunction ("GetBeastStr", &LuaAdapter::GetBeastStr)
@@ -92,6 +94,13 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetGamerMoved", &LuaAdapter::GetGamerMoved)
 			.addFunction ("SetGamerMoved", &LuaAdapter::SetGamerMoved)
 			.addFunction ("ResetGamerMoved", &LuaAdapter::ResetGamerMoved)
+			.addFunction ("AddEffectOnCell", &LuaAdapter::AddEffectOnCell)
+			.addFunction ("GetNumOfEffectsOnCell", &LuaAdapter::GetNumOfEffectsOnCell)
+			.addFunction ("CheckEffects", &LuaAdapter::CheckEffectsOnCell)
+			.addFunction ("GetEffectTypeOnCell", &LuaAdapter::GetTypeOfEffectOnCell)
+			.addFunction ("GetEffectPowerOnCell", &LuaAdapter::GetPowerOfEffectOnCell)
+			.addFunction ("GetEffectTimeOnCell", &LuaAdapter::GetTimeOfEffectOnCell)
+			.addFunction ("EffectTOnCellimeDec", &LuaAdapter::EffectOnCellTimeDec)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -663,4 +672,41 @@ void LuaAdapter::SetGamerMoved ()
 void LuaAdapter::ResetGamerMoved ()
 {
 	MyGame->ResetPlayerMoved ();
+}
+
+void LuaAdapter::AddEffectOnCell (int x, int y, int Type, int Power, int Time)
+{
+	MyLevel->AddEffect (x,y,Type,Power,Time);
+}
+int LuaAdapter::GetNumOfEffectsOnCell (int x, int y)
+{
+	return MyLevel->GetNumOfEffects (x,y);
+}
+void LuaAdapter::CheckEffectsOnCell (int x, int y)
+{
+	MyLevel->CheckEffects(x,y);
+}
+int LuaAdapter::GetTypeOfEffectOnCell (int x, int y, int Num)
+{
+	return MyLevel->GetEffectTypeByNum (x,y,Num);
+}
+int LuaAdapter::GetPowerOfEffectOnCell (int x, int y, int Num)
+{
+	return MyLevel->GetEffectPowerByNum (x,y,Num);
+}
+int LuaAdapter::GetTimeOfEffectOnCell (int x, int y, int Num)
+{
+	return MyLevel->GetEffectTimeByNum (x,y,Num);
+}
+void LuaAdapter::EffectOnCellTimeDec (int x, int y)
+{
+	MyLevel->EffectTimeDesc (x,y);
+}
+void LuaAdapter::SetBeastDefenseAdvansed (int NumOfBeast,int NumOfDefense, int Def)
+{
+	MyBestiary->SetDefenseAdvansed (NumOfBeast, NumOfDefense, Def);
+}
+int LuaAdapter::GetBeastDefenseAdvansed (int NumOfBeast, int NumOfDefense)
+{
+	return MyBestiary->GetDefenseAdvansed (NumOfBeast, NumOfDefense);
 }

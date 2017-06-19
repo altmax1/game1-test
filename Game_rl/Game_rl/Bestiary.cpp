@@ -264,6 +264,16 @@ int Bestiary::GetDefense (int Num)
 	return BeastsOfLevel[Num].GetDefence();
 }
 
+int Bestiary::GetDefenseAdvansed (int Num, int TypeOfDef)
+{
+	return BeastsOfLevel[Num].GetDefenseAdvansed (TypeOfDef);
+}
+
+void Bestiary::SetDefenseAdvansed (int Num, int TypeOfDef, int Def)
+{
+	BeastsOfLevel[Num].SetDefenseAdvansed (Def, TypeOfDef);
+}
+
 void Bestiary::SetDex (int Num, int Dex)
 {
 	BeastsOfLevel[Num].SetDex (Dex);

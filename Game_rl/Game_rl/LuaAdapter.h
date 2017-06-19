@@ -71,6 +71,8 @@ public:
 	int GetBeastIsDead (int Num);
 	void SetBeastDefense (int Num, int Def);
 	int GetBeastDefense (int Num);
+	void SetBeastDefenseAdvansed (int NumOfBeast,int NumOfDefense, int Def);
+	int GetBeastDefenseAdvansed (int NumOfBeast, int NumOfdefense);
 	void SetBeastDex (int Num, int Dex);
 	int GetBeastDex (int Num);
 	void SetBeastStr (int Num, int Str);
@@ -114,6 +116,13 @@ public:
 	void SetGamerMoved ();
 	void ResetGamerMoved ();
 	int GetGamerMoved ();
+	void AddEffectOnCell (int x, int y, int Type, int Power, int Time);
+	int GetNumOfEffectsOnCell (int x, int y);
+	void CheckEffectsOnCell (int x, int y);
+	int GetTypeOfEffectOnCell (int x, int y, int Num);
+	int GetPowerOfEffectOnCell (int x, int y, int Num);
+	int GetTimeOfEffectOnCell (int x, int y, int Num);
+	void EffectOnCellTimeDec (int x, int y);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

@@ -24,11 +24,30 @@ if Distance>WeaponRange then -- проверяем дистанцию до це�
 end
 NeedsAmmo = Game:GetWeaponNeedsAmmo (WeaponID)
 AmmoQuantity = Game:GetWeaponCurrentAmmoQuantity (WeaponID)
+
 if NeedsAmmo == 1 and AmmoQuantity == 0 then -- проверяем патроны/заряды
 	Game:PrintMessage ('Ваше оружие не заряжено. Зарядите его')
 	return;
 end
-if BeastID<0 then
+BulletId = Game:GetWeaponNextAmmo (WeaponID)
+if Game:GetWeaponBlastRadius (BulletId) >0 then -- атака по площадям еcли BlastRadius >0
+	
+	shots = Game:GetWeaponShotsByStep(WeaponID)
+	if OneShot == 1 then
+		shots = 1
+	end
+	for i = 1,shots do
+		MassAttack (Game, CoordX, CoordY)
+		Game:WeaponMakeOneShot (WeaponID)
+		if Game:GetWeaponCurrentAmmoQuantity(WeaponID)== 0 then
+			break
+		end
+	
+	end
+	return
+end
+
+if BeastID<0 then --если клетка пустая
 	Game:PrintMessageNow ("Там никого нет. Вы действительно хотите туда выстрелить? (Y для выстрела)")
 	Code = Game:GetKeyCode()
 	if Code ~= 28 then
@@ -97,4 +116,54 @@ if BeastHP >0 then
 	Game:SetBeastHP (BeastID, BeastHP)
 end
 return
+end
+
+MassAttack = function (Game, CoordX, CoordY)
+
+Width = Game:GetLevelWidth()
+Height = Game:GetLevelHeight()
+
+WeaponID = Game:GetIdByGamerSlot(7)
+BulletId = Game:GetWeaponNextAmmo(WeaponID)
+BlastRadius = Game:GetWeaponBlastRadius (BulletId)
+BulletMaxDamage = Game:GetWeaponMaxDamage (BulletId)
+BulletMinDamage = Game:GetWeaponMinDamage (BulletId)
+DeltaBulletDamage = BulletMaxDamage-BulletMinDamage+1
+DamageBullet = BulletMinDamage+ Game:MyRandom (DeltaBulletDamage)
+Damage = DamageBullet
+for y = -BlastRadius, BlastRadius do
+	for x = -BlastRadius, BlastRadius do
+		NewCoordX = CoordX + x
+		NewCoordY = CoordY +y
+		if NewCoordX >=1 and NewCoordX <= Width and NewCoordY >= 1 and NewCoordY < Height then
+		BeastID = Game:GetBeastNumber (NewCoordX, NewCoordY)
+			if BeastID>=0 then
+				BeastHP = Game:GetBeastHP (BeastID);
+				BeastDefense = Game:GetBeastDefense (BeastID)
+				TempDamage = DamageBullet-BeastDefense
+				if TempDamage < 0 then
+				TempDamage = 0
+				end
+				BeastHP = BeastHP - TempDamage
+				BeastName = Game:GetBeastRName (BeastID)
+				if BeastHP <= 0 then
+					Game:PrintMessage ("Вы уничтожили <<"..BeastName..">>, нанеся ей "..TempDamage.." урона." )
+					Game:SetBeastHP (BeastID, BeastHP)
+				end
+			if BeastHP >0 then
+				Game:PrintMessage ("Вы нанесли по <<"..BeastName..">> урон в размере  "..TempDamage)
+				Game:SetBeastHP (BeastID, BeastHP)
+			end
+			
+			end
+		end
+	
+	end
+end
+
+
+
+
+
+
 end

@@ -138,6 +138,7 @@ void Game::GameInit()
 	if (KeyCode == TK_ESCAPE)
 		break;
 	MyGamer->Move(KeyCode);
+	MyLevel->LevelProcessEffects();
 	MakeAIMove();
 	}
 	return;

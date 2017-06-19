@@ -9,6 +9,7 @@ private:
 	int LevelWidth;
 	int LevelHeight;
 	FOV_MAP    map;
+	set <int> CellsUnderEffects;
 	
 public:
 	X_cell *cells;
@@ -17,6 +18,7 @@ public:
 	void LevelCreate ( int Type,int Width, int Height, int Density);
 	void LevelPrint ();
 	int DecartToLinear (int x, int y); // утилита для перевода
+	pair <int,int> LinearToDecart (int linear);
 	int GetLevelWidth ();
 	int GetLevelHeight ();
 	char GetBaseType (int x, int y);
@@ -43,5 +45,13 @@ public:
 	int PathFind ( int StartX, int StartY, int EndX, int EndY);
 	int GetPassable (int x, int y);
 	void SetPassable (int x, int y, int passable);
+	void AddEffect (int x, int y, int Type, int Power, int Time);
+	int GetNumOfEffects (int x, int y);
+	void CheckEffects (int x, int y);
+	int GetEffectTypeByNum (int x, int y, int Num);
+	int GetEffectPowerByNum (int x, int y, int Num);
+	int GetEffectTimeByNum (int x, int y, int Num);
+	void EffectTimeDesc (int x, int y);
+	void LevelProcessEffects ();
 };
 
