@@ -48,6 +48,7 @@ public:
 	void AddEffect (int x, int y, int Type, int Power, int Time);
 	int GetNumOfEffects (int x, int y);
 	void CheckEffects (int x, int y);
+	void CheckEffectsGlobal ();
 	int GetEffectTypeByNum (int x, int y, int Num);
 	int GetEffectPowerByNum (int x, int y, int Num);
 	int GetEffectTimeByNum (int x, int y, int Num);

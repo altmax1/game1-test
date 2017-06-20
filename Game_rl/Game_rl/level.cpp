@@ -494,9 +494,28 @@ void level::CheckEffects (int x, int y)
 {
 	int linear = DecartToLinear (x,y);
 	cells[linear].CheckEffects();
+}
+
+void level::CheckEffectsGlobal ()
+{
+	/*int linear = DecartToLinear (x,y);
+	cells[linear].CheckEffects();
 	if (cells[linear].GetNumOfEffects() == 0)
 		CellsUnderEffects.erase (linear);
-	return;
+	return;*/
+	set <int> CellsToDelete;
+	set <int>::iterator p;
+	for (p = CellsUnderEffects.begin(); p!= CellsUnderEffects.end(); p++)
+	{
+		if (cells[*p].GetNumOfEffects () == 0)
+			CellsToDelete.insert (*p);
+	}
+
+	for (p = CellsToDelete.begin(); p!= CellsToDelete.end(); p++)
+	{
+		CellsUnderEffects.erase (*p);
+	}
+	CellsToDelete.clear();
 }
 
 int level::GetEffectTypeByNum (int x, int y, int Num)
@@ -526,7 +545,10 @@ void level::EffectTimeDesc (int x, int y)
 
 void level::LevelProcessEffects ()
 {
+	CheckEffects (0,0);
 	set <int>::iterator p;
+	if (CellsUnderEffects.size() > 0)
+	{
 	for (p = CellsUnderEffects.begin(); p!=CellsUnderEffects.end(); p++)
 	{
 		int linear = *p;
@@ -553,11 +575,12 @@ void level::LevelProcessEffects ()
 			 }
 	
 	}
+	}
 }
 pair <int,int> level::LinearToDecart (int linear)
 {
-	int y = linear/LevelWidth+1;
-	int x = linear -(LevelWidth*y-1);
+	int y = linear/LevelWidth;
+	int x = linear -(LevelWidth*(y));
 	pair <int,int> coords;
 	coords = make_pair(x,y);
 	return coords;

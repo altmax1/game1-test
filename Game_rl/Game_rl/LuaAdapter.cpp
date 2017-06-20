@@ -101,6 +101,9 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetEffectPowerOnCell", &LuaAdapter::GetPowerOfEffectOnCell)
 			.addFunction ("GetEffectTimeOnCell", &LuaAdapter::GetTimeOfEffectOnCell)
 			.addFunction ("EffectTOnCellimeDec", &LuaAdapter::EffectOnCellTimeDec)
+			.addFunction ("GetWeaponAfterEffectType", &LuaAdapter::GetWeaponAfterEffectType)
+			.addFunction ("GetWeaponAfterEffectTime", &LuaAdapter::GetWeaponAfterEffectTime)
+			.addFunction ("GetWeaponAfterEffectPower", &LuaAdapter::GetWeaponAfterEffectPower)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -709,4 +712,19 @@ void LuaAdapter::SetBeastDefenseAdvansed (int NumOfBeast,int NumOfDefense, int D
 int LuaAdapter::GetBeastDefenseAdvansed (int NumOfBeast, int NumOfDefense)
 {
 	return MyBestiary->GetDefenseAdvansed (NumOfBeast, NumOfDefense);
+}
+
+int LuaAdapter::GetWeaponAfterEffectType (int Id)
+{
+	return MyItems->GetWeaponAfterEffectType (Id);
+}
+
+int LuaAdapter::GetWeaponAfterEffectTime (int Id)
+{
+	return MyItems->GetWeaponAfterEffectTime (Id);
+}
+
+int LuaAdapter::GetWeaponAfterEffectPower (int Id)
+{
+	return MyItems->GetWeaponAfterEffectPower (Id);
 }

@@ -269,8 +269,42 @@ void X_cell::AddEffect (int Type, int Power, int Time)
 	Temp.Type = Type;
 	Temp.Power = Power;
 	Temp.Time = Time;
-	Effects.push_back (Temp);
-	return;
+	if (Effects.size() == 0)
+	{
+		Effects.push_back (Temp);
+		return;
+	}
+	int TypeIsExist = -1;
+	for (int i = 0; i < Effects.size(); i++) // проверяем, есть ли уже такие эффекты.
+	{
+		if (Effects[i].Type == Type)
+			TypeIsExist = i;
+	}
+	if (TypeIsExist <0)
+		Effects.push_back (Temp);
+	if (TypeIsExist >=0  && Effects[TypeIsExist].Time > Temp.Time) 
+	{
+		if (Effects[TypeIsExist].Power >= Temp.Power)
+			return;
+		if (Effects[TypeIsExist].Power < Temp.Power)
+			Effects[TypeIsExist].Power = Temp.Power;
+		return;
+	}
+		
+	if (TypeIsExist >=0  && Effects[TypeIsExist].Time < Temp.Time) 
+	{
+		if (Effects[TypeIsExist].Power >= Temp.Power)
+		{
+			Effects[TypeIsExist].Time = Temp.Time;
+		}
+		if (Effects[TypeIsExist].Power < Temp.Power)
+		{
+			Effects[TypeIsExist].Time = Temp.Time;
+			Effects[TypeIsExist].Power = Temp.Power;
+		}
+	}
+
+
 }
 
 int X_cell::GetNumOfEffects ()
@@ -283,10 +317,16 @@ void X_cell::CheckEffects ()
 	if ( Effects.size() == 0)
 		return;
 	vector<Effect>::iterator p;
-	for ( p = Effects.begin(); p != Effects.end(); p++)
+	/*for ( p = Effects.begin(); p != Effects.end(); p++)
 	{
 		if (p->Time <= 0)
 			Effects.erase (p);
+	}*/
+
+	for (int i = 0; i< Effects.size(); i++)
+	{
+		if (Effects[i].Time <= 0)
+			Effects.erase (Effects.begin()+i);
 	}
 	return;
 }
@@ -307,7 +347,7 @@ int X_cell::GetEffectPowerByNum (int Num)
 
 int X_cell::GetEffectTimeByNum (int Num)
 {
-	if (Num >= Effects.size())
+	if (Num <= Effects.size() && Num > 0)
 		return Effects[Num-1].Time;
 	return -1;
 }

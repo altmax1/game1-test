@@ -90,6 +90,28 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		MapPtr = p->find ("ColorNotVisible");
 		TempWeapon.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
+		if (p->count ("AfterEffectType")>0)
+		{
+			MapPtr = p->find ("AfterEffectType");
+			TempWeapon.AfterEffectType = atoi (MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.AfterEffectType = 0;
+		if (p->count ("AfterEffectTime")>0)
+		{
+			MapPtr = p->find ("AfterEffectTime");
+			TempWeapon.AfterEffectTime = atoi (MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.AfterEffectTime = 0;
+		if (p->count ("AfterEffectPower")>0)
+		{
+			MapPtr = p->find ("AfterEffectPower");
+			TempWeapon.AfterEffectPower = atoi (MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.AfterEffectPower = 0;
+
 		try{
 		if (TempWeapon.ID != UniqueWeapon.size())
 			throw "BAD_ID_IN_UniqueWeapon";}
@@ -161,6 +183,27 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		TempWeapon.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		MapPtr = p->find ("ColorNotVisible");
 		TempWeapon.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
+		if (p->count ("AfterEffectType")>0)
+		{
+			MapPtr = p->find ("AfterEffectType");
+			TempWeapon.AfterEffectType = atoi (MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.AfterEffectType = 0;
+		if (p->count ("AfterEffectTime")>0)
+		{
+			MapPtr = p->find ("AfterEffectTime");
+			TempWeapon.AfterEffectTime = atoi (MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.AfterEffectTime = 0;
+		if (p->count ("AfterEffectPower")>0)
+		{
+			MapPtr = p->find ("AfterEffectPower");
+			TempWeapon.AfterEffectPower = atoi (MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.AfterEffectPower = 0;
 		try{
 		if (TempWeapon.ID-900000 != CommonWeapon.size())
 			throw "BAD_ID_IN_CommonWeapon";}
@@ -741,3 +784,33 @@ void Items::SetColorNotVisible (int ID, int Color)
 		ArmourFromLevel[ID-1000000].ColorNotVisible = Color;
 	return;
 }
+
+int Items::GetWeaponAfterEffectType (int Id)
+{
+	if (Id>0 && Id < 900000)
+		return WeaponFromLevel[Id].AfterEffectType;
+	if (Id>=900000 && Id < 1000000)
+		return CommonWeapon[Id-900000].AfterEffectType;
+}
+void Items::SetWeaponAfterEffectType (int Id, int Type)
+{}
+
+int Items::GetWeaponAfterEffectTime (int Id)
+{
+	if (Id>0 && Id < 900000)
+		return WeaponFromLevel[Id].AfterEffectTime;
+	if (Id>=900000 && Id < 1000000)
+		return CommonWeapon[Id-900000].AfterEffectTime;
+}
+void Items::SetWeaponAfterEffectTime (int Id, int Time)
+{}
+
+int Items::GetWeaponAfterEffectPower (int Id)
+{
+	if (Id>0 && Id < 900000)
+		return WeaponFromLevel[Id].AfterEffectPower;
+	if (Id>=900000 && Id < 1000000)
+		return CommonWeapon[Id-900000].AfterEffectPower;
+}
+void Items::SetWeaponAfterEffectPower (int Id, int Power)
+{}

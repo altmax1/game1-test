@@ -1,3 +1,7 @@
-LevelProcess = function (game, x, y)
+LevelProcess = function (Game, x, y)
+
+Game:CheckEffects (x,y)
+Game:EffectTOnCellimeDec (x,y)
+
 
 end

@@ -109,6 +109,12 @@ public:
 	void SetColorVisible (int Id, int Color);
 	int GetColorNotVisible (int Id);
 	void SetColorNotVisible (int Id, int Color);
+	int GetWeaponAfterEffectType (int Id);
+	void SetWeaponAfterEffectType (int Id, int Type);
+	int GetWeaponAfterEffectTime (int Id);
+	void SetWeaponAfterEffectTime (int Id, int Time);
+	int GetWeaponAfterEffectPower (int Id);
+	void SetWeaponAfterEffectPower (int Id, int Power);
 
 };
 

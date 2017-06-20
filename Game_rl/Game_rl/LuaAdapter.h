@@ -107,6 +107,9 @@ public:
 	void ReloadWeapon (int Id);
 	int GetWeaponShotsByStep (int Id);
 	void SetWeaponShotsByStep (int Id, int Shots);
+	int GetWeaponAfterEffectType (int Id);
+	int GetWeaponAfterEffectTime (int Id);
+	int GetWeaponAfterEffectPower (int Id);
 	void WeaponMakeOneShot (int Id);
 	int SelectTarget ();
 	void PrintMessage (string MyMessage);

@@ -173,6 +173,21 @@ void Interface::PrintItems (int BaseX, int BaseY, int FOVX, int FOVY)
 	}
 }
 
+void Interface::PrintEffects (int BaseX, int BaseY, int FOVX, int FOVY)
+{
+	int Effect = Mylevel->GetEffectTypeByNum (BaseX, BaseY, 1);
+	if (Effect == FIRE)
+	{
+		terminal_color (0xffff7600);
+		terminal_layer (5);
+		terminal_composition (TK_ON);
+		terminal_put (FOVX, FOVY, 0x25a0); //попробовать символы 2591, 2592, 2593, 25cf, 007f
+		terminal_composition (TK_OFF);
+	}
+
+	
+}
+
 void Interface::PrintFOV ()
 {
 	GetGamerAndLevel();
@@ -203,14 +218,18 @@ void Interface::PrintFOV ()
 				terminal_layer (0);
 			}
 			ItemCounter = Mylevel->GetQuantityItemsOnCell (x+LeftUpX,y+LeftUpY);
-			if (ItemCounter >0)
+			if (ItemCounter >0) // рисуем вещи
 				PrintItems (x+LeftUpX,y+LeftUpY, x+1, y+1);
-			if ((Mylevel->GetCreature(x+LeftUpX,y+LeftUpY))>=0)
+			if ((Mylevel->GetCreature(x+LeftUpX,y+LeftUpY))>=0) // рисуем мобов
 			{
 				terminal_layer (0);
-				//terminal_put (x+1,y+1, 82);
 				PrintCreature (x+1,y+1,x+LeftUpX,y+LeftUpY,Mylevel->GetCreature(x+LeftUpX,y+LeftUpY));
 				terminal_layer (0);
+			}
+
+			if (Mylevel->GetNumOfEffects(x+LeftUpX,y+LeftUpY) > 0) //рисуем эффекты
+			{
+				PrintEffects (x+LeftUpX, y+LeftUpY, x+1, y+1);
 			}
 
 		}
