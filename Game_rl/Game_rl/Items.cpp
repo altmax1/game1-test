@@ -52,6 +52,7 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 		Weapon TempWeapon;
 		MapPtr = p->find("ID");
 		TempWeapon.ID = atoi(MapPtr->second.c_str());
+		ExistingID.insert (TempWeapon.ID);
 		MapPtr = p->find("Name");
 		TempWeapon.Name = MapPtr->second;
 		MapPtr = p->find("RName");
@@ -145,6 +146,7 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		Weapon TempWeapon;
 		MapPtr = p->find("ID");
 		TempWeapon.ID = atoi(MapPtr->second.c_str());
+		ExistingID.insert (TempWeapon.ID);
 		MapPtr = p->find("Name");
 		TempWeapon.Name = MapPtr->second;
 		MapPtr = p->find("RName");
@@ -248,6 +250,7 @@ void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 		Armour TempArmour;
 		MapPtr = p->find("ID");
 		TempArmour.ID = atoi(MapPtr->second.c_str());
+		ExistingID.insert (TempArmour.ID);
 		MapPtr = p->find("Name");
 		TempArmour.Name = MapPtr->second;
 		MapPtr = p->find("RName");
@@ -315,6 +318,7 @@ void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 		Armour TempArmour;
 		MapPtr = p->find("ID");
 		TempArmour.ID = atoi(MapPtr->second.c_str());
+		ExistingID.insert (TempArmour.ID);
 		MapPtr = p->find("Name");
 		TempArmour.Name = MapPtr->second;
 		MapPtr = p->find("RName");
@@ -814,3 +818,13 @@ int Items::GetWeaponAfterEffectPower (int Id)
 }
 void Items::SetWeaponAfterEffectPower (int Id, int Power)
 {}
+
+int Items::CheckID (int ID)
+{
+	set <int>::iterator p;
+	p = ExistingID.find (ID);
+	if (p == ExistingID.end())
+		return 0;
+	else
+		return 1;
+}

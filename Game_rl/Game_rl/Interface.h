@@ -45,6 +45,9 @@ public:
 	void PrintGamerEBar (Gamer *MyGamer);
 	void PrintOtherHIDs (Gamer *MyGamer);
 	void PrintInventory (Gamer *MyGamer);
+	string GetInputString ();
+	int GetInputNumber ();
+	int GetInputKey();
 	Interface(void);
 	~Interface(void);
 };

@@ -540,3 +540,112 @@ void Interface::PrintInventory (Gamer *MyGamer)
 		}
 	}
 }
+
+string Interface::GetInputString ()
+{
+	string MyString;
+	terminal_put (1,36,'>');
+	terminal_refresh();
+	while (1)
+	{
+		char temp;
+		int KeyCode = terminal_read();
+		if (KeyCode >=4 && KeyCode <= 29)
+		{
+			temp = KeyCode+61;
+			MyString = MyString+temp;
+		}
+		if (KeyCode >= 30 && KeyCode <= 38)
+		{
+			temp = KeyCode+19;
+			MyString += temp;
+		}
+		if (KeyCode == 39 || KeyCode == 98)
+		{
+			MyString += '0';
+		}
+	
+		if (KeyCode >=89 && KeyCode <= 97)
+		{
+			temp = KeyCode-40;
+			MyString += temp;
+		}
+
+		if (KeyCode == TK_MINUS && terminal_check(TK_SHIFT))
+		{
+			MyString+='_';
+		}
+		if (KeyCode == TK_BACKSPACE && MyString.size()>0)
+		{
+			MyString.pop_back();
+		}
+		if (KeyCode == TK_ESCAPE)
+		{
+			terminal_clear_area (1,36,40,1);
+			MyString.clear();
+			return MyString;
+		}
+		if (KeyCode == TK_ENTER)
+		{
+			terminal_clear_area (1,36,40,1);
+			return MyString;
+		}
+		terminal_clear_area (2,36,40,1);
+		terminal_print_ext(2,36,40,1, TK_ALIGN_DEFAULT, MyString.c_str());
+		terminal_refresh();
+	}
+}
+
+int Interface::GetInputNumber()
+{
+	string MyString;
+	terminal_put (1,36,'>');
+	terminal_refresh();
+	while (1)
+	{
+		char temp;
+		int KeyCode = terminal_read();
+		
+		if (KeyCode >= 30 && KeyCode <= 38)
+		{
+			temp = KeyCode+19;
+			MyString += temp;
+		}
+		if (KeyCode == 39 || KeyCode == 98)
+		{
+			MyString += '0';
+		}
+
+		if (KeyCode >=89 && KeyCode <= 97)
+		{
+			temp = KeyCode-40;
+			MyString += temp;
+		}
+
+		
+		if (KeyCode == TK_BACKSPACE && MyString.size()>0)
+		{
+			MyString.pop_back();
+		}
+		if (KeyCode == TK_ESCAPE)
+		{
+			terminal_clear_area (1,36,40,1);
+			MyString.clear();
+			return 0;
+		}
+		if (KeyCode == TK_ENTER)
+		{
+			terminal_clear_area (1,36,40,1);
+			return atoi (MyString.c_str());
+		}
+		terminal_clear_area (2,36,40,1);
+		terminal_print_ext(2,36,40,1, TK_ALIGN_DEFAULT, MyString.c_str());
+		terminal_refresh();
+	}
+}
+
+int Interface::GetInputKey ()
+{
+	int a = terminal_read();
+	return a;
+}

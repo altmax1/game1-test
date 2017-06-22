@@ -92,7 +92,8 @@ void Bestiary::FillCreatures ()
 		MapPtr = MyCreatures[i].find ("RangeOfSight");
 		MyBeast.SetRangeOfSight (atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ID");
-		int ID = (atoi (MapPtr->second.c_str()));
+		MyBeast.SetID(atoi (MapPtr->second.c_str()));
+		ExistingBeastID.insert (MyBeast.GetID());
 		MapPtr = MyCreatures[i].find ("CharCode");
 		MyBeast.SetCharCode ( atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ColorVisible");
@@ -101,7 +102,7 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetColorNotVisible (strtoul (MapPtr->second.c_str(), NULL, 16));
 		MapPtr = MyCreatures[i].find ("Speed");
 		MyBeast.SetSpeed (atoi (MapPtr->second.c_str()));
-		Creatures.resize (ID+1);
+		Creatures.resize (MyBeast.GetID()+1);
 		Creatures[i] = MyBeast;
 	}
 delete [] temp;
@@ -110,6 +111,8 @@ delete [] temp;
 void Bestiary::MakeCreature (int ID, int x, int y)
 
 {	
+	if (CheckBeastID (ID) == 0)
+		return;
 	int NumOfBeast;
 	if (DeadBeasts.empty())
 	{
@@ -338,4 +341,14 @@ void Bestiary::SetSpeed (int Num, int Speed)
 {
 	BeastsOfLevel[Num].SetSpeed (Speed);
 	return;
+}
+
+int Bestiary::CheckBeastID (int ID)
+{
+	set <int>::iterator p;
+	p = ExistingBeastID.find (ID);
+	if (p == ExistingBeastID.end())
+		return 0;
+	else
+		return 1;
 }

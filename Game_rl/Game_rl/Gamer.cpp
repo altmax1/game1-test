@@ -201,6 +201,7 @@ void Gamer::Move (int Direction)
 {
 	Game *MyGame;
 	MyGame = Game::GetGameInstance();
+
 	int NextX, NextY;
 	int linear;
 	NextX = CoordX;
@@ -253,6 +254,10 @@ void Gamer::Move (int Direction)
 		Game *MyGame;
 		MyGame = Game::GetGameInstance();
 		MyGame->ChangeGameMode();
+	}
+	if (Direction == TK_GRAVE && MyGame->GetDeveloperMode() ==1)
+	{
+		GamerMakeCheatsLua ();
 	}
 
 	GamerMoveLua (Direction);
@@ -425,4 +430,24 @@ void Gamer::UnloadWeapon ()
 		MyItems->UnloadWeapon(Id);
 	}
 	return;
+}
+
+void Gamer::GamerMakeCheatsLua ()
+{
+	using namespace luabridge;
+
+	lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\GamerMakeCheats.lua");
+    lua_pcall(L, 0, 0, 0);
+    LuaRef GamerMakeCheats = getGlobal(L, "GamerMakeCheats");
+	  //
+	try {
+            GamerMakeCheats (Luaad);
+        }
+        catch (luabridge::LuaException const& e) {
+            std::cout << "LuaException: " << e.what() << std::endl;
+        }
 }

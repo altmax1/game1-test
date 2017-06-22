@@ -586,3 +586,21 @@ pair <int,int> level::LinearToDecart (int linear)
 	return coords;
 
 }
+
+void level::AddItem (int ID, int Quantity, int CoordX, int CoordY)
+{
+	Items *MyItems;
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyItems = MyGame->GetItems();
+	int a = MyItems->CheckID(ID);
+	if (a == 0)
+		return;
+	int NewId = MyItems->GetIdForCreation (ID);
+	int Stackable = MyItems->GetStackable (ID);
+	if (Stackable == 0)
+		Quantity = 1;
+	int coords = DecartToLinear(CoordX, CoordY);
+	cells[coords].AddItems (NewId, Stackable, Quantity);
+	return;
+}

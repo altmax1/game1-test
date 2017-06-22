@@ -55,6 +55,7 @@ private:
 	vector <Armour> UniqueArmour;
 	vector <Armour> CommonArmour;
 	vector <Armour> ArmourFromLevel;
+	set <int> ExistingID;
 public:
 	Items(void);
 	~Items(void);
@@ -115,6 +116,7 @@ public:
 	void SetWeaponAfterEffectTime (int Id, int Time);
 	int GetWeaponAfterEffectPower (int Id);
 	void SetWeaponAfterEffectPower (int Id, int Power);
+	int CheckID (int ID);
 
 };
 

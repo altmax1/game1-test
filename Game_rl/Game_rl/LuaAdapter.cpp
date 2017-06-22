@@ -104,6 +104,12 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetWeaponAfterEffectType", &LuaAdapter::GetWeaponAfterEffectType)
 			.addFunction ("GetWeaponAfterEffectTime", &LuaAdapter::GetWeaponAfterEffectTime)
 			.addFunction ("GetWeaponAfterEffectPower", &LuaAdapter::GetWeaponAfterEffectPower)
+			.addFunction ("GetInputString", &LuaAdapter::GetInputString)
+			.addFunction ("GetInputNumber", &LuaAdapter::GetInputNumber)
+			.addFunction ("GetInputKey", &LuaAdapter::GetInputKey)
+			.addFunction ("CheckItemID", &LuaAdapter::CheckItemID)
+			.addFunction ("CheckBeastID", &LuaAdapter::CheckBeastID)
+			.addFunction ("AddItemOnLevel", &LuaAdapter::AddItemOnLevel)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -727,4 +733,35 @@ int LuaAdapter::GetWeaponAfterEffectTime (int Id)
 int LuaAdapter::GetWeaponAfterEffectPower (int Id)
 {
 	return MyItems->GetWeaponAfterEffectPower (Id);
+}
+
+string LuaAdapter::GetInputString ()
+{
+	return MyInterface->GetInputString();
+}
+
+int LuaAdapter::GetInputKey ()
+{
+	return MyInterface->GetInputKey();
+}
+
+int LuaAdapter::CheckItemID (int ID)
+{
+	return MyItems->CheckID (ID);
+}
+
+void LuaAdapter::AddItemOnLevel (int ID, int Quantity, int x, int y)
+{
+	MyLevel->AddItem (ID, Quantity,x,y);
+	return;
+}
+
+int LuaAdapter::GetInputNumber ()
+{
+	return MyInterface->GetInputNumber();
+}
+
+int LuaAdapter::CheckBeastID (int ID)
+{
+	return MyBestiary->CheckBeastID (ID);
 }

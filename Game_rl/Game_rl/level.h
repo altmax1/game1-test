@@ -54,5 +54,6 @@ public:
 	int GetEffectTimeByNum (int x, int y, int Num);
 	void EffectTimeDesc (int x, int y);
 	void LevelProcessEffects ();
+	void AddItem (int ID, int Quantity, int CoordX, int CoordY);
 };
 

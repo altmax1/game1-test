@@ -38,6 +38,7 @@ public:
 	void Move(int Direction);
 	void GamerMoveLua (int KeyCode);
 	void GamerDistantAttackLua ();
+	void GamerMakeCheatsLua();
 	void GamerPrint ();
 	int GetCoordX () const;
 	int GetCoordY () const;

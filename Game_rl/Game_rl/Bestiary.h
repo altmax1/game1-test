@@ -8,6 +8,7 @@ private:
 	vector <Beast> Creatures;
 	vector <Beast> BeastsOfLevel;
 	set<int> DeadBeasts;
+	set <int> ExistingBeastID;
 public:
 	void MakeCreatures ();
 	void FillCreatures ();
@@ -50,6 +51,7 @@ public:
 	int GetMovePoints (int Num) {return BeastsOfLevel[Num].GetMovePoints();}
 	void SetMovePoints (int Num, int Points) {BeastsOfLevel[Num].SetMovePoints(Points);}
 	void SetDeadBeast (int Num) {DeadBeasts.insert (Num);};
+	int CheckBeastID (int ID);
 	
 };
 

@@ -126,6 +126,12 @@ public:
 	int GetPowerOfEffectOnCell (int x, int y, int Num);
 	int GetTimeOfEffectOnCell (int x, int y, int Num);
 	void EffectOnCellTimeDec (int x, int y);
+	string GetInputString ();
+	int GetInputNumber ();
+	int GetInputKey();
+	int CheckItemID(int ID);
+	int CheckBeastID (int ID);
+	void AddItemOnLevel (int ID, int Quantity, int x, int y);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

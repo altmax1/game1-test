@@ -85,6 +85,7 @@ public:
 	void ResetPlayerMoved (){PlayerMoved = 0;};
 	int GetPlayerMoved () {return PlayerMoved;};
 	int GetMoves () {return Moves;};
+	int GetDeveloperMode () {return DeveloperMode;};
 
 	
 };
