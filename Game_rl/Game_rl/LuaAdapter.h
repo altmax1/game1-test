@@ -9,6 +9,7 @@ private:
 	Bestiary *MyBestiary;
 	Items *MyItems;
 	Interface *MyInterface;
+	Log *MyLog;
 	
 public:
 	void LuaDesc (lua_State *L);
@@ -132,6 +133,7 @@ public:
 	int CheckItemID(int ID);
 	int CheckBeastID (int ID);
 	void AddItemOnLevel (int ID, int Quantity, int x, int y);
+	void AddMessageToLog(string Message);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };

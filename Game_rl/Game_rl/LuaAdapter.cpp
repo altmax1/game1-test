@@ -11,6 +11,7 @@ LuaAdapter::LuaAdapter(void)
 	MyBestiary = MyGame->GetBestiary();
 	MyItems = MyGame->GetItems();
 	MyInterface = MyGame->GetInterface();
+	MyLog = MyGame->GetLog();
 }
 
 
@@ -110,6 +111,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("CheckItemID", &LuaAdapter::CheckItemID)
 			.addFunction ("CheckBeastID", &LuaAdapter::CheckBeastID)
 			.addFunction ("AddItemOnLevel", &LuaAdapter::AddItemOnLevel)
+			.addFunction ("AddMessageToLog", &LuaAdapter::AddMessageToLog)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -753,6 +755,12 @@ int LuaAdapter::CheckItemID (int ID)
 void LuaAdapter::AddItemOnLevel (int ID, int Quantity, int x, int y)
 {
 	MyLevel->AddItem (ID, Quantity,x,y);
+	return;
+}
+
+void LuaAdapter::AddMessageToLog(string Message)
+{
+	MyLog->AddMessageToLog(Message);
 	return;
 }
 

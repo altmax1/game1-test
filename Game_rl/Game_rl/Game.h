@@ -6,6 +6,7 @@
 #include "X_File.h"
 #include "Bestiary.h"
 #include "Equipment.h"
+#include "Log.h"
 
 #define SLOT_HEAD			1
 #define SLOT_BODY			2
@@ -59,6 +60,7 @@ private:
 	Items *MyItems;
 	Interface *MyInterface;
 	Bestiary *MyBestiary;
+	Log *MyLog;
 	Game(void);
 	int DeveloperMode;
 	int PlayerMoved;
@@ -68,12 +70,14 @@ public:
 	static Game* GetGameInstance ();
 	~Game(void);
 	void GameInit ();
+	void MakeLog();
 	void MakeLevel (int Type, int Width, int Height, int Density);
 	void MakeGamer ();
 	void MakeItems ();
 	void MakeInterface();
 	void MakeBestiary ();
 	void MakeAIMove ();
+	Log* GetLog();
 	Items* GetItems ();
 	level *GetLevel();
 	Gamer* GetGamer();

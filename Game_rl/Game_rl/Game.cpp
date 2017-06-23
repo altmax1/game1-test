@@ -117,9 +117,15 @@ void Game::MakeAIMove ()
 	return;
 }
 
+Log * Game::GetLog()
+{
+	return MyLog;
+}
+
 void Game::GameInit()
 {
 	int KeyCode;
+	MakeLog();
 	MakeItems();
 	MakeLevel (1,128,40,40);
 	MakeGamer ();
@@ -144,7 +150,13 @@ void Game::GameInit()
 	return;
 		
 
-}	
+}
+
+void Game::MakeLog()
+{
+	MyLog = new Log;
+	return;
+}
 
 void Game::ChangeGameMode ()
 {

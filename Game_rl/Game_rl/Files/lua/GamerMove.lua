@@ -19,6 +19,7 @@ NO=0
 GamerMove = function (Game, KeyCode)
 NextX = Game.GamerX
 NextY = Game.GamerY
+Game:AddMessageToLog ("Player Moved!!!"..KeyCode);
 if (KeyCode == TK_RIGHT or KeyCode == TK_KP_6) then
 	NextX = NextX+1
 	Game:SetGamerMoved()

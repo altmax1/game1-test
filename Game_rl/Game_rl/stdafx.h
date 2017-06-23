@@ -21,6 +21,10 @@
 #include <algorithm>
 #include <iterator>
 #include <map>
+#include <cmath>
+#include <stdlib.h>
+
+
 
 
 #include "BearLibTerminal.h"

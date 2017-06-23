@@ -260,6 +260,15 @@ void Gamer::Move (int Direction)
 		GamerMakeCheatsLua ();
 	}
 
+	if (Direction == TK_A)
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		Log *MyLog;
+		MyLog = MyGame->GetLog();
+		MyLog->PrintLog();
+	}
+
 	GamerMoveLua (Direction);
 
 	/*if (Direction == TK_UP || Direction == TK_KP_8)
