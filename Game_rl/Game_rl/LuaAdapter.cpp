@@ -112,6 +112,19 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("CheckBeastID", &LuaAdapter::CheckBeastID)
 			.addFunction ("AddItemOnLevel", &LuaAdapter::AddItemOnLevel)
 			.addFunction ("AddMessageToLog", &LuaAdapter::AddMessageToLog)
+			.addFunction ("AddToDevLog", &LuaAdapter::AddDevLog)
+			.addFunction ("SetWeaponMaxDamage2", &LuaAdapter::SetWeaponMaxDamage2)
+			.addFunction ("SetWeaponMaxDamage3", &LuaAdapter::SetWeaponMaxDamage3)
+			.addFunction ("SetWeaponMinDamage2", &LuaAdapter::SetWeaponMinDamage2)
+			.addFunction ("SetWeaponMinDamage3", &LuaAdapter::SetWeaponMinDamage3)
+			.addFunction ("GetWeaponMaxDamage2", &LuaAdapter::GetWeaponMaxDamage2)
+			.addFunction ("GetWeaponMaxDamage3", &LuaAdapter::GetWeaponMaxDamage3)
+			.addFunction ("GetWeaponMinDamage2", &LuaAdapter::GetWeaponMinDamage2)
+			.addFunction ("GetWeaponMinDamage3", &LuaAdapter::GetWeaponMinDamage3)
+			.addFunction ("SetWeaponDamage2Type", &LuaAdapter::SetWeaponDamage2Type)
+			.addFunction ("SetWeaponDamage3Type", &LuaAdapter::SetWeaponDamage3Type)
+			.addFunction ("GetWeaponDamage2Type", &LuaAdapter::GetWeaponDamage2Type)
+			.addFunction ("GetWeaponDamage3Type", &LuaAdapter::GetWeaponDamage3Type)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -762,6 +775,71 @@ void LuaAdapter::AddMessageToLog(string Message)
 {
 	MyLog->AddMessageToLog(Message);
 	return;
+}
+
+void LuaAdapter::AddDevLog(string Message)
+{
+	MyLog->AddToDevLog(Message);
+}
+
+void LuaAdapter::SetWeaponMaxDamage2(int ID, int Damage)
+{
+	MyItems->SetWeaponMaxDamage2(ID, Damage);
+}
+
+int LuaAdapter::GetWeaponMaxDamage2(int ID)
+{
+	return MyItems->GetWeaponMaxDamage2(ID);
+}
+
+void LuaAdapter::SetWeaponMaxDamage3(int ID, int Damage)
+{
+	MyItems->SetWeaponMaxDamage2(ID, Damage);
+}
+
+int LuaAdapter::GetWeaponMaxDamage3(int ID)
+{
+	return MyItems->GetWeaponMaxDamage3(ID);
+}
+
+void LuaAdapter::SetWeaponMinDamage2(int ID, int Damage)
+{
+	MyItems->SetWeaponMinDamage2(ID, Damage);
+}
+
+int LuaAdapter::GetWeaponMinDamage2(int ID)
+{
+	return MyItems->GetWeaponMinDamage2(ID);
+}
+
+void LuaAdapter::SetWeaponMinDamage3(int ID, int Damage)
+{
+	MyItems->SetWeaponMinDamage3(ID, Damage);
+}
+
+int LuaAdapter::GetWeaponMinDamage3(int ID)
+{
+	return MyItems->GetWeaponMinDamage3(ID);
+}
+
+void LuaAdapter::SetWeaponDamage2Type(int ID, int Type)
+{
+	MyItems->SetWeaponDamage2Type(ID, Type);
+}
+
+int LuaAdapter::GetWeaponDamage2Type(int ID)
+{
+	return MyItems->GetWeaponDamage2Type(ID);
+}
+
+void LuaAdapter::SetWeaponDamage3Type(int ID, int Type)
+{
+	MyItems->SetWeaponDamage3Type(ID, Type);
+}
+
+int LuaAdapter::GetWeaponDamage3Type(int ID)
+{
+	return MyItems->GetWeaponDamage3Type(ID);
 }
 
 int LuaAdapter::GetInputNumber ()

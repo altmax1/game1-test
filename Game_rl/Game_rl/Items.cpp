@@ -112,6 +112,48 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 		}
 		else
 			TempWeapon.AfterEffectPower = 0;
+		if (p->count("MaxDamage2") > 0)
+		{
+			MapPtr = p->find("MaxDamage2");
+			TempWeapon.MaxDamage2 = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.MaxDamage2 = 0;
+		if (p->count("MaxDamage3") > 0)
+		{
+			MapPtr = p->find("MaxDamage3");
+			TempWeapon.MaxDamage3 = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.MaxDamage3 = 0;
+		if (p->count("MinDamage2") > 0)
+			{
+				MapPtr = p->find("MinDamage2");
+				TempWeapon.MinDamage2 = atoi(MapPtr->second.c_str());
+			}
+		else
+			TempWeapon.MinDamage2 = 0;
+		if (p->count("MinDamage3") > 0)
+			{
+				MapPtr = p->find("MinDamage3");
+				TempWeapon.MinDamage3 = atoi(MapPtr->second.c_str());
+			}
+		else
+			TempWeapon.MinDamage3 = 0;
+		if (p->count("Damage2Type") > 0)
+		{
+			MapPtr = p->find("Damage2Type");
+			TempWeapon.Damage2Type = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.Damage2Type = 0;
+		if (p->count("Damage3Type") > 0)
+		{
+			MapPtr = p->find("Damage3Type");
+			TempWeapon.Damage3Type = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.Damage3Type = 0;
 
 		try{
 		if (TempWeapon.ID != UniqueWeapon.size())
@@ -206,6 +248,48 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		}
 		else
 			TempWeapon.AfterEffectPower = 0;
+		if (p->count("MaxDamage2") > 0)
+		{
+			MapPtr = p->find("MaxDamage2");
+			TempWeapon.MaxDamage2 = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.MaxDamage2 = 0;
+		if (p->count("MaxDamage3") > 0)
+		{
+			MapPtr = p->find("MaxDamage3");
+			TempWeapon.MaxDamage3 = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.MaxDamage3 = 0;
+		if (p->count("MinDamage2") > 0)
+		{
+			MapPtr = p->find("MinDamage2");
+			TempWeapon.MinDamage2 = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.MinDamage2 = 0;
+		if (p->count("MinDamage3") > 0)
+		{
+			MapPtr = p->find("MinDamage3");
+			TempWeapon.MinDamage3 = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.MinDamage3 = 0;
+		if (p->count("Damage2Type") > 0)
+		{
+			MapPtr = p->find("Damage2Type");
+			TempWeapon.Damage2Type = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.Damage2Type = 0;
+		if (p->count("Damage3Type") > 0)
+		{
+			MapPtr = p->find("Damage3Type");
+			TempWeapon.Damage3Type = atoi(MapPtr->second.c_str());
+		}
+		else
+			TempWeapon.Damage3Type = 0;
 		try{
 		if (TempWeapon.ID-900000 != CommonWeapon.size())
 			throw "BAD_ID_IN_CommonWeapon";}
@@ -827,4 +911,99 @@ int Items::CheckID (int ID)
 		return 0;
 	else
 		return 1;
+}
+
+void Items::SetWeaponDamage2Type(int ID,int Type)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].Damage2Type = Type;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].Damage2Type = Type;
+
+}
+int Items::GetWeaponDamage2Type(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].Damage2Type;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].Damage2Type;
+	return 0;
+}
+
+
+void Items::SetWeaponMaxDamage2(int ID, int Damage)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].MaxDamage2 = Damage;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].MaxDamage2 = Damage;
+
+}
+int Items::GetWeaponMaxDamage2(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].MaxDamage2;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].MaxDamage2;
+	return 0;
+}
+void Items::SetWeaponMinDamage2(int ID, int Damage)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].MinDamage2 = Damage;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].MinDamage2 = Damage;
+}
+int Items::GetWeaponMinDamage2(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].MinDamage2;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].MinDamage2;
+	return 0;
+}
+void Items::SetWeaponDamage3Type(int ID, int Type)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].Damage3Type = Type;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].Damage3Type = Type;
+}
+int Items::GetWeaponDamage3Type(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].Damage3Type;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].Damage3Type;
+	return 0;
+}
+void Items::SetWeaponMaxDamage3(int ID, int Damage)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].MaxDamage3 = Damage;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].MaxDamage3 = Damage;
+}
+int Items::GetWeaponMaxDamage3(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].MaxDamage3;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].MaxDamage3;
+	return 0;
+}
+void Items::SetWeaponMinDamage3(int ID, int Damage)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].MinDamage3 = Damage;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].MinDamage3 = Damage;
+}
+int Items::GetWeaponMinDamage3(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].MinDamage3;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].MinDamage3;
+	return 0;
 }

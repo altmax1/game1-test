@@ -277,3 +277,6 @@ __pycache__/
 *.lib
 *.dll
 .gitignore
+.logs/
+log.txt
+devlog.txt

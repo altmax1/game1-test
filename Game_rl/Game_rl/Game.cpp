@@ -14,6 +14,7 @@ Game::Game(void)
 	DeveloperMode = 0;
 	PlayerMoved = 0;
 	Moves = 0;
+	FullLogging = 1;
 }
 
 Game* Game::GetGameInstance ()
@@ -171,4 +172,9 @@ void Game::ChangeGameMode ()
 		MyInterface->SetMessage ("Developer Mode OFF");
 	}
 	return;
+}
+
+int Game::GetFullLogging()
+{
+	return FullLogging;
 }

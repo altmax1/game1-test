@@ -1,14 +1,26 @@
 #include "stdafx.h"
 #include "Log.h"
+#include "Game.h"
 
 using namespace std;
 Log::Log()
 {
+	
+	MyLog.open(".\\Files\\logs\\log.txt");
+	DevLog.open(".\\Files\\logs\\devlog.txt");
+	Game *MyGame = Game::GetGameInstance();
+	if (MyGame->GetFullLogging() == 1)
+		FullLogging = 1;
+	else
+		FullLogging = 0;
+
 }
 
 
 Log::~Log()
 {
+	MyLog.close();
+	DevLog.close();
 }
 
 void Log::ResetLog()
@@ -100,8 +112,9 @@ void Log::PrintLog ()
 		for (; index < messages.size() && delta <= frame_height; index++)
 		{
 			auto& message = messages[index];
-			terminal_print_ext(padding_left, padding_top + delta, frame_width, 0, TK_ALIGN_DEFAULT, message.text.c_str());
-			delta += message.height + 1;
+			terminal_put(padding_left, padding_top + delta, '>');
+			terminal_print_ext(padding_left+1, padding_top + delta, frame_width, 0, TK_ALIGN_DEFAULT, message.text.c_str());
+			delta += message.height;// +1;
 		}
 		terminal_crop(padding_left, padding_top, frame_width, frame_height);
 
@@ -182,6 +195,18 @@ void Log::PrintLog ()
 
 void Log::AddMessageToLog(string Message)
 {
+	MyLog << Message << endl;
+	AddToDevLog(Message);
 	messages.push_back(Message);
+	if (messages.size() >= MaxLogSize)
+		messages.erase(messages.begin(), messages.begin() + 100);
+	return;
+}
+
+void Log::AddToDevLog(string Message)
+{
+	if (FullLogging == 0)
+		return;
+	DevLog << Message << endl;
 	return;
 }

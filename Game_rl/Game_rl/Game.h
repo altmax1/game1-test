@@ -63,6 +63,7 @@ private:
 	Log *MyLog;
 	Game(void);
 	int DeveloperMode;
+	int FullLogging;
 	int PlayerMoved;
 	int Moves;
 
@@ -90,6 +91,7 @@ public:
 	int GetPlayerMoved () {return PlayerMoved;};
 	int GetMoves () {return Moves;};
 	int GetDeveloperMode () {return DeveloperMode;};
+	int GetFullLogging();
 
 	
 };

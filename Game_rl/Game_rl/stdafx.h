@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <iostream>
+#include <fstream>
 #include <list>
 #include <vector>
 #include <Windows.h>
@@ -19,7 +20,6 @@
 #include <set>
 #include <queue>
 #include <algorithm>
-#include <iterator>
 #include <map>
 #include <cmath>
 #include <stdlib.h>

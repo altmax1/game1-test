@@ -33,6 +33,11 @@ private:
 	int scrollbar_height = 0;
 	bool dragging_scrollbar = false;
 	int dragging_scrollbar_offset = 0;
+	int MaxLogSize = 500;
+	ofstream MyLog;
+	ofstream DevLog;
+	int FullLogging;
+	
 
 public:
 	void ResetLog();
@@ -41,6 +46,7 @@ public:
 	void ScrollToPixel(int py);
 	void PrintLog();
 	void AddMessageToLog(string Message);
+	void AddToDevLog(string Message);
 	Log();
 	~Log();
 };

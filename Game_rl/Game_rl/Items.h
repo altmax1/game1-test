@@ -31,6 +31,12 @@ struct Weapon: public Item
 	int AfterEffectType; // тип последствий выстрела
 	int AfterEffectTime; // время последствий
 	int AfterEffectPower; // сила последствий
+	int MaxDamage2;
+	int MinDamage2;
+	int Damage2Type;
+	int MaxDamage3;
+	int MinDamage3;
+	int Damage3Type;
 };
 
 struct Armour: public Item
@@ -117,6 +123,18 @@ public:
 	int GetWeaponAfterEffectPower (int Id);
 	void SetWeaponAfterEffectPower (int Id, int Power);
 	int CheckID (int ID);
+	void SetWeaponDamage2Type(int ID, int Type);
+	int GetWeaponDamage2Type( int ID);
+	void SetWeaponMaxDamage2(int ID, int Damage);
+	int GetWeaponMaxDamage2(int ID);
+	void SetWeaponMinDamage2(int ID,int Damage);
+	int GetWeaponMinDamage2(int ID);
+	void SetWeaponDamage3Type(int ID,int Type);
+	int GetWeaponDamage3Type(int ID);
+	void SetWeaponMaxDamage3(int ID,int Damage);
+	int GetWeaponMaxDamage3(int ID);
+	void SetWeaponMinDamage3(int ID,int Damage);
+	int GetWeaponMinDamage3(int ID);
 
 };
 
