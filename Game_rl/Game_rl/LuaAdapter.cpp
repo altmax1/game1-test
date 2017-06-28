@@ -69,7 +69,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetWeaponMinDamage", &LuaAdapter::SetWeaponMinDamage)
 			.addFunction ("GetWeaponNeedsAmmo", &LuaAdapter::GetWeaponNeedsAmmo)
 			.addFunction ("GetWeaponIsAmmo", &LuaAdapter::GetWeaponIsAmmo)
-			.addFunction ("GetWeaponCalober", &LuaAdapter::GetWeaponCaliber)
+			.addFunction ("GetWeaponCaliber", &LuaAdapter::GetWeaponCaliber)
 			.addFunction ("GetWeaponAmmoQuantity", &LuaAdapter::GetWeaponAmmoQuantity)
 			.addFunction ("SetWeaponAmmoQuantity", &LuaAdapter::SetWeaponAmmoQuantity)
 			.addFunction ("GetWeaponCurrentAmmoQuantity", &LuaAdapter::GetWeaponCurrentAmmoQuantity)
@@ -125,6 +125,9 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetWeaponDamage3Type", &LuaAdapter::SetWeaponDamage3Type)
 			.addFunction ("GetWeaponDamage2Type", &LuaAdapter::GetWeaponDamage2Type)
 			.addFunction ("GetWeaponDamage3Type", &LuaAdapter::GetWeaponDamage3Type)
+			.addFunction ("GetWeaponNeedsEnergy", &LuaAdapter::GetWeaponNeedsEnergy)
+			.addFunction ("GetWeaponEnergyPerUse", &LuaAdapter::GetWeaponEnergyPerUse)
+			.addFunction ("GetWeaponFacultEnergy", &LuaAdapter::GetWeaponEnergyFacultative)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -840,6 +843,21 @@ void LuaAdapter::SetWeaponDamage3Type(int ID, int Type)
 int LuaAdapter::GetWeaponDamage3Type(int ID)
 {
 	return MyItems->GetWeaponDamage3Type(ID);
+}
+
+int LuaAdapter::GetWeaponNeedsEnergy(int ID)
+{
+	return MyItems->GetWeaponNeedsEnergy(ID);
+}
+
+int LuaAdapter::GetWeaponEnergyPerUse(int ID)
+{
+	return MyItems->GetWeaponEnergyPerUse(ID);
+}
+
+int LuaAdapter::GetWeaponEnergyFacultative(int ID)
+{
+	return MyItems->GetWeaponFaccultativeEnergy(ID);
 }
 
 int LuaAdapter::GetInputNumber ()

@@ -48,113 +48,8 @@ void Items::InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp)
 	p = Temp.begin();
 	while (p!= Temp.end())
 	{
-		map <string,string>::iterator MapPtr;
 		Weapon TempWeapon;
-		MapPtr = p->find("ID");
-		TempWeapon.ID = atoi(MapPtr->second.c_str());
-		ExistingID.insert (TempWeapon.ID);
-		MapPtr = p->find("Name");
-		TempWeapon.Name = MapPtr->second;
-		MapPtr = p->find("RName");
-		TempWeapon.RName = MapPtr->second;
-		MapPtr = p->find("Type");
-		TempWeapon.Type = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Weight");
-		TempWeapon.Weight = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("MinDamage");
-		TempWeapon.MinDamage = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("MaxDamage");
-		TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Stackable");
-		TempWeapon.Stackable = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Unique");
-		TempWeapon.Unique = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("NeedsAmmo");
-		TempWeapon.NeedsAmmo = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("IsAmmo");
-		TempWeapon.IsAmmo = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("Caliber");
-		TempWeapon.Caliber = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("AmmoQuantity");
-		TempWeapon.AmmoQuantity = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("Destroyed");
-		TempWeapon.Destroyed = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("Range");
-		TempWeapon.Range = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("BlastRadius");
-		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("ShotsPerStep");
-		TempWeapon.ShotsPerStep = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("CharCode");
-		TempWeapon.CharCode = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("ColorVisible");
-		TempWeapon.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
-		MapPtr = p->find ("ColorNotVisible");
-		TempWeapon.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
-		if (p->count ("AfterEffectType")>0)
-		{
-			MapPtr = p->find ("AfterEffectType");
-			TempWeapon.AfterEffectType = atoi (MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.AfterEffectType = 0;
-		if (p->count ("AfterEffectTime")>0)
-		{
-			MapPtr = p->find ("AfterEffectTime");
-			TempWeapon.AfterEffectTime = atoi (MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.AfterEffectTime = 0;
-		if (p->count ("AfterEffectPower")>0)
-		{
-			MapPtr = p->find ("AfterEffectPower");
-			TempWeapon.AfterEffectPower = atoi (MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.AfterEffectPower = 0;
-		if (p->count("MaxDamage2") > 0)
-		{
-			MapPtr = p->find("MaxDamage2");
-			TempWeapon.MaxDamage2 = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.MaxDamage2 = 0;
-		if (p->count("MaxDamage3") > 0)
-		{
-			MapPtr = p->find("MaxDamage3");
-			TempWeapon.MaxDamage3 = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.MaxDamage3 = 0;
-		if (p->count("MinDamage2") > 0)
-			{
-				MapPtr = p->find("MinDamage2");
-				TempWeapon.MinDamage2 = atoi(MapPtr->second.c_str());
-			}
-		else
-			TempWeapon.MinDamage2 = 0;
-		if (p->count("MinDamage3") > 0)
-			{
-				MapPtr = p->find("MinDamage3");
-				TempWeapon.MinDamage3 = atoi(MapPtr->second.c_str());
-			}
-		else
-			TempWeapon.MinDamage3 = 0;
-		if (p->count("Damage2Type") > 0)
-		{
-			MapPtr = p->find("Damage2Type");
-			TempWeapon.Damage2Type = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.Damage2Type = 0;
-		if (p->count("Damage3Type") > 0)
-		{
-			MapPtr = p->find("Damage3Type");
-			TempWeapon.Damage3Type = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.Damage3Type = 0;
-
+		ReadWeaponFromMap(*p, TempWeapon);
 		try{
 		if (TempWeapon.ID != UniqueWeapon.size())
 			throw "BAD_ID_IN_UniqueWeapon";}
@@ -184,112 +79,8 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 	p = Temp.begin();
 	while (p!= Temp.end())
 	{
-		map <string,string>::iterator MapPtr;
 		Weapon TempWeapon;
-		MapPtr = p->find("ID");
-		TempWeapon.ID = atoi(MapPtr->second.c_str());
-		ExistingID.insert (TempWeapon.ID);
-		MapPtr = p->find("Name");
-		TempWeapon.Name = MapPtr->second;
-		MapPtr = p->find("RName");
-		TempWeapon.RName = MapPtr->second;
-		MapPtr = p->find("Type");
-		TempWeapon.Type = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Weight");
-		TempWeapon.Weight = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("MinDamage");
-		TempWeapon.MinDamage = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("MaxDamage");
-		TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Stackable");
-		TempWeapon.Stackable = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Unique");
-		TempWeapon.Unique = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("NeedsAmmo");
-		TempWeapon.NeedsAmmo = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("IsAmmo");
-		TempWeapon.IsAmmo = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("Caliber");
-		TempWeapon.Caliber = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("AmmoQuantity");
-		TempWeapon.AmmoQuantity = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("Destroyed");
-		TempWeapon.Destroyed = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("Range");
-		TempWeapon.Range = atoi (MapPtr->second.c_str());
-		MapPtr = p->find("BlastRadius");
-		TempWeapon.BlastRadius = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("ShotsPerStep");
-		TempWeapon.ShotsPerStep = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("CharCode");
-		TempWeapon.CharCode = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("ColorVisible");
-		TempWeapon.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
-		MapPtr = p->find ("ColorNotVisible");
-		TempWeapon.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
-		if (p->count ("AfterEffectType")>0)
-		{
-			MapPtr = p->find ("AfterEffectType");
-			TempWeapon.AfterEffectType = atoi (MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.AfterEffectType = 0;
-		if (p->count ("AfterEffectTime")>0)
-		{
-			MapPtr = p->find ("AfterEffectTime");
-			TempWeapon.AfterEffectTime = atoi (MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.AfterEffectTime = 0;
-		if (p->count ("AfterEffectPower")>0)
-		{
-			MapPtr = p->find ("AfterEffectPower");
-			TempWeapon.AfterEffectPower = atoi (MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.AfterEffectPower = 0;
-		if (p->count("MaxDamage2") > 0)
-		{
-			MapPtr = p->find("MaxDamage2");
-			TempWeapon.MaxDamage2 = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.MaxDamage2 = 0;
-		if (p->count("MaxDamage3") > 0)
-		{
-			MapPtr = p->find("MaxDamage3");
-			TempWeapon.MaxDamage3 = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.MaxDamage3 = 0;
-		if (p->count("MinDamage2") > 0)
-		{
-			MapPtr = p->find("MinDamage2");
-			TempWeapon.MinDamage2 = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.MinDamage2 = 0;
-		if (p->count("MinDamage3") > 0)
-		{
-			MapPtr = p->find("MinDamage3");
-			TempWeapon.MinDamage3 = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.MinDamage3 = 0;
-		if (p->count("Damage2Type") > 0)
-		{
-			MapPtr = p->find("Damage2Type");
-			TempWeapon.Damage2Type = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.Damage2Type = 0;
-		if (p->count("Damage3Type") > 0)
-		{
-			MapPtr = p->find("Damage3Type");
-			TempWeapon.Damage3Type = atoi(MapPtr->second.c_str());
-		}
-		else
-			TempWeapon.Damage3Type = 0;
+		ReadWeaponFromMap(*p, TempWeapon);
 		try{
 		if (TempWeapon.ID-900000 != CommonWeapon.size())
 			throw "BAD_ID_IN_CommonWeapon";}
@@ -301,6 +92,142 @@ void Items::InsertCommonWeaponsInStorage (vector <map<string,string>> Temp)
 		p++;
 
 	}
+}
+
+void Items::ReadWeaponFromMap(map<string, string>& MyMap, Weapon & TempWeapon)
+{
+	map <string, string>::iterator MapPtr;
+	MapPtr = MyMap.find("ID");
+	TempWeapon.ID = atoi(MapPtr->second.c_str());
+	ExistingID.insert(TempWeapon.ID);
+	MapPtr = MyMap.find("Name");
+	TempWeapon.Name = MapPtr->second;
+	MapPtr = MyMap.find("RName");
+	TempWeapon.RName = MapPtr->second;
+	MapPtr = MyMap.find("Type");
+	TempWeapon.Type = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Weight");
+	TempWeapon.Weight = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("MinDamage");
+	TempWeapon.MinDamage = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("MaxDamage");
+	TempWeapon.MaxDamage = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Stackable");
+	TempWeapon.Stackable = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Unique");
+	TempWeapon.Unique = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("NeedsAmmo");
+	TempWeapon.NeedsAmmo = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("IsAmmo");
+	TempWeapon.IsAmmo = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Caliber");
+	TempWeapon.Caliber = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("AmmoQuantity");
+	TempWeapon.AmmoQuantity = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Destroyed");
+	TempWeapon.Destroyed = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Range");
+	TempWeapon.Range = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("BlastRadius");
+	TempWeapon.BlastRadius = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("ShotsPerStep");
+	TempWeapon.ShotsPerStep = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("CharCode");
+	TempWeapon.CharCode = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("ColorVisible");
+	TempWeapon.ColorVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+	MapPtr = MyMap.find("ColorNotVisible");
+	TempWeapon.ColorNotVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+	if (MyMap.count("AfterEffectType")>0)
+	{
+		MapPtr = MyMap.find("AfterEffectType");
+		TempWeapon.AfterEffectType = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.AfterEffectType = 0;
+	if (MyMap.count("AfterEffectTime")>0)
+	{
+		MapPtr = MyMap.find("AfterEffectTime");
+		TempWeapon.AfterEffectTime = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.AfterEffectTime = 0;
+	if (MyMap.count("AfterEffectPower")>0)
+	{
+		MapPtr = MyMap.find("AfterEffectPower");
+		TempWeapon.AfterEffectPower = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.AfterEffectPower = 0;
+	if (MyMap.count("MaxDamage2") > 0)
+	{
+		MapPtr = MyMap.find("MaxDamage2");
+		TempWeapon.MaxDamage2 = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.MaxDamage2 = 0;
+	if (MyMap.count("MaxDamage3") > 0)
+	{
+		MapPtr = MyMap.find("MaxDamage3");
+		TempWeapon.MaxDamage3 = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.MaxDamage3 = 0;
+	if (MyMap.count("MinDamage2") > 0)
+	{
+		MapPtr = MyMap.find("MinDamage2");
+		TempWeapon.MinDamage2 = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.MinDamage2 = 0;
+	if (MyMap.count("MinDamage3") > 0)
+	{
+		MapPtr = MyMap.find("MinDamage3");
+		TempWeapon.MinDamage3 = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.MinDamage3 = 0;
+	if (MyMap.count("Damage2Type") > 0)
+	{
+		MapPtr = MyMap.find("Damage2Type");
+		TempWeapon.Damage2Type = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.Damage2Type = 0;
+	if (MyMap.count("Damage3Type") > 0)
+	{
+		MapPtr = MyMap.find("Damage3Type");
+		TempWeapon.Damage3Type = atoi(MapPtr->second.c_str());
+	}
+	else
+		TempWeapon.Damage3Type = 0;
+	if (MyMap.count("NeedsEnergy") > 0)
+	{
+		MapPtr = MyMap.find("NeedsEnergy");
+		TempWeapon.NeedsEnergy = atoi(MapPtr->second.c_str());
+	}
+	else TempWeapon.NeedsEnergy = 0;
+	if (MyMap.count("FacultativeEnergy") > 0)
+	{
+		MapPtr = MyMap.find("FacultativeEnergy");
+		TempWeapon.FacultativeEnergy = atoi(MapPtr->second.c_str());
+	}
+	else TempWeapon.FacultativeEnergy = 0;
+	if (MyMap.count("EnergyPerUse") > 0)
+	{
+		MapPtr = MyMap.find("EnergyPerUse");
+		TempWeapon.EnergyPerUse = atoi(MapPtr->second.c_str());
+	}
+	else TempWeapon.EnergyPerUse = 0;
+	if (MyMap.count("Desccription") > 0)
+	{
+		MapPtr = MyMap.find("Desccription");
+		TempWeapon.Description = MapPtr->second;
+	}
+	else TempWeapon.Description = "None";
+
+	return;
+
 }
 
 void Items::GetCommonArmourFromFile ()
@@ -1006,4 +933,71 @@ int Items::GetWeaponMinDamage3(int ID)
 	if (ID >= 900000 && ID < 1000000)
 		return CommonWeapon[ID - 900000].MinDamage3;
 	return 0;
+}
+
+int Items::GetWeaponNeedsEnergy(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].NeedsEnergy;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].NeedsEnergy;
+	return 0;
+}
+
+void Items::SetWeaponNeedEnergy(int ID, int Param)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].NeedsEnergy = Param;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].NeedsEnergy = Param;
+	return;
+}
+
+int Items::GetWeaponEnergyPerUse(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].EnergyPerUse;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].EnergyPerUse;
+	return 0;
+}
+
+void Items::SetWeaponEnergyPerUse(int ID, int Energy)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].EnergyPerUse = Energy;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].EnergyPerUse = Energy;
+	return;
+}
+
+int Items::GetWeaponFaccultativeEnergy(int ID)
+{
+	if (ID >= 0 && ID < 900000)
+		return WeaponFromLevel[ID].EnergyPerUse;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].EnergyPerUse;
+	return 0;
+}
+
+void Items::SetWeaponFacultativeEnergy(int ID, int Param)
+{
+	if (ID >= 0 && ID < 900000)
+		WeaponFromLevel[ID].FacultativeEnergy = Param;
+	if (ID >= 900000 && ID < 1000000)
+		CommonWeapon[ID - 900000].FacultativeEnergy = Param;
+	return;
+}
+
+string Items::GetDescription(int ID)
+{
+	if (ID >= 0 && ID <900000)
+		return WeaponFromLevel[ID].Description;
+	if (ID >= 900000 && ID < 1000000)
+		return CommonWeapon[ID - 900000].Description;
+	if (ID >= 1000000 && ID < 1900000)
+		return ArmourFromLevel[ID - 1000000].Description;
+	if (ID >= 1900000 && ID < 2000000)
+		return CommonArmour[ID - 1900000].Description;
+	return "None description";
 }

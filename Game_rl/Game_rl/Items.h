@@ -7,6 +7,7 @@ struct Item{
 	bool Unique;
 	string Name;
 	string RName;
+	string Description;
 	bool Stackable;
 	int Type;
 	int Quality; //качество - износ мб, если батарея, то заряд.
@@ -37,6 +38,9 @@ struct Weapon: public Item
 	int MaxDamage3;
 	int MinDamage3;
 	int Damage3Type;
+	int NeedsEnergy;
+	int EnergyPerUse;
+	int FacultativeEnergy;
 };
 
 struct Armour: public Item
@@ -69,6 +73,7 @@ public:
 	void GetCommonWeaponsFromFile ();
 	void InsertUniqueWeaponsInStorage (vector <map<string,string>> Temp);
 	void InsertCommonWeaponsInStorage (vector <map<string,string>> Temp);
+	void ReadWeaponFromMap(map <string, string> &MyMap, Weapon &Temp);
 	void GetUniqueArmourFromFile ();
 	void GetCommonArmourFromFile ();
 	void InsertUniqueArmourInStorage (vector <map<string,string>> Temp);
@@ -135,6 +140,12 @@ public:
 	int GetWeaponMaxDamage3(int ID);
 	void SetWeaponMinDamage3(int ID,int Damage);
 	int GetWeaponMinDamage3(int ID);
-
+	int GetWeaponNeedsEnergy(int ID);
+	void SetWeaponNeedEnergy(int ID, int Param);
+	int GetWeaponEnergyPerUse(int ID);
+	void SetWeaponEnergyPerUse(int ID, int Energy);
+	int GetWeaponFaccultativeEnergy(int ID);
+	void SetWeaponFacultativeEnergy(int ID, int Param);
+	string GetDescription(int ID);
 };
 

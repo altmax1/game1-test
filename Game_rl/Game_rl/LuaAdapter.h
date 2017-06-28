@@ -147,6 +147,9 @@ public:
 	int GetWeaponDamage2Type(int ID);
 	void SetWeaponDamage3Type(int ID, int Type);
 	int GetWeaponDamage3Type(int ID);
+	int GetWeaponNeedsEnergy(int ID);
+	int GetWeaponEnergyPerUse(int ID);
+	int GetWeaponEnergyFacultative(int ID);
 	LuaAdapter(void);
 	~LuaAdapter(void);
 };
