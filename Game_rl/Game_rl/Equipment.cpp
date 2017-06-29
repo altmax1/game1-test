@@ -199,7 +199,7 @@ void Equipment::WearThisItem (int Num)
 	MyInventory = MyGamer->GetInventory();
 
 	int ID = MyInventory->GetIdByNum (Num);
-	int Type = MyItems->GetTypeById (ID);
+	int Type = MyItems->GetTypeById (ID)-1000000;
 	int GlobalType = MyItems->GetGlobalType (ID);
 	if (Type >0 && Type <=8 && GlobalType == 1)
 		*Ptr [Type-1] = ID;  

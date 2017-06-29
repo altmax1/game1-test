@@ -259,52 +259,8 @@ void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 	{
 		map <string,string>::iterator MapPtr;
 		Armour TempArmour;
-		MapPtr = p->find("ID");
-		TempArmour.ID = atoi(MapPtr->second.c_str());
-		ExistingID.insert (TempArmour.ID);
-		MapPtr = p->find("Name");
-		TempArmour.Name = MapPtr->second;
-		MapPtr = p->find("RName");
-		TempArmour.RName = MapPtr->second;
-		MapPtr = p->find("Type");
-		TempArmour.Type = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Weight");
-		TempArmour.Weight = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Unique");
-		TempArmour.Unique = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Stackable");
-		TempArmour.Stackable = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Type2");
-		TempArmour.Type2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense");
-		TempArmour.Defense[0] = atoi(MapPtr->second.c_str());
+		ReadArmourFromMap(*p, TempArmour);
 		
-		for (int i = 1; i <=10; i++)
-		{
-			int NumInVector = i-1;
-			_itoa (i, temp, 10);
-			string name2 = temp;
-			string name = "Defense"+name2;
-			if (p->count (name)>0)
-			{
-				MapPtr = p->find (name);
-				TempArmour.Defense[NumInVector] = atoi (MapPtr->second.c_str());
-			}
-		
-		}
-		
-		MapPtr = p->find("CanBuiltedIn");
-		TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("NumOfBuiltedInSlots");
-		TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("BuiltInType");
-		TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
-		MapPtr = p->find ("CharCode");
-		TempArmour.CharCode = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("ColorVisible");
-		TempArmour.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
-		MapPtr = p->find ("ColorNotVisible");
-		TempArmour.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		try{
 		if (TempArmour.ID-1900000 != CommonArmour.size())
 			throw "BAD_ID_IN_ComonArmour";}
@@ -318,6 +274,62 @@ void Items::InsertCommonArmourInStorage (vector <map<string,string>> Temp)
 	delete [] temp;
 }
 
+void Items::ReadArmourFromMap(map<string, string>& MyMap, Armour & TempArmour)
+{
+	char *temp;
+	temp = new char[4];
+	map <string, string>::iterator MapPtr;
+	MapPtr = MyMap.find("ID");
+	TempArmour.ID = atoi(MapPtr->second.c_str());
+	ExistingID.insert(TempArmour.ID);
+	MapPtr = MyMap.find("Name");
+	TempArmour.Name = MapPtr->second;
+	MapPtr = MyMap.find("RName");
+	TempArmour.RName = MapPtr->second;
+	MapPtr = MyMap.find("Type");
+	TempArmour.Type = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Weight");
+	TempArmour.Weight = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Unique");
+	TempArmour.Unique = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Stackable");
+	TempArmour.Stackable = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Type2");
+	TempArmour.Type2 = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Defense");
+	TempArmour.Defense[0] = atoi(MapPtr->second.c_str());
+
+	for (int i = 1; i <= 10; i++)
+	{
+		int NumInVector = i - 1;
+		_itoa(i, temp, 10);
+		string name2 = temp;
+		string name = "Defense" + name2;
+		if (MyMap.count(name)>0)
+		{
+
+			MapPtr = MyMap.find(name);
+			TempArmour.Defense[NumInVector] = atoi(MapPtr->second.c_str());
+		}
+
+	}
+
+	MapPtr = MyMap.find("CanBuiltedIn");
+	TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("NumOfBuiltedInSlots");
+	TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("BuiltInType");
+	TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("CharCode");
+	TempArmour.CharCode = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("ColorVisible");
+	TempArmour.ColorVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+	MapPtr = MyMap.find("ColorNotVisible");
+	TempArmour.ColorNotVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+	delete[] temp;
+	return;
+}
+
 void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 {
 	char *temp = new char [3];
@@ -327,53 +339,8 @@ void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 	{
 		map <string,string>::iterator MapPtr;
 		Armour TempArmour;
-		MapPtr = p->find("ID");
-		TempArmour.ID = atoi(MapPtr->second.c_str());
-		ExistingID.insert (TempArmour.ID);
-		MapPtr = p->find("Name");
-		TempArmour.Name = MapPtr->second;
-		MapPtr = p->find("RName");
-		TempArmour.RName = MapPtr->second;
-		MapPtr = p->find("Type");
-		TempArmour.Type = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Weight");
-		TempArmour.Weight = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Unique");
-		TempArmour.Unique = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Stackable");
-		TempArmour.Stackable = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Type2");
-		TempArmour.Type2 = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("Defense");
-		TempArmour.Defense[0] = atoi(MapPtr->second.c_str());
+		ReadArmourFromMap(*p, TempArmour);
 		
-		for (int i = 1; i <=10; i++)
-		{
-			int NumInVector = i-1;
-			_itoa (i, temp, 10);
-			string name2 = temp;
-			string name = "Defense"+name2;
-			if (p->count (name)>0)
-			{
-			
-				MapPtr = p->find (name);
-				TempArmour.Defense[NumInVector] = atoi (MapPtr->second.c_str());
-			}
-		
-		}
-		
-		MapPtr = p->find("CanBuiltedIn");
-		TempArmour.CanBuiltedIn = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("NumOfBuiltedInSlots");
-		TempArmour.NumOfBuiltedInSlots = atoi(MapPtr->second.c_str());
-		MapPtr = p->find("BuiltInType");
-		TempArmour.BuiltInType = atoi(MapPtr->second.c_str());
-		MapPtr = p->find ("CharCode");
-		TempArmour.CharCode = atoi (MapPtr->second.c_str());
-		MapPtr = p->find ("ColorVisible");
-		TempArmour.ColorVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
-		MapPtr = p->find ("ColorNotVisible");
-		TempArmour.ColorNotVisible = strtoul (MapPtr->second.c_str(), NULL, 16);
 		try{
 		if (TempArmour.ID-1000000 != UniqueArmour.size())
 			throw "BAD_ID_IN_UniqueArmour";}

@@ -19,7 +19,7 @@ NO=0
 GamerMove = function (Game, KeyCode)
 NextX = Game.GamerX
 NextY = Game.GamerY
-Game:AddMessageToLog ("Player Moved!!!"..KeyCode);
+
 if (KeyCode == TK_RIGHT or KeyCode == TK_KP_6) then
 	NextX = NextX+1
 	Game:SetGamerMoved()
@@ -86,7 +86,10 @@ if CreatureNum >= 0 then
 		return;
 	end
 	damage = CalculateDamage (Game)
-	print ("Damage  "..damage[1])
+	
+	DamageToBeast = CalculateDamageToBeast (Game, CreatureNum, damage)
+	print ("DamageToBeast = "..DamageToBeast)
+	AddDamageToBeast (Game, CreatureNum, DamageToBeast)
 	-- вызываем GamerAttack из этого же скрипта:
 	Game:AttackBeastByNum (CreatureNum)
 	--Game:RemoveCreature (CreatureNum)
@@ -176,6 +179,43 @@ CalculateDamage = function (Game) --расчёт урона от оружия
 	Damage[1] = Damage[1]*GamerStr/8*GamerDex/5
 	return Damage
 	
+end
+
+CalculateDamageToBeast = function (Game, BeastNum, damage)
+BeastDef = {0,0,0,0,0,0,0,0,0,0}
+BeastDam = 0
+FullDamage = 0
+for i = 1,10 do
+	BeastDam = 0
+	BeastDef[i] = Game:GetBeastDefenseAdvansed(BeastNum, i)
+	BeastDam = damage[i]-BeastDef[i]
+	print ("BeastDamage "..i.."  "..BeastDam) 
+	if BeastDam <0 then
+		BeastDam = 0
+	end
+	
+	FullDamage = FullDamage+BeastDam
+end
+return FullDamage
+end
+
+AddDamageToBeast = function (Game, CreatureNum, DamageToBeast)
+print (CreatureNum)
+BeastHealth = Game:GetBeastHP (CreatureNum)
+Health = BeastHealth - math.floor(DamageToBeast)
+BeastName = Game:GetBeastRName (CreatureNum)
+if Health> 0 then
+	Game:PrintMessage ("Вы нанесли по <<"..BeastName..">> урон в размере  "..DamageToBeast)
+	
+end
+if Health<=0 then
+	Health = 0
+	Game:SetBeastIsDead (CreatureNum,1)
+	Game:PrintMessage ("Вы уничтожили <<"..BeastName..">>, нанеся ей "..DamageToBeast.." урона." )
+	
+end
+Game:SetBeastHP (CreatureNum, Health)
+
 end
 
 GamerAttack = function (Game, Beast, NumOfBeast)

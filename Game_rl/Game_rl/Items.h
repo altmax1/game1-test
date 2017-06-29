@@ -78,6 +78,7 @@ public:
 	void GetCommonArmourFromFile ();
 	void InsertUniqueArmourInStorage (vector <map<string,string>> Temp);
 	void InsertCommonArmourInStorage (vector <map<string,string>> Temp);
+	void ReadArmourFromMap(map <string, string> &MyMap, Armour &Temp);
 	int QuantityUniqueWeapon ();
 	int QuantityCommonWeapon ();
 	int GetIdForCreation (int Id);

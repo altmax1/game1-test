@@ -281,7 +281,7 @@ void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Slot)
 	{
 	while (p!=MyInventory.end())
 	{
-		if ( (MyItems->GetGlobalType (p->ID) == GlobalType) && (MyItems->GetTypeById (p->ID) == Slot))
+		if ( (MyItems->GetGlobalType (p->ID) == GlobalType) && (MyItems->GetTypeById (p->ID)-1000000 == Slot))
 			temp.push_back (IterC);
 		
 		p++;
@@ -294,7 +294,7 @@ void Inventory::FindItemsByType ( vector<int> &temp, int GlobalType, int Slot)
 		while (p!=MyInventory.end())
 	{
 		if (( MyItems->GetGlobalType (p->ID)) == 0 && (MyItems->GetTypeById (p->ID)) >=0 && 
-			(MyItems->GetTypeById (p->ID) <100))
+			(MyItems->GetTypeById (p->ID)-1000000 <100))
 				temp.push_back (IterC);
 		p++;
 		IterC++;

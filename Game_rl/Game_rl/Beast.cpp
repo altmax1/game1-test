@@ -12,6 +12,7 @@ Beast::Beast(void)
 {
 	IsDead = 0;
 	MovePoints = 10;
+	
 }
 
 

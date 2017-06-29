@@ -49,23 +49,25 @@ void Bestiary::FillCreatures ()
 		MyBeast.SetLevelOfBeast(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("Defense");
 		MyBeast.SetDefense(atoi (MapPtr->second.c_str()));
-
-		for (int a = 1; a <=10; a++)
+		
+		for (int a = 2; a <=10; a++)
 		{
 			int NumInVector = a-1;
 			_itoa (a, temp, 10);
 			string name2 = temp;
-			string name = "Defense"+name2;
-		
-			
-			if ( MyCreatures[i].count (name)  >0)
+			string name3 = "Defense";
+			string name = name3+name2;
+			if (MyCreatures[i].count(name.c_str()) > 0)
 			{
-				MapPtr = MyCreatures[i].find (name);
-				MyBeast.SetDefenseAdvansed (atoi (MapPtr->second.c_str()),i);
-									
+				MapPtr = MyCreatures[i].find(name.c_str());
+				MyBeast.SetDefenseAdvansed(atoi(MapPtr->second.c_str()), a);
+
 			}
-		
+			else
+				MyBeast.SetDefenseAdvansed(0, a);
+					
 		}
+		
 
 		MapPtr = MyCreatures[i].find ("Str");
 		MyBeast.SetStr(atoi (MapPtr->second.c_str()));
