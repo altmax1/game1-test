@@ -41,14 +41,10 @@ public:
 	void SetGamerMaxEnergy (int a);
 	int GetGamerDefense () const;
 	void SetGamerDefense (int a);
-	int GetGamerDefense2 () const;
-	void SetGamerDefense2 (int a);
-	int GetGamerDefense3 () const;
-	void SetGamerDefense3 (int a);
-	int GetGamerDefense4 () const;
-	void SetGamerDefense4 (int a);
-	int GetGamerDefense5 () const;
-	void SetGamerDefense5 (int a);
+	int GetGamerDefenseAdvansed(int Num);
+	void SetGamerDefenseAdvansed(int Num, int Def);
+	int GetGamerBaseDefense(int NumOfDefense);
+	void SetGamerBaseDefense(int NumOfDefense, int Def);
 	int GetGamerRegenHP () const;
 	void SetGamerRegenHP (int a);
 	int GetGamerRegenEnergy () const;

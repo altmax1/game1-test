@@ -299,32 +299,49 @@ int Beast::GetID () const
 		return 0;
 	}
 
-	void Beast::SetMaxAttack (int a)
+	void Beast::SetMaxAttack (int NumOfAttack,int a)
 	{
-		MaxAttack = a;
+		if (NumOfAttack>=1 && NumOfAttack <=3)
+			MaxAttack[NumOfAttack-1] = a;
 		return;
 	}
-	int Beast::GetMaxAttack () const
+	int Beast::GetMaxAttack (int NumOfAttack) const
 	{
-		return MaxAttack;
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			return MaxAttack[NumOfAttack];
 	}
-	void Beast::SetMinAttack (int a)
+	void Beast::SetMinAttack (int NumOfAttack, int a)
 	{
-		MinAttack = a;
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			MinAttack[NumOfAttack] = a;
 		return;
 	}
-	int Beast::GetMinAttack () const 
+	int Beast::GetMinAttack (int NumOfAttack) const
 	{
-		return MinAttack;
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			return MinAttack[NumOfAttack];
 	}
-	void Beast::SetAttackType (int a)
+	void Beast::SetAttackType (int NumOfAttack,int a)
 	{
-		AttackType = a;
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			AttackType[NumOfAttack] = a;
 		return;
 	}
-	int Beast::GetAttackType () const
+	int Beast::GetAttackType (int NumOfAttack) const
 	{
-		return AttackType;
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			return AttackType[NumOfAttack];
+	}
+	void Beast::SetAttackRange(int NumOfAttack, int Range)
+	{
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			AttackRange[NumOfAttack-1] = Range;
+		return;
+	}
+	int Beast::GetAttackRange(int NumOfAttack) const
+	{
+		if (NumOfAttack >= 1 && NumOfAttack <= 3)
+			return AttackRange[NumOfAttack];
 	}
 	void Beast::SetDex (int a)
 	{

@@ -19,9 +19,10 @@ private:
 	int RegenEnergy;  // Скорость регенерации энергии
 	int LevelOfBeast; //виртуальный уровень
 	int Defense[10];  //уровень защиты
-	int MaxAttack; // максимальная атака
-	int MinAttack; // минимальная атака
-	int AttackType; //тип атаки
+	int MaxAttack[3]; // максимальная атака
+	int MinAttack[3]; // минимальная атака
+	int AttackType[3]; //тип атаки
+	int AttackRange[3]; // радиус поражения
 	int Dex;  // ловкость
 	int Str;  //сила
 	int FlyAble:1; //способен к полету?
@@ -81,12 +82,14 @@ public:
 	int GetDefence () const;
 	void SetDefenseAdvansed (int def, int NumOfDef);
 	int GetDefenseAdvansed (int NumOfDef);
-	void SetMaxAttack (int a);
-	int GetMaxAttack () const;
-	void SetMinAttack (int a);
-	int GetMinAttack () const;
-	void SetAttackType (int a);
-	int GetAttackType () const;
+	void SetMaxAttack (int NumOfAttack,int a);
+	int GetMaxAttack (int NumOfAttack) const;
+	void SetMinAttack (int NumOfAttack,int a);
+	int GetMinAttack (int NumOfAttack) const;
+	void SetAttackType (int NumOfAttack,int a);
+	int GetAttackType (int NumOfAttack) const;
+	void SetAttackRange(int NumOfAttack, int Range);
+	int GetAttackRange(int NumOfAttack) const;
 	void SetDex (int a);
 	int GetDex () const;
 	void SetStr (int a);

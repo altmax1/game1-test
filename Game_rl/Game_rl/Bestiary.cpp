@@ -86,11 +86,71 @@ void Bestiary::FillCreatures ()
 		MapPtr = MyCreatures[i].find ("Behavior");
 		MyBeast.SetBehavior(atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("MaxAttack");
-		MyBeast.SetMaxAttack (atoi (MapPtr->second.c_str()));
+		MyBeast.SetMaxAttack (1,atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("MinAttack");
-		MyBeast.SetMinAttack (atoi (MapPtr->second.c_str()));
+		MyBeast.SetMinAttack (1,atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("AttackType");
-		MyBeast.SetAttackType (atoi (MapPtr->second.c_str()));
+		MyBeast.SetAttackType (1,atoi (MapPtr->second.c_str()));
+		MapPtr = MyCreatures[i].find("AttackRange");
+		MyBeast.SetAttackRange(1, atoi(MapPtr->second.c_str()));
+
+		if (MyCreatures[i].count("MaxAttack2") > 0)
+		{
+			MapPtr = MyCreatures[i].find("MaxAttack2");
+			MyBeast.SetMaxAttack(2, atoi(MapPtr->second.c_str()));
+		}
+		else 
+			MyBeast.SetMaxAttack(2, 0);
+		if (MyCreatures[i].count("MinAttack2") > 0)
+		{
+			MapPtr = MyCreatures[i].find("MinAttack2");
+			MyBeast.SetMinAttack(2, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetMinAttack(2, 0);
+		if (MyCreatures[i].count("AttackType2") > 0)
+		{
+			MapPtr = MyCreatures[i].find("AttackType2");
+			MyBeast.SetAttackType(2, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetAttackType(2, 0);
+		if (MyCreatures[i].count("AttackRange2") > 0)
+		{
+			MapPtr = MyCreatures[i].find("AttackRange2");
+			MyBeast.SetAttackRange(2, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetAttackRange(2, 0);
+
+		if (MyCreatures[i].count("MaxAttack3") > 0)
+		{
+			MapPtr = MyCreatures[i].find("MaxAttack3");
+			MyBeast.SetMaxAttack(3, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetMaxAttack(3, 0);
+		if (MyCreatures[i].count("MinAttack3") > 0)
+		{
+			MapPtr = MyCreatures[i].find("MinAttack3");
+			MyBeast.SetMinAttack(3, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetMinAttack(3, 0);
+		if (MyCreatures[i].count("AttackType3") > 0)
+		{
+			MapPtr = MyCreatures[i].find("AttackType3");
+			MyBeast.SetAttackType(3, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetAttackType(3, 0);
+		if (MyCreatures[i].count("AttackRange3") > 0)
+		{
+			MapPtr = MyCreatures[i].find("AttackRange3");
+			MyBeast.SetAttackRange(3, atoi(MapPtr->second.c_str()));
+		}
+		else
+			MyBeast.SetAttackRange(3, 0);
 		MapPtr = MyCreatures[i].find ("RangeOfSight");
 		MyBeast.SetRangeOfSight (atoi (MapPtr->second.c_str()));
 		MapPtr = MyCreatures[i].find ("ID");

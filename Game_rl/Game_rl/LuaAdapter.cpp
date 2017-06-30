@@ -59,6 +59,10 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetBeastStr", &LuaAdapter::SetBeastStr)
 			.addFunction ("GetDefenseOfSlot", &LuaAdapter::GetDefenseBySlot)
 			.addFunction ("GetDefenseOfSlotAdvansed", &LuaAdapter::GetDefenseBySlotAdvansed)
+			.addFunction ("GetGamerDefenseAdvansed", &LuaAdapter::GetGamerDefenseAdvansed)
+			.addFunction("SetGamerDefenseAdvansed", &LuaAdapter::SetGamerDefenseAdvansed)
+			.addFunction("GetGamerBaseDefense", &LuaAdapter::GetGamerBaseDefense)
+			.addFunction("SetGamerBaseDefense", &LuaAdapter::SetGamerBaseDefense)
 			.addFunction ("GetIdByGamerSlot", &LuaAdapter::GetItemIdBySlot)
 			.addFunction ("GetItemTypeById", &LuaAdapter::GetTypeById)
 			.addFunction ("GetItemType2ById", &LuaAdapter::GetType2ById)
@@ -138,10 +142,6 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addProperty ("GamerRangeOfSight", &LuaAdapter::GetGamerRangeOfSight, &LuaAdapter::SetGamerRangeOfSight)
 			.addProperty ("GamerMaxEnergy", &LuaAdapter::GetGamerMaxEnergy, &LuaAdapter::SetGamerMaxEnergy)
 			.addProperty ("GamerDefense", &LuaAdapter::GetGamerDefense, &LuaAdapter::SetGamerDefense)
-			.addProperty ("GamerDefense2", &LuaAdapter::GetGamerDefense2, &LuaAdapter::SetGamerDefense2)
-			.addProperty ("GamerDefense3", &LuaAdapter::GetGamerDefense3, &LuaAdapter::SetGamerDefense3)
-			.addProperty ("GamerDefense4", &LuaAdapter::GetGamerDefense4, &LuaAdapter::SetGamerDefense4)
-			.addProperty ("GamerDefense5", &LuaAdapter::GetGamerDefense5, &LuaAdapter::SetGamerDefense5)
 			.addProperty ("GamerRegenHP", &LuaAdapter::GetGamerRegenHP, &LuaAdapter::SetGamerRegenHP)
 			.addProperty ("GamerRegenEnergy", &LuaAdapter::GetGamerRegenEnergy, &LuaAdapter::SetGamerRegenEnergy)
 		.endClass();
@@ -149,6 +149,10 @@ void LuaAdapter::LuaDesc (lua_State *L)
 	getGlobalNamespace (L)
 		.beginClass <Beast> ("Beast")
 		.addFunction ("Move", &Beast::MoveCreature)
+		.addFunction ("GetMaxAttack", &Beast::GetMaxAttack)
+		.addFunction ("GetMinAttack", &Beast::GetMinAttack)
+		.addFunction ("GetAttackType", &Beast::GetAttackType)
+		.addFunction ("GetAttackRange", &Beast::GetAttackRange)
 		.addProperty ("CoordX", &Beast::GetCoordX, &Beast::SetCoordX)
 		.addProperty ("CoordY", &Beast::GetCoordY, &Beast::SetCoordY)
 		.addProperty ("HP", &Beast::GetHP,&Beast::SetHP)
@@ -163,9 +167,9 @@ void LuaAdapter::LuaDesc (lua_State *L)
 		.addProperty ("Behavior", &Beast::GetBehavior, &Beast::SetBehavior)
 		.addProperty ("Sleeping", &Beast::GetSleep, &Beast::SetSleep)
 		.addProperty ("Active", &Beast::GetActive, &Beast::SetActive)
-		.addProperty ("MaxAttack", &Beast::GetMaxAttack, &Beast::SetMaxAttack)
-		.addProperty ("MinAttack", &Beast::GetMinAttack, &Beast::SetMinAttack)
-		.addProperty ("AttackType", &Beast::GetAttackType, &Beast::SetAttackType)
+		//.addProperty ("MaxAttack", &Beast::GetMaxAttack, &Beast::SetMaxAttack)
+		//.addProperty ("MinAttack", &Beast::GetMinAttack, &Beast::SetMinAttack)
+		//.addProperty ("AttackType", &Beast::GetAttackType, &Beast::SetAttackType)
 		.addProperty ("IsDead", &Beast::GetIsDead, &Beast::SetIsDead)
 		.addProperty ("CharCode", &Beast::GetCharCode, &Beast::SetCharCode)
 		.addProperty ("MovePoints", &Beast::GetMovePoints, &Beast::SetMovePoints)
@@ -313,42 +317,22 @@ void LuaAdapter::SetGamerDefense (int a)
 	MyGamer->SetDefense (a);
 	return;
 }
-int LuaAdapter::GetGamerDefense2 () const
+int LuaAdapter::GetGamerDefenseAdvansed(int Num)
 {
-	return MyGamer->GetDefense2();
+	return MyGamer->GetDefenseAdvansed (Num);
 }
-void LuaAdapter::SetGamerDefense2 (int a)
+void LuaAdapter::SetGamerDefenseAdvansed(int Num, int Def)
 {
-	MyGamer->SetDefense2 (a);
-	return;
-}int LuaAdapter::GetGamerDefense3 () const
-{
-	return MyGamer->GetDefense3();
+	MyGamer->SetDefenseAdvansed(Num, Def);
 }
-void LuaAdapter::SetGamerDefense3 (int a)
+int LuaAdapter::GetGamerBaseDefense(int NumOfDefense)
 {
-	MyGamer->SetDefense3 (a);
-	return;
-}int LuaAdapter::GetGamerDefense4 () const
-{
-	return MyGamer->GetDefense4();
+	return MyGamer->GetBaseDefenseAdvansed(NumOfDefense);
 }
-void LuaAdapter::SetGamerDefense4 (int a)
+void LuaAdapter::SetGamerBaseDefense(int NumOfDefense, int Def)
 {
-	MyGamer->SetDefense4 (a);
-	return;
-}int LuaAdapter::GetGamerDefense5 () const
-{
-	return MyGamer->GetDefense5();
+	MyGamer->SetBaseDefenseAdvansed(NumOfDefense, Def);
 }
-void LuaAdapter::SetGamerDefense5 (int a)
-{
-	MyGamer->SetDefense5 (a);
-	return;
-}
-
-
-
 int LuaAdapter::GetGamerRegenHP () const
 {
 	return MyGamer->GetRegenHP ();

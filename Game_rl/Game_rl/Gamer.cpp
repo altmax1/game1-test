@@ -17,6 +17,7 @@ Gamer::Gamer (level *LevelPtr)
 	 Game *MyGame;
 	MyGame = Game::GetGameInstance();
 	MyItems = MyGame->GetItems();
+	
 }
 
 Gamer::~Gamer(void)
@@ -110,51 +111,41 @@ void Gamer::SetDex (int a)
 }
 int Gamer::GetDefense () const
 {
-	return Defense;
+	return Defense[0];
 }
 void Gamer::SetDefense (int a)
 {
-	Defense = a;
+	Defense[0] = a;
 	return;
 }
 
-int Gamer::GetDefense2 () const
+int Gamer::GetDefenseAdvansed(int Num) const
 {
-	return Defense2;
+	if (Num >=1 && Num <=10 ) 
+		return Defense[Num-1];
+	else
+		return 0;
 }
-void Gamer::SetDefense2 (int a)
+
+void Gamer::SetDefenseAdvansed(int Num, int Def)
 {
-	Defense2 = a;
+	if (Num >= 1 && Num <= 10)
+		Defense[Num - 1] = Def;
 	return;
 }
 
-int Gamer::GetDefense3 () const
+int Gamer::GetBaseDefenseAdvansed(int Num) const
 {
-	return Defense3;
-}
-void Gamer::SetDefense3 (int a)
-{
-	Defense3 = a;
-	return;
+	if (Num >=1 && Num <= 10)
+		return BaseDefense[Num-1];
+	else 
+		return 0;
 }
 
-int Gamer::GetDefense4 () const
+void Gamer::SetBaseDefenseAdvansed(int Num, int Def)
 {
-	return Defense4;
-}
-void Gamer::SetDefense4 (int a)
-{
-	Defense4 = a;
-	return;
-}
-
-int Gamer::GetDefense5 () const
-{
-	return Defense5;
-}
-void Gamer::SetDefense5 (int a)
-{
-	Defense5 = a;
+	if (Num >= 1 && Num <= 10)
+		BaseDefense[Num - 1] = Def;
 	return;
 }
 
