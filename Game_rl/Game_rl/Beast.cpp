@@ -308,29 +308,29 @@ int Beast::GetID () const
 	int Beast::GetMaxAttack (int NumOfAttack) const
 	{
 		if (NumOfAttack >= 1 && NumOfAttack <= 3)
-			return MaxAttack[NumOfAttack];
+			return MaxAttack[NumOfAttack-1];
 	}
 	void Beast::SetMinAttack (int NumOfAttack, int a)
 	{
 		if (NumOfAttack >= 1 && NumOfAttack <= 3)
-			MinAttack[NumOfAttack] = a;
+			MinAttack[NumOfAttack-1] = a;
 		return;
 	}
 	int Beast::GetMinAttack (int NumOfAttack) const
 	{
 		if (NumOfAttack >= 1 && NumOfAttack <= 3)
-			return MinAttack[NumOfAttack];
+			return MinAttack[NumOfAttack-1];
 	}
 	void Beast::SetAttackType (int NumOfAttack,int a)
 	{
 		if (NumOfAttack >= 1 && NumOfAttack <= 3)
-			AttackType[NumOfAttack] = a;
+			AttackType[NumOfAttack-1] = a;
 		return;
 	}
 	int Beast::GetAttackType (int NumOfAttack) const
 	{
 		if (NumOfAttack >= 1 && NumOfAttack <= 3)
-			return AttackType[NumOfAttack];
+			return AttackType[NumOfAttack-1];
 	}
 	void Beast::SetAttackRange(int NumOfAttack, int Range)
 	{
@@ -341,7 +341,7 @@ int Beast::GetID () const
 	int Beast::GetAttackRange(int NumOfAttack) const
 	{
 		if (NumOfAttack >= 1 && NumOfAttack <= 3)
-			return AttackRange[NumOfAttack];
+			return AttackRange[NumOfAttack-1];
 	}
 	void Beast::SetDex (int a)
 	{

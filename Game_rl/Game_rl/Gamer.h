@@ -19,7 +19,7 @@ private:
 	int MaxEnergy;
 	int MaxAttack;
 	int MinAttack;
-	int Defense[10]; 
+	int Defense[10]{0,0,0,0,0,0,0,0,0,0};
 	int BaseDefense[10]{0,0,0,0,0,0,0,0,0,0};
 	int RegenHP;
 	int RegenEnergy;

@@ -106,6 +106,8 @@ void Items::ReadWeaponFromMap(map<string, string>& MyMap, Weapon & TempWeapon)
 	TempWeapon.RName = MapPtr->second;
 	MapPtr = MyMap.find("Type");
 	TempWeapon.Type = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Quality");
+	TempWeapon.Quality = atoi(MapPtr->second.c_str());
 	MapPtr = MyMap.find("Weight");
 	TempWeapon.Weight = atoi(MapPtr->second.c_str());
 	MapPtr = MyMap.find("MinDamage");
@@ -678,9 +680,26 @@ void Items::LoadWeapon (int Id, int AmmoId, int AmmoQuantity)
 }
 
 void Items::WeaponMakeOneShot (int Id)
+
 {
-	if (WeaponFromLevel[Id].Ammo.size() >0)
-		WeaponFromLevel[Id].Ammo.pop_back();
+	if (WeaponFromLevel[Id].NeedsAmmo == 1)
+	{
+		if (WeaponFromLevel[Id].Ammo.size() > 0)
+			WeaponFromLevel[Id].Ammo.pop_back();
+		return;
+	}
+	if (WeaponFromLevel[Id].NeedsEnergy == 1 && WeaponFromLevel[Id].Type == 11)
+	{
+		int AmmoID = WeaponFromLevel[Id].Ammo.back();
+		int AmmoQuality = WeaponFromLevel[AmmoID].Quality;
+		int EnPerUse = WeaponFromLevel[Id].EnergyPerUse;
+		if (EnPerUse <= AmmoQuality)
+		{
+			AmmoQuality -=  EnPerUse;
+			WeaponFromLevel[AmmoID].Quality = AmmoQuality;
+		}
+	}
+		
 }
 
 void Items::SetWeaponShotPerStep (int Id, int Shots)

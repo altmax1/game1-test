@@ -377,7 +377,7 @@ void Interface::PrintGamerHBar (Gamer *MyGamer)
 	int HP = MyGamer->GetHP();
 	int MaxHP = MyGamer->GetMaxHP();
 	int steps = (HP*100)/(MaxHP*100/20);
-	char *p = new char[4];
+	char *p = new char[12];
 	_itoa (HP,p,10);
 	terminal_color ("white");
 	terminal_print (44,2, "HP:");
@@ -434,7 +434,7 @@ void Interface::PrintGamerEBar (Gamer *MyGamer)
 void Interface::PrintOtherHIDs (Gamer *MyGamer)
 {
 	terminal_color ("white");
-	char *temp = new char [8];
+	char *temp = new char [10];
 	int Str = MyGamer->GetStr ();
 	_itoa (Str, temp, 10);
 	terminal_print (44,5, "Str:");
@@ -467,6 +467,13 @@ void Interface::PrintOtherHIDs (Gamer *MyGamer)
 			_itoa (Quantity, temp, 10);
 			RHEquipment = RHEquipment+" ("+temp+")";
 		}
+		if (MyItems->GetWeaponNeedsEnergy(RightHand) == 1)
+		{
+			int AmmoID = MyItems->GetWeaponNextAmmo(RightHand);
+			int MQuantity = MyItems->GetQuality(AmmoID);
+			_itoa(MQuantity, temp, 10);
+			RHEquipment = RHEquipment + " (" + temp + ")";
+		}
 	}
 	if (LeftHand < 0)
 		LHEquipment = "---";
@@ -479,6 +486,14 @@ void Interface::PrintOtherHIDs (Gamer *MyGamer)
 			_itoa (Quantity, temp, 10);
 			LHEquipment = LHEquipment+" ("+temp+")";
 		}
+		if (MyItems->GetWeaponNeedsEnergy(LeftHand) == 1)
+		{
+			int AmmoID = MyItems->GetWeaponNextAmmo(LeftHand);
+			int Quantity = MyItems->GetQuality(AmmoID);
+			_itoa(Quantity, temp, 10);
+			LHEquipment = LHEquipment + " (" + temp + ")";
+		}
+
 	}
 	
 	terminal_print (44,10, L"оп:");

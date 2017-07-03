@@ -15,13 +15,17 @@ MBeastX = Beast.CoordX
 MBeastY = Beast.CoordY
 
 distance = ((MGamerX-MBeastX)^2+(MGamerY-MBeastY)^2)^0.5 -- Расстояние между ГГ и мобом
-if distance < Beast.RangeOfSight then
+if distance <= Beast.RangeOfSight then
 	a = Game:LOS (Game.GamerX, Game.GamerY, Beast.CoordX, Beast.CoordY)
 	c = Game:LOS (Beast.CoordX, Beast.CoordY, Game.GamerX, Game.GamerY)
 	end
+	
+	AttackRange = math.max (Beast:GetAttackRange (1), Beast:GetAttackRange(2), Beast:GetAttackRange (3))
+
 
 if a == 1 or c == 1 then  -- если моб видит ГГ
-	if distance > 1.5 and distance<= Beast.RangeOfSight then
+	if distance > AttackRange+1.5  then
+
 	TempCoords = MGamerY*1000+MGamerX
 	Beast:ClearAllSteps()
 	Beast:SetNextStep (TempCoords)
@@ -55,8 +59,8 @@ if a == 1 or c == 1 then  -- если моб видит ГГ
 	
 	
 	
-	if distance < 1.5 then
-		BeastAttack (Game, Beast)
+	if distance <= AttackRange+1.5 then
+		BeastAttack (Game, Beast, distance)
 		return
 	end
 	
@@ -75,13 +79,61 @@ end
 Beast.MovePoints = 10
 end
 
-BeastAttack = function (Game, Beast)
+BeastAttack = function (Game, Beast, distance)
 	
 	TempCoords = MGamerY*1000+MGamerX
 	Beast:ClearAllSteps()
 	Beast:SetNextStep (TempCoords)
-	Game.GamerHP = Game.GamerHP-1
+	--Game.GamerHP = Game.GamerHP-1
 	Beast.MovePoints = 10 --обнуляем счётчик скорости
+	for i = 1,3 do
+		AttackType = Beast:GetAttackType (i)
+		if distance <= (Beast:GetAttackRange(i)+1.5) and AttackType ~= 0 then 
+		GamerDefense = Game:GetGamerDefenseAdvansed (AttackType)
+		MaxAttack = Beast:GetMaxAttack (i)
+		MinAttack = Beast:GetMinAttack (i)
+		AttackPower = MinAttack + Game:MyRandom (MaxAttack - MinAttack)
+		Damage = AttackPower - GamerDefense
+		if Damage < 0 then
+			Damage = 0
+		end	
+		if AttackType == 1 then
+		CType = "Физическим воздействием"
+		end
+		if AttackType == 2 then
+		CType = "огнём и высокой температурой"
+		end
+		if AttackType == 3 then
+		CType = "холодом"
+		end
+		if AttackType == 4 then
+		CType = "негативной энергией хаоса"
+		end
+		if AttackType == 5 then
+		CType = "ядом"
+		end
+		if AttackType == 6 then
+		CType = "электричеством"
+		end
+		if AttackType == 7 then
+		CType = "экстрасенсорными способностями"
+		end
+		if AttackType == 8 then
+		CType = "кислотой"
+		end
+		if AttackType == 9 then
+		CType = "агрессивной бактериологической и мутагенной средой"
+		end
+		if AttackType == 10 then
+		CType = "радиоактивным излучением"
+		end
+		Game.GamerHP = Game.GamerHP-Damage
+		Game:PrintMessage ("<<"..Beast.RName..">> нанес(ла) вам "..Damage.. " урона "..CType) 
+		Game:AddMessageToLog ("<<"..Beast.RName..">> нанес(ла) вам "..Damage.. " урона "..CType)
+		
+		end
+	end
+	
 end
 
 TryToMove = function (Game, Beast, DestX, DestY)

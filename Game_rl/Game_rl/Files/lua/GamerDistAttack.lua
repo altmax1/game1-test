@@ -35,7 +35,7 @@ if NeedsAmmo == 1 and AmmoQuantity == 0 then -- проверяем патрон�
 	return;
 end
 BulletId = Game:GetWeaponNextAmmo (WeaponID)
-if Game:GetWeaponBlastRadius (BulletId) >0 or Game:GetWeaponBlastRadius (WeaponID) then -- атака по площадям еcли BlastRadius >0
+if Game:GetWeaponBlastRadius (BulletId) >0 or Game:GetWeaponBlastRadius (WeaponID)>0 then -- атака по площадям еcли BlastRadius >0
 	
 	shots = Game:GetWeaponShotsByStep(WeaponID)
 	if OneShot == 1 then

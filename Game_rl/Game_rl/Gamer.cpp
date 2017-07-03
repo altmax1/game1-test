@@ -17,6 +17,12 @@ Gamer::Gamer (level *LevelPtr)
 	 Game *MyGame;
 	MyGame = Game::GetGameInstance();
 	MyItems = MyGame->GetItems();
+	for (int i = 0; i <= 9; i++)
+	{
+		Defense[i] = 0;
+		BaseDefense[i] = 0;
+			
+	}
 	
 }
 
@@ -377,7 +383,7 @@ void Gamer::ReloadWeapon ()
 		return;
 	if (MyItems->GetGlobalType(Id) !=0)
 		return;
-	if (MyItems->GetWeaponNeedsAmmo(Id) == 0)
+	if (MyItems->GetWeaponNeedsAmmo(Id) == 0 && MyItems->GetWeaponNeedsEnergy(Id) == 0)
 		return;
 	int CurrentAmmo = MyItems->GetWeaponCurrentAmmoQuantity(Id);
 	int AmmoQuantity = MyItems->GetWeaponAmmoQuantity(Id);
@@ -419,7 +425,7 @@ void Gamer::UnloadWeapon ()
 		return;
 	if (MyItems->GetGlobalType(Id) !=0)
 		return;
-	if (MyItems->GetWeaponNeedsAmmo(Id) == 0)
+	if (MyItems->GetWeaponNeedsAmmo(Id) == 0 && MyItems->GetWeaponNeedsEnergy(Id) == 0)
 		return;
 	int CurrentAmmo = MyItems->GetWeaponCurrentAmmoQuantity(Id);
 	for (int i = CurrentAmmo; i>0; i--)
