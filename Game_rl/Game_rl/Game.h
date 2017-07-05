@@ -7,6 +7,7 @@
 #include "Bestiary.h"
 #include "Equipment.h"
 #include "Log.h"
+//#include "LuaAdapter.h"
 
 #define SLOT_HEAD			1
 #define SLOT_BODY			2
@@ -50,11 +51,14 @@
 #define RADIATION			10
 
 
+class LuaAdapter;
 
 class Game
 {
 private:
 	static Game *MyGame;
+	lua_State *L;
+	LuaAdapter *Luaad;
 	level *MyLevel;
 	Gamer *MyGamer;
 	Items *MyItems;
@@ -66,6 +70,7 @@ private:
 	int FullLogging;
 	int PlayerMoved;
 	int Moves;
+	vector <level*> Levels;
 
 public:
 	static Game* GetGameInstance ();
@@ -92,6 +97,12 @@ public:
 	int GetMoves () {return Moves;};
 	int GetDeveloperMode () {return DeveloperMode;};
 	int GetFullLogging();
+	void CreateNewLevel();
+	void SetCurrentLevel(int NumOfLevel);
+	void Destructor();
+	lua_State* GetLuaState();
+	void MakeLuaadapter();
+	LuaAdapter* GetLuaadapter();
 
 	
 };

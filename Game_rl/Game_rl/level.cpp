@@ -14,7 +14,7 @@ level::level()
 
 level::~level()
 {
-	delete [] cells;
+	delete[] cells;
 	
 }
 int level::GetQuantityItemsOnCell (int x, int y)
@@ -603,4 +603,92 @@ void level::AddItem (int ID, int Quantity, int CoordX, int CoordY)
 	int coords = DecartToLinear(CoordX, CoordY);
 	cells[coords].AddItems (NewId, Stackable, Quantity);
 	return;
+}
+
+int level::GetLevelNum()
+{
+	return NumOfLevel;
+}
+
+void level::SetLevelNum(int Num)
+{
+	NumOfLevel = Num;
+	return;
+}
+
+int level::GetConnectorNum(int x, int y)
+{
+	int linear = DecartToLinear(x, y);
+	return cells[linear].GetConnectorNum();
+}
+
+void level::SetConnectorNum(int x, int y, int Num)
+{
+	int linear = DecartToLinear(x, y);
+	cells[linear].SetConnectorNum(Num);
+}
+
+void level::MakeNewConnector(int x1, int y1, int x2, int y2, int z2, int type, string Name, int Completed)
+{
+	Connector MyConnector;
+	MyConnector.StartX = x1;
+	MyConnector.StartY = y1;
+	MyConnector.DestinationX = x2;
+	MyConnector.DestinationZ = z2;
+	MyConnector.DestinationY = y2;
+	MyConnector.Type = type;
+	MyConnector.ConnectorName = Name;
+	MyConnector.ConnectorCompleted = Completed;
+	Connectors.push_back(MyConnector);
+
+}
+
+void level::SetConnectorDestX(int NumOfConnector, int X)
+{
+	Connectors[NumOfConnector].DestinationX = X;
+}
+
+void level::SetConnectorDestY(int NumOfConnector, int Y)
+{
+	Connectors[NumOfConnector].DestinationY = Y;
+}
+
+void level::SetConnectorDestZ(int NumOfConnector, int Z)
+{
+	Connectors[NumOfConnector].DestinationZ = Z;
+}
+
+void level::SetConnectorIsComleted(int NumOfConnector, int a)
+{
+	Connectors[NumOfConnector].ConnectorCompleted = a;
+}
+
+int level::GetConnectorDestX(int NumOfConnector)
+{
+	return Connectors[NumOfConnector].DestinationX;
+}
+
+int level::GetConnectorDestY(int NumOfConnector)
+{
+	return Connectors[NumOfConnector].DestinationY;
+}
+
+int level::GetConnectorDestZ(int NumOfConnector)
+{
+	return Connectors[NumOfConnector].DestinationZ;
+}
+
+int level::GetConnectorIsComleted(int NumOfConnector)
+{
+	return Connectors[NumOfConnector].ConnectorCompleted;
+}
+
+int level::GetConnectorType(int NumOfConnector)
+{
+	return Connectors[NumOfConnector].Type;
+}
+
+string level::GetConnectorName(int NumOfConnector)
+{
+	return Connectors[NumOfConnector].ConnectorName;
 }

@@ -3,6 +3,19 @@
 #include "bearlibfov.h"
 
 using namespace std;
+
+struct Connector {
+	int StartX;
+	int StartY; 
+	int DestinationX;
+	int DestinationY;
+	int DestinationZ;
+	int ConnectorCompleted; // 0 если уровень назначения не готов и 1 если полностью  оформлен
+	string ConnectorName;
+	int Type;
+
+};
+
 class level
 {
 private:
@@ -10,6 +23,8 @@ private:
 	int LevelHeight;
 	FOV_MAP    map;
 	set <int> CellsUnderEffects;
+	vector <Connector> Connectors;
+	int NumOfLevel;
 	
 public:
 	X_cell *cells;
@@ -55,5 +70,22 @@ public:
 	void EffectTimeDesc (int x, int y);
 	void LevelProcessEffects ();
 	void AddItem (int ID, int Quantity, int CoordX, int CoordY);
+	int GetLevelNum();
+	void SetLevelNum(int Num);
+	int GetConnectorNum(int x, int y);
+	void SetConnectorNum(int x, int y, int Num);
+	void MakeNewConnector(int x1, int y1, int x2, int y2, int z2, int type, string Name, int Completed);
+	void SetConnectorDestX(int NumOfConnector, int X);
+	void SetConnectorDestY(int NumOfConnector, int Y);
+	void SetConnectorDestZ(int NumOfConnector, int Z);
+	void SetConnectorIsComleted(int NumOfConnector, int a);
+	int GetConnectorDestX(int NumOfConnector);
+	int GetConnectorDestY(int NumOfConnector);
+	int GetConnectorDestZ(int NumOfConnector);
+	int GetConnectorIsComleted(int NumOfConnector);
+	int GetConnectorType(int NumOfConnector);
+	string GetConnectorName(int NumOfConnector);
+
+
 };
 

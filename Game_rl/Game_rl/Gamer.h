@@ -3,11 +3,13 @@
 #include "Inventory.h"
 #include "Equipment.h"
 #include "Items.h"
+
 //#include "Game.h"
 
 class Gamer
 {
 private:
+	//lua_State* L;
 	int CoordX;
 	int CoordY;
 	int HP;

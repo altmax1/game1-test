@@ -172,6 +172,7 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 			Game *MyGame;
 			MyGame = Game::GetGameInstance();
 			MyGame->GameInit();
+			delete MyGame;
 			return;		
 		}
 	

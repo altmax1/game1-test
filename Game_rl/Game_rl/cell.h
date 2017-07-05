@@ -28,6 +28,7 @@ private:
 	list <CellItems> items;
 	vector <Effect> Effects;
 	int creature;
+	int ConnectorNum;
 
 public:
 	X_cell(void);
@@ -61,5 +62,7 @@ public:
 	int GetEffectPowerByNum (int Num);
 	int GetEffectTimeByNum (int Num);
 	void EffectTimeDec ();
+	int GetConnectorNum();
+	void SetConnectorNum(int Num);
 };
 

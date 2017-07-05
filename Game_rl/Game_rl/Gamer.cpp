@@ -7,6 +7,9 @@
 Gamer::Gamer(void)
 {
 	MyInventory = new Inventory;
+	//L = luaL_newstate();
+	//luaL_openlibs(L);
+	
 }
 
 Gamer::Gamer (level *LevelPtr)
@@ -302,37 +305,37 @@ void Gamer::Move (int Direction)
 void Gamer::GamerMoveLua (int KeyCode)
 {
 	using namespace luabridge;
-
-	lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
-	LuaAdapter Luaad;
-	Luaad.LuaDesc(L);
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	lua_State *L = MyGame->GetLuaState();
+	LuaAdapter *Luaad = MyGame->GetLuaadapter();
 	luaL_dofile(L, ".\\Files\\lua\\GamerMove.lua");
     lua_pcall(L, 0, 0, 0);
     LuaRef GamerMove = getGlobal(L, "GamerMove");
 	  //
 	try {
-            GamerMove (Luaad, KeyCode);
+            GamerMove (*Luaad, KeyCode);
         }
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;
         }
+		
 }
 
 void Gamer::GamerDistantAttackLua ()
 {
 	using namespace luabridge;
 
-	lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
-	LuaAdapter Luaad;
-	Luaad.LuaDesc(L);
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	lua_State *L = MyGame->GetLuaState();
+	LuaAdapter *Luaad = MyGame->GetLuaadapter();
 	luaL_dofile(L, ".\\Files\\lua\\GamerDistAttack.lua");
     lua_pcall(L, 0, 0, 0);
     LuaRef GamerDistAttack = getGlobal(L, "GamerDistAttack");
 	  //
 	try {
-            GamerDistAttack (Luaad);
+            GamerDistAttack (*Luaad);
         }
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;

@@ -8,11 +8,13 @@
 X_cell::X_cell(void)
 {
 	creature = -1;
+	ConnectorNum = -1;
 }
 
 
 X_cell::~X_cell(void)
 {
+	
 }
 
 bool X_cell::IsEmpty()
@@ -357,4 +359,14 @@ void X_cell::EffectTimeDec ()
 	for (int i = 0; i < Effects.size(); i++)
 		Effects[i].Time--;
 	return;
+}
+
+int X_cell::GetConnectorNum()
+{
+	return ConnectorNum;
+}
+
+void X_cell::SetConnectorNum(int Num)
+{
+	ConnectorNum = Num;
 }

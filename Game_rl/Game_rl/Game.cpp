@@ -15,6 +15,10 @@ Game::Game(void)
 	PlayerMoved = 0;
 	Moves = 0;
 	FullLogging = 1;
+	
+	//Luaad = new LuaAdapter;
+	//Luaad->LuaDesc(L);
+
 }
 
 Game* Game::GetGameInstance ()
@@ -32,6 +36,7 @@ Game::~Game(void)
 {
 	delete MyLevel;
 	delete MyGamer;
+	MyGame = nullptr;
 }
 
 Items* Game::GetItems ()
@@ -61,8 +66,9 @@ Interface* Game::GetInterface ()
 
 void Game::MakeLevel (int Type, int Width, int Height, int Density)
 {
-	MyLevel = new level;
-	MyLevel->LevelCreate (Type, Width, Height, Density);
+	//MyLevel = new level;
+	//MyLevel->LevelCreate (Type, Width, Height, Density);
+	CreateNewLevel();
 }
 
 void Game::MakeGamer()
@@ -104,7 +110,7 @@ void Game::MakeInterface()
 void Game::MakeBestiary()
 {
 	MyBestiary = new Bestiary;
-	MyBestiary->MakeCreatures();
+	//MyBestiary->MakeCreatures();
 	return;
 }
 
@@ -128,10 +134,11 @@ void Game::GameInit()
 	int KeyCode;
 	MakeLog();
 	MakeItems();
+	MakeBestiary();
 	MakeLevel (1,128,40,40);
 	MakeGamer ();
 	MakeInterface();
-	MakeBestiary();
+	MakeLuaadapter();
 	MyLevel->PlaceItems();
 	MyLevel->LevelPrint();
 	MyGamer->GamerPlacing();
@@ -148,6 +155,7 @@ void Game::GameInit()
 	MyLevel->LevelProcessEffects();
 	MakeAIMove();
 	}
+	//Destructor();
 	return;
 		
 
@@ -177,4 +185,79 @@ void Game::ChangeGameMode ()
 int Game::GetFullLogging()
 {
 	return FullLogging;
+}
+
+void Game::CreateNewLevel()
+{
+	MyLevel = new level;
+	Levels.push_back(MyLevel);
+	MyLevel->SetLevelNum(Levels.size());
+	using namespace luabridge;
+
+	lua_State* L = luaL_newstate();
+	luaL_openlibs(L);
+	LuaAdapter Luaad;
+	Luaad.LuaDesc(L);
+	luaL_dofile(L, ".\\Files\\lua\\MakeLevel.lua");
+	lua_pcall(L, 0, 0, 0);
+	luabridge::LuaRef MakeLevel = luabridge::getGlobal(L, "MakeLevel");
+	//
+	try {
+		MakeLevel(Luaad, MyLevel);
+	}
+	catch (luabridge::LuaException const& e) {
+		std::cout << "LuaException: " << e.what() << std::endl;
+	}
+
+
+}
+
+void Game::SetCurrentLevel(int NumOfLevel)
+{
+	if (NumOfLevel > 0 && NumOfLevel <= Levels.size())
+		MyLevel = Levels[NumOfLevel - 1];
+}
+
+void Game::Destructor()
+{
+	delete MyGamer;
+	//delete MyInterface;
+	delete MyBestiary;
+	delete MyInterface;
+	delete MyItems;
+	/*vector <level*>::iterator p;
+	p = Levels.begin();
+	while (p!= Levels.end())
+	{
+		
+		delete *p;
+		p++;
+	}*/
+	/*for (int i = 0; i < Levels.size(); i++)
+	{
+		Levels[i]->~level();
+		delete Levels[i];
+	}*/
+	//delete MyLevel;
+
+	Levels.clear();
+	
+}
+
+lua_State* Game::GetLuaState()
+{
+	return L;
+}
+
+void Game::MakeLuaadapter()
+{
+	L = luaL_newstate();
+	luabridge:luaL_openlibs(L);
+	Luaad = new LuaAdapter;
+	Luaad->LuaDesc(L);
+}
+
+LuaAdapter*  Game::GetLuaadapter()
+{
+	return Luaad;
 }
