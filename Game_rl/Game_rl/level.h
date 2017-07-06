@@ -37,6 +37,7 @@ public:
 	int GetLevelWidth ();
 	int GetLevelHeight ();
 	char GetBaseType (int x, int y);
+	void SetBaseType(int x, int y, char BaseType);
 	unsigned char GetFlagsFOV (int x, int y);
 	void FovCellsInit ();
 	void FovProcess (int x, int y, int radius);
@@ -85,6 +86,8 @@ public:
 	int GetConnectorIsComleted(int NumOfConnector);
 	int GetConnectorType(int NumOfConnector);
 	string GetConnectorName(int NumOfConnector);
+	int GetTile(int x, int y);
+	void SetTile(int x, int y, int Tile);
 
 
 };

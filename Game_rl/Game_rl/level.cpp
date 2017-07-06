@@ -204,6 +204,11 @@ char level::GetBaseType (int x, int y)
 	int coord = DecartToLinear (x,y);
 	return cells[coord].GetBaseType();
 }
+void level::SetBaseType(int x, int y, char BaseType)
+{
+	int coord = DecartToLinear(x, y);
+	cells[coord].SetBaseType(BaseType);
+}
 unsigned char level::GetFlagsFOV (int x, int y)
 {
 	int coord = DecartToLinear (x,y);
@@ -640,7 +645,13 @@ void level::MakeNewConnector(int x1, int y1, int x2, int y2, int z2, int type, s
 	MyConnector.ConnectorName = Name;
 	MyConnector.ConnectorCompleted = Completed;
 	Connectors.push_back(MyConnector);
-
+	int ConNumber = Connectors.size() - 1;
+	SetConnectorNum(x1, y1, ConNumber);
+	SetOpaque(x1, y1, 1);
+	SetPassable(x1, y1, 1);
+	SetBaseType(x1, y1, '.');
+	SetTile(x1, y1, 1000);
+	
 }
 
 void level::SetConnectorDestX(int NumOfConnector, int X)
@@ -691,4 +702,17 @@ int level::GetConnectorType(int NumOfConnector)
 string level::GetConnectorName(int NumOfConnector)
 {
 	return Connectors[NumOfConnector].ConnectorName;
+}
+
+int level::GetTile(int x, int y)
+{
+	int coords = DecartToLinear(x, y);
+	return cells[coords].GetTile();
+
+}
+
+void level::SetTile(int x, int y, int Tile)
+{
+	int coords = DecartToLinear(x, y);
+	cells[coords].SetTile(Tile);
 }

@@ -64,5 +64,7 @@ public:
 	void EffectTimeDec ();
 	int GetConnectorNum();
 	void SetConnectorNum(int Num);
+	int GetTile();
+	void SetTile(int Tile);
 };
 

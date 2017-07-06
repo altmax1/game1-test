@@ -38,6 +38,7 @@ public:
 	void GamerMoveLua (int KeyCode);
 	void GamerDistantAttackLua ();
 	void GamerMakeCheatsLua();
+	void MoveToOtherLevelLua();
 	void GamerPrint ();
 	int GetCoordX () const;
 	int GetCoordY () const;
@@ -75,5 +76,6 @@ public:
 	int GetItemIdBySlot (int Slot);
 	void ReloadWeapon ();
 	void UnloadWeapon ();
+	void LevelUpdate();
 };
 

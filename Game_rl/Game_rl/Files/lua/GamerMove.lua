@@ -17,6 +17,7 @@ YES=1
 NO=0
 
 GamerMove = function (Game, KeyCode)
+Game:LevelRefresh();
 NextX = Game.GamerX
 NextY = Game.GamerY
 
@@ -50,6 +51,7 @@ elseif KeyCode == TK_KP_7 then
 	Game:SetGamerMoved()
 	end
 Passable = Game:GetCellPassable (NextX, NextY)
+
 if NextX >=0 and NextX < Game:GetLevelWidth () and NextY >= 0 and NextY < Game:GetLevelHeight () then
 	LegalCoords = 1
 else LegalCoords = 0

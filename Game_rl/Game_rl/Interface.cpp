@@ -202,6 +202,7 @@ void Interface::PrintFOV ()
 		for (int x =0; x < FOVWidth; x++)
 		{
 			c = Mylevel->GetBaseType(x+LeftUpX,y+LeftUpY);
+			int Tile = Mylevel->GetTile(x + LeftUpX, y + LeftUpY);
 			if ((Mylevel->GetFlagsFOV(x+LeftUpX,y+LeftUpY))&FOV_CELL_VISIBLE)
 				terminal_color ("white");
 			else if ((Mylevel->GetFlagsFOV(x+LeftUpX,y+LeftUpY))&FOV_CELL_VISITED) 
@@ -209,6 +210,11 @@ void Interface::PrintFOV ()
 			else
 				terminal_color ("black");
 			terminal_put (x+1,y+1,c);
+			if (Tile >= 0)
+			{
+				if (Tile == 1000)
+					terminal_put(x + 1, y + 1, 0x00a9);
+			}
 			if ((x+LeftUpX == GamerCoordX) && (y+LeftUpY == GamerCoordY ))
 			{
 				terminal_layer (10);

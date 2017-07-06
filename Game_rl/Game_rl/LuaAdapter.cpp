@@ -3,6 +3,13 @@
 
 using namespace std;
 using namespace luabridge;
+int LuaAdapter::GetConnectorType(int ConnectorNum)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorType(ConnectorNum);
+}
 LuaAdapter::LuaAdapter(void)
 {
 	MyGame = Game::GetGameInstance();
@@ -132,6 +139,25 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("GetWeaponNeedsEnergy", &LuaAdapter::GetWeaponNeedsEnergy)
 			.addFunction ("GetWeaponEnergyPerUse", &LuaAdapter::GetWeaponEnergyPerUse)
 			.addFunction ("GetWeaponFacultEnergy", &LuaAdapter::GetWeaponEnergyFacultative)
+			.addFunction ("LevelRefresh", &LuaAdapter::LevelRefresh)
+			.addFunction ("CreateNewLevel", &LuaAdapter::CreateNewLevel)
+			.addFunction ("SetCurrentLevel", &LuaAdapter::SetCurrentLevel)
+			.addFunction("MakeNewConnector", &LuaAdapter::MakeNewConnector)
+			.addFunction("GetLevelNum", &LuaAdapter::GetLevelNum)
+			.addFunction("GetConnectorNum", &LuaAdapter::GetConnectorNum)
+			.addFunction("SetConnectorNum", &LuaAdapter::SetConnectorNum)
+			.addFunction("MakeNewConnector", &LuaAdapter::MakeNewConnector)
+			.addFunction("SetConnectorDestX", &LuaAdapter::SetConnectorDestX)
+			.addFunction("SetConnectorDestY", &LuaAdapter::SetConnectorDestY)
+			.addFunction("SetConnectorDestZ", &LuaAdapter::SetConnectorDestZ)
+			.addFunction("GetConnectorDestX", &LuaAdapter::GetConnectorDestX)
+			.addFunction("GetConnectorDestY", &LuaAdapter::GetConnectorDestY)
+			.addFunction("GetConnectorDestZ", &LuaAdapter::GetConnectorDestZ)
+			.addFunction("SetConnectorIsCompleted", &LuaAdapter::SetConnectorComplete)
+			.addFunction("GetConnectorIsCompleted", &LuaAdapter::GetConnectorComplete)
+			//.addFunction ("GetConnectorIsCompleted", &LuaAdapter::GetConnectorComplete)
+			.addFunction("GetConnectorType", &LuaAdapter::GetConnectorType)
+			.addFunction("GetConnectorName", &LuaAdapter::GetConnectorName)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -251,6 +277,10 @@ int LuaAdapter::PathFind (int StartX, int StartY, int EndX, int EndY)
 
 int LuaAdapter::GetCellPassable (int x, int y)
 {
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	
 	return MyLevel->GetPassable (x,y);
 }
 
@@ -859,6 +889,128 @@ int LuaAdapter::GetWeaponEnergyPerUse(int ID)
 int LuaAdapter::GetWeaponEnergyFacultative(int ID)
 {
 	return MyItems->GetWeaponFaccultativeEnergy(ID);
+}
+
+void LuaAdapter::LevelRefresh()
+{
+	MyLevel = MyGame->GetLevel();
+	MyInterface->GetGamerAndLevel();
+	MyGamer->LevelUpdate();
+	
+}
+
+void LuaAdapter::CreateNewLevel()
+{
+	MyGame->CreateNewLevel();
+}
+
+void LuaAdapter::SetCurrentLevel(int NumOfLevel)
+{
+	MyGame->SetCurrentLevel(NumOfLevel);
+}
+
+void LuaAdapter::MakeNewConnector(int x1, int y1, int x2, int y2, int z2, int Type, string Name, int IsCompleted)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->MakeNewConnector(x1, y1, x2, y2, z2, Type, Name, IsCompleted);
+}
+
+int LuaAdapter::GetLevelNum()
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetLevelNum();
+}
+
+int LuaAdapter::GetConnectorNum(int x, int y)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorNum(x,y);
+}
+
+void LuaAdapter::SetConnectorNum(int x, int y, int Num)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetConnectorNum(x, y, Num);
+}
+
+void LuaAdapter::SetConnectorDestX(int ConnectorNum, int X)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetConnectorDestX(ConnectorNum, X);
+}
+
+void LuaAdapter::SetConnectorDestY(int ConnectorNum, int Y)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetConnectorDestY(ConnectorNum, Y);
+}
+
+void LuaAdapter::SetConnectorDestZ(int ConnectorNum, int Z)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetConnectorDestZ(ConnectorNum, Z);
+}
+
+int LuaAdapter::GetConnectorDestX(int ConnectorNum)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorDestX(ConnectorNum);
+}
+
+int LuaAdapter::GetConnectorDestY(int ConnectorNum)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorDestY(ConnectorNum);
+}
+
+int LuaAdapter::GetConnectorDestZ(int ConnectorNum)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorDestZ(ConnectorNum);
+}
+
+void LuaAdapter::SetConnectorComplete(int ConnectorNum, int State)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetConnectorIsComleted(ConnectorNum, State);
+}
+
+int LuaAdapter::GetConnectorComplete(int ConnectorNum)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorIsComleted(ConnectorNum);
+}
+
+string LuaAdapter::GetConnectorName(int ConnectorNum)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetConnectorName(ConnectorNum);
 }
 
 int LuaAdapter::GetInputNumber ()

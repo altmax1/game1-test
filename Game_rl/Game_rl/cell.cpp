@@ -9,6 +9,7 @@ X_cell::X_cell(void)
 {
 	creature = -1;
 	ConnectorNum = -1;
+	tile = -1;
 }
 
 
@@ -369,4 +370,14 @@ int X_cell::GetConnectorNum()
 void X_cell::SetConnectorNum(int Num)
 {
 	ConnectorNum = Num;
+}
+
+int X_cell::GetTile()
+{
+	return tile;
+}
+
+void X_cell::SetTile(int Tile)
+{
+	tile = Tile;
 }

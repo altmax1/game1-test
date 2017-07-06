@@ -146,7 +146,24 @@ public:
 	int GetWeaponNeedsEnergy(int ID);
 	int GetWeaponEnergyPerUse(int ID);
 	int GetWeaponEnergyFacultative(int ID);
-	LuaAdapter(void);
+	void LevelRefresh();
+	void CreateNewLevel();
+	void SetCurrentLevel(int NumOfLevel);
+	void MakeNewConnector(int x1, int y1, int x2, int y2, int z2, int Type, string Name, int IsCompleted);
+	int GetLevelNum();
+	int GetConnectorNum(int x, int y);
+	void SetConnectorNum(int x, int y, int Num);
+	void SetConnectorDestX(int ConnectorNum, int X);
+	void SetConnectorDestY(int ConnectorNum, int Y);
+	void SetConnectorDestZ(int ConnectorNum, int Z);
+	int GetConnectorDestX(int ConnectorNum);
+	int GetConnectorDestY(int ConnectorNum);
+	int GetConnectorDestZ(int ConnectorNum);
+	void SetConnectorComplete(int ConnectorNum, int State);
+	int GetConnectorComplete(int ConnectorNum);
+	string GetConnectorName(int ConnectorNum);
+	int GetConnectorType(int ConnectorNum);
+		LuaAdapter(void);
 	~LuaAdapter(void);
 };
 

@@ -255,6 +255,13 @@ void Gamer::Move (int Direction)
 		MyGame = Game::GetGameInstance();
 		MyGame->ChangeGameMode();
 	}
+	if (Direction == TK_PERIOD && terminal_check(TK_SHIFT))
+	{
+		if (MyLevel->GetTile(CoordX, CoordY) == 1000)
+		{
+			MoveToOtherLevelLua();
+		}
+	}
 	if (Direction == TK_GRAVE && MyGame->GetDeveloperMode() ==1)
 	{
 		GamerMakeCheatsLua ();
@@ -306,7 +313,9 @@ void Gamer::GamerMoveLua (int KeyCode)
 {
 	using namespace luabridge;
 	Game *MyGame;
+	level *MyLevel;
 	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
 	lua_State *L = MyGame->GetLuaState();
 	LuaAdapter *Luaad = MyGame->GetLuaadapter();
 	luaL_dofile(L, ".\\Files\\lua\\GamerMove.lua");
@@ -441,6 +450,13 @@ void Gamer::UnloadWeapon ()
 	return;
 }
 
+void Gamer::LevelUpdate()
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+}
+
 void Gamer::GamerMakeCheatsLua ()
 {
 	using namespace luabridge;
@@ -459,4 +475,26 @@ void Gamer::GamerMakeCheatsLua ()
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;
         }
+}
+
+void Gamer::MoveToOtherLevelLua()
+{
+	using namespace luabridge;
+	Game *MyGame;
+	level *MyLevel;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	lua_State *L = MyGame->GetLuaState();
+	LuaAdapter *Luaad = MyGame->GetLuaadapter();
+	luaL_dofile(L, ".\\Files\\lua\\GamerMoveToLevel.lua");
+	lua_pcall(L, 0, 0, 0);
+	LuaRef GamerMoveToLevel = getGlobal(L, "GamerMoveToLevel");
+	//
+	try {
+		GamerMoveToLevel(*Luaad, MyLevel);
+	}
+	catch (luabridge::LuaException const& e) {
+		std::cout << "LuaException: " << e.what() << std::endl;
+	}
+
 }
