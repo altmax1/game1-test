@@ -4,6 +4,7 @@
 #include "X_MainMenu.h"
 #include "Dungeon.h"
 #include "Game.h"
+#include "MiniGame.h"
 
 
 using namespace std;
@@ -167,6 +168,16 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 			}
 		}
 
+		if (MenuState == 3)
+
+		{
+			MiniGame *MyMiniGame;
+			MyMiniGame = new MiniGame;
+			MyMiniGame->MiniGameInit();
+			//MyMiniGame->CalculateAllVariants();
+			delete MyMiniGame;
+
+		}
 		if (MenuState == 0)
 		{
 			Game *MyGame;
