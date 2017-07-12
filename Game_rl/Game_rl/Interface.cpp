@@ -212,8 +212,19 @@ void Interface::PrintFOV ()
 			terminal_put (x+1,y+1,c);
 			if (Tile >= 0)
 			{
+				if ((Mylevel->GetFlagsFOV(x + LeftUpX, y + LeftUpY))&FOV_CELL_VISIBLE)
+					terminal_color(0xffbf9e30); //желтый светлый
+				else if ((Mylevel->GetFlagsFOV(x + LeftUpX, y + LeftUpY))&FOV_CELL_VISITED)
+					terminal_color(0xafbf9e30); //желтый темный
+				else
+					terminal_color("black");
+
 				if (Tile == 1000)
 					terminal_put(x + 1, y + 1, 0x00a9);
+				if (Tile == 2000)
+					terminal_put(x + 1, y + 1, 0x00fb);
+				if (Tile == 2001)
+					terminal_put(x + 1, y + 1, 0x00fc);
 			}
 			if ((x+LeftUpX == GamerCoordX) && (y+LeftUpY == GamerCoordY ))
 			{

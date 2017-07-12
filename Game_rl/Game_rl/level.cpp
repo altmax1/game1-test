@@ -716,3 +716,33 @@ void level::SetTile(int x, int y, int Tile)
 	int coords = DecartToLinear(x, y);
 	cells[coords].SetTile(Tile);
 }
+
+void level::AddRoom(LevelRoom MyRoom)
+{
+	Rooms.push_back(MyRoom);
+}
+
+int level::GetRoomsCount()
+{
+	return Rooms.size();
+}
+
+int level::GetRooomLeftX(int Num)
+{
+	return Rooms.at(Num).LeftX;
+}
+
+int level::GetRoomUpY(int Num)
+{
+	return Rooms.at(Num).UpY;
+}
+
+int level::GetRoomWidth(int Num)
+{
+	return Rooms.at(Num).Width;
+}
+
+int level::GetRoomHeight(int Num)
+{
+	return Rooms.at(Num).Height;
+}

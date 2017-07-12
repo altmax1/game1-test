@@ -131,7 +131,7 @@ void Inventory::PutItemInInventory ()
 	CoordY = MyGamer->GetCoordY();
 	int StackQuantity;
 	StackQuantity = MyLevel->GetQuantityItemsOnCell(CoordX, CoordY);
-	if (StackQuantity == 1)
+	/*if (StackQuantity == 1)
 	{	
 		int ID = MyLevel->GetItemIDByCell(CoordX, CoordY,0);
 		bool Stackable = MyLevel->GetStackableByCell (CoordX, CoordY,0);
@@ -141,8 +141,8 @@ void Inventory::PutItemInInventory ()
 		PutItemInVector (ID, Stackable, Nums);
 		MyLevel->RemoveItemFromCell(CoordX, CoordY,0,Nums);
 			
-	}
-	if (StackQuantity >1)
+	}*/
+	if (StackQuantity >=1)
 	{
 		int itemnum = MyLevel->SelectItem (CoordX, CoordY);
 		if (itemnum == 1000000)

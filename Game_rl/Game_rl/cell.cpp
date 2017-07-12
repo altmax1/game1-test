@@ -175,7 +175,10 @@ int X_cell::SelectItem ()
 	while (1)
 	{
 		terminal_clear();
-		terminal_wprint (10, 7, L"Выберите позицию");
+		if (items.size()>1)
+			terminal_wprint (10, 7, L"Выберите позицию, которую хотите поднять:");
+		if (items.size()==1)
+			terminal_wprint(10, 7, L"Вы хотите это поднять? (ESC для выхода, ENTER - поднять):");
 		PrintItems ();
 		PrintBorder (state);
 		terminal_refresh();

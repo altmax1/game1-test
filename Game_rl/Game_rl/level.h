@@ -16,6 +16,13 @@ struct Connector {
 
 };
 
+struct LevelRoom {
+	int LeftX;
+	int UpY;
+	int Width;
+	int Height;
+};
+
 class level
 {
 private:
@@ -24,6 +31,7 @@ private:
 	FOV_MAP    map;
 	set <int> CellsUnderEffects;
 	vector <Connector> Connectors;
+	vector <LevelRoom> Rooms;
 	int NumOfLevel;
 	
 public:
@@ -88,6 +96,12 @@ public:
 	string GetConnectorName(int NumOfConnector);
 	int GetTile(int x, int y);
 	void SetTile(int x, int y, int Tile);
+	void AddRoom(LevelRoom MyRoom);
+	int GetRoomsCount();
+	int GetRooomLeftX(int Num);
+	int GetRoomUpY(int Num);
+	int GetRoomWidth(int Num);
+	int GetRoomHeight(int Num);
 
 
 };

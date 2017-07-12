@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Dungeon.h"
 #include "level.h"
+#include "Game.h"
 using namespace std;
 
 
@@ -106,6 +107,10 @@ void DungeonType1::DetectCohesion ()
 
 void DungeonType1::MakeRooms ()
 {
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	level *MyLevel;
+	MyLevel = MyGame->GetLevel();
 	for (int i=0; i<MaxRooms; i++)
 	{
 		room TempRoom;
@@ -119,8 +124,13 @@ void DungeonType1::MakeRooms ()
 			TempRoom.LeftUpCornerY = 1;
 		TempRoom.RoomId = i;
 		TempRoom.RoomFlag = 0;
-		Rooms.push_back (TempRoom);		
-	
+		Rooms.push_back (TempRoom);	
+		LevelRoom Temp2;
+		Temp2.LeftX = TempRoom.LeftUpCornerX;
+		Temp2.UpY = TempRoom.LeftUpCornerY;
+		Temp2.Width = TempRoom.RoomWidth;
+		Temp2.Height = TempRoom.RoomHeight;
+		MyLevel->AddRoom(Temp2);
 	}
 	return;
 

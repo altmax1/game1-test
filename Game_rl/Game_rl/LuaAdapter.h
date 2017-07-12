@@ -12,6 +12,8 @@ private:
 	Log *MyLog;
 	
 public:
+	LuaAdapter(void);
+	~LuaAdapter(void);
 	void LuaDesc (lua_State *L);
 	char GetTileBaseType (int x, int y) const;
 	int GetLevelWidth();
@@ -163,7 +165,13 @@ public:
 	int GetConnectorComplete(int ConnectorNum);
 	string GetConnectorName(int ConnectorNum);
 	int GetConnectorType(int ConnectorNum);
-		LuaAdapter(void);
-	~LuaAdapter(void);
+	int GetLevelNumOfRooms();
+	int GetRoomLefX(int Num);
+	int GetRoomUpY(int Num);
+	int GetRoomWidth(int Num);
+	int GetRoomHeight(int Num);
+	int GetLevelTile(int x, int y);
+	void SetLevelTile(int x, int y, int Tile);
+	
 };
 

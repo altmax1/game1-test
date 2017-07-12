@@ -10,6 +10,55 @@ int LuaAdapter::GetConnectorType(int ConnectorNum)
 	MyLevel = MyGame->GetLevel();
 	return MyLevel->GetConnectorType(ConnectorNum);
 }
+int LuaAdapter::GetLevelNumOfRooms()
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetRoomsCount();
+}
+int LuaAdapter::GetRoomLefX(int Num)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetRooomLeftX(Num);
+}
+int LuaAdapter::GetRoomUpY(int Num)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetRoomUpY(Num);
+}
+int LuaAdapter::GetRoomWidth(int Num)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetRoomWidth(Num);
+}
+int LuaAdapter::GetRoomHeight(int Num)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetRoomHeight(Num);
+}
+int LuaAdapter::GetLevelTile(int x, int y)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetTile(x, y);
+}
+void LuaAdapter::SetLevelTile(int x, int y, int Tile)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetTile(x, y, Tile);
+}
 LuaAdapter::LuaAdapter(void)
 {
 	MyGame = Game::GetGameInstance();
@@ -158,6 +207,13 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			//.addFunction ("GetConnectorIsCompleted", &LuaAdapter::GetConnectorComplete)
 			.addFunction("GetConnectorType", &LuaAdapter::GetConnectorType)
 			.addFunction("GetConnectorName", &LuaAdapter::GetConnectorName)
+			.addFunction("GetLevelNumOfRooms", &LuaAdapter::GetLevelNumOfRooms)
+			.addFunction ("GetRoomLeftX", &LuaAdapter::GetRoomLefX)
+			.addFunction("GetRoomUpY", &LuaAdapter::GetRoomUpY)
+			.addFunction("GetRoomWidth", &LuaAdapter::GetRoomWidth)
+			.addFunction("GetRoomHeight", &LuaAdapter::GetRoomHeight)
+			.addFunction("GetLevelTile", &LuaAdapter::GetLevelTile)
+			.addFunction("SetLevelTile", &LuaAdapter::SetLevelTile)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)

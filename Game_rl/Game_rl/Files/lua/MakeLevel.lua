@@ -3,6 +3,7 @@ MakeLevel = function (Game, Level)
 	Level:MakeDungeon (1,128,40,40)
 	--MakeCreatures (Game)
 	MakeConnector (Level, Game)
+	MakeDepots(Game)
 	--end
 end
 
@@ -40,4 +41,24 @@ for x = 1, levelwidth do
 	end
 end
 
+end
+
+MakeDepots = function (Game)
+NumOfRooms = Game:GetLevelNumOfRooms();
+for i = 1,20 do
+	Room = Game:MyRandom (NumOfRooms)
+	LeftX = Game:GetRoomLeftX(Room)
+	UpY = Game:GetRoomUpY(Room)
+	RoomWidth = Game:GetRoomWidth(Room)
+	RoomHeight = Game:GetRoomHeight(Room)
+	CoordX = LeftX + Game:MyRandom (RoomWidth)
+	CoordY = UpY+Game:MyRandom(RoomHeight)
+
+	repeat
+		CoordX = CoordX+1
+	until 
+		Game:GetTileBaseType (CoordX, CoordY) == '#'
+	Game:SetLevelTile (CoordX, CoordY, 2000)
+
+end
 end
