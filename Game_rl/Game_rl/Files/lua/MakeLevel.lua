@@ -54,11 +54,38 @@ for i = 1,20 do
 	CoordX = LeftX + Game:MyRandom (RoomWidth)
 	CoordY = UpY+Game:MyRandom(RoomHeight)
 
-	repeat
-		CoordX = CoordX+1
-	until 
-		Game:GetTileBaseType (CoordX, CoordY) == '#'
-	Game:SetLevelTile (CoordX, CoordY, 2000)
-
+	direction = Game:MyRandom (4)
+	if direction == 0 then
+		repeat
+			CoordX = CoordX+1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2000)
+	end
+	
+	if direction == 1 then
+		repeat
+			CoordX = CoordX-1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2000)
+	end
+	
+	if direction == 2 then
+		repeat
+			CoordY = CoordY+1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2000)
+	end
+	
+	if direction == 3 then
+		repeat
+			CoordY = CoordY-1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2000)
+	end
+	Game:AddItemOnLevel(1,1,CoordX,CoordY)
 end
 end

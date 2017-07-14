@@ -63,3 +63,35 @@ public:
 	void ReturnDungeon (level *MyLevel);
 
 };
+
+struct MyCell {
+	int pasable;
+	int visited;
+};
+
+class DungeonType2 //: private Dungeon
+{
+private:
+	int MapWidth;
+	int MapHeight;
+	vector <int> cells;
+	vector <MyCell> MyCells;
+	int PassableCells; //проходимые клетки
+	vector <set <int>> Rooms;
+
+public:
+	DungeonType2(void);
+	~DungeonType2(void);
+	void InitDungeon ();
+	void FillArrayRandom();
+	void CellsProcessing();
+	void Averaging(int x, int y);
+	int DecToLin(int x, int y);
+	void PrintDungeon();
+	void ConvertToMyCell();
+	void FindRooms();
+	void DrawLine(int x1, int y1, int x2, int y2);
+	void ConnectRooms();
+	
+
+};

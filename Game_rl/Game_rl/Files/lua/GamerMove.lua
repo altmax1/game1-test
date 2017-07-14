@@ -98,7 +98,13 @@ if CreatureNum >= 0 then
 	
 	
 	end
+if CreatureNum < 0 then
+	Tile = Game:GetLevelTile (NextX, NextY)
+	if Tile == 2000 then
+		Game:PutItemInInventoryFromCell(NextX, NextY)
+	end
 
+end
 	
 end
 

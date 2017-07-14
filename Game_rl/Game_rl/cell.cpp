@@ -150,8 +150,8 @@ void X_cell::PrintItems ()
 		string stemp;
 		stemp = MyItems->GetNameById (p->ID);
 		terminal_print (startX, startY, temp);
-		terminal_print (startX+3, startY, stemp.c_str());
-		terminal_print (startX+20, startY, tempnums);
+		terminal_print_ext (startX+3, startY,50,2,TK_ALIGN_DEFAULT, stemp.c_str());
+		terminal_print (startX+55, startY, tempnums);
 		p++;
 		startY++; startY++;
 		iter++;

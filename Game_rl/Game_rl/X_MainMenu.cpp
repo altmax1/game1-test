@@ -155,12 +155,14 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 	{
 		if (MenuState == 4)
 		{
-			Dungeon *ptr;
-			ptr = Dungeon::MakeDungeon (1, 80, 25, 30);
+			/*Dungeon *ptr;
+			ptr = Dungeon::MakeDungeon (1, 80, 25, 30);*/
+			DungeonType2 MD;
 			while (1)
 			{	
 				int i = clock ();
-				ptr->InitDungeon();
+				//ptr->InitDungeon();
+				MD.InitDungeon();
 				terminal_clear;
 				//cout << "main cikle  "<< clock () -i<<endl;
 				if (terminal_read () == TK_ESCAPE)

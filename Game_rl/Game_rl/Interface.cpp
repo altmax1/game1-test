@@ -236,7 +236,8 @@ void Interface::PrintFOV ()
 			}
 			ItemCounter = Mylevel->GetQuantityItemsOnCell (x+LeftUpX,y+LeftUpY);
 			if (ItemCounter >0) // рисуем вещи
-				PrintItems (x+LeftUpX,y+LeftUpY, x+1, y+1);
+				if (Tile != 2000 && Tile !=  2001)
+					PrintItems (x+LeftUpX,y+LeftUpY, x+1, y+1);
 			if ((Mylevel->GetCreature(x+LeftUpX,y+LeftUpY))>=0) // рисуем мобов
 			{
 				terminal_layer (0);
@@ -312,8 +313,16 @@ int Interface::SelectTarget ()
 
 void Interface::SetMessage (string CurrentMessage)
 {
+	Message2.clear();
 	MessageExist = 1;
 	Message = CurrentMessage;
+}
+
+void Interface::SetMessage(wstring CurrentMessage)
+{
+	Message.clear();
+	MessageExist = 1;
+	Message2 = CurrentMessage;
 }
 
 void Interface::PrintMessage ()
@@ -322,6 +331,7 @@ void Interface::PrintMessage ()
 	{
 		MessageExist = 0;
 		terminal_print_ext (2,30,40,5,TK_ALIGN_DEFAULT, Message.c_str());
+		terminal_print_ext(2, 30, 40, 5, TK_ALIGN_DEFAULT, Message2.c_str());
 		
 	}
 }
@@ -332,6 +342,13 @@ void Interface::PrintMessageNow (string Message)
 	terminal_print_ext (2,30,40,5,TK_ALIGN_DEFAULT, Message.c_str());
 	terminal_refresh();
 
+}
+
+void Interface::PrintMessageNow(wstring Message)
+{
+	terminal_clear_area(2, 30, 40, 5);
+	terminal_print_ext(2, 30, 40, 5, TK_ALIGN_DEFAULT, Message.c_str());
+	terminal_refresh();
 }
 
 void Interface::PrintCreature (int x, int y, int LevelX, int LevelY, int NumOfCreature)

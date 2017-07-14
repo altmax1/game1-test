@@ -59,6 +59,13 @@ void LuaAdapter::SetLevelTile(int x, int y, int Tile)
 	MyLevel = MyGame->GetLevel();
 	MyLevel->SetTile(x, y, Tile);
 }
+void LuaAdapter::PutItemInInventory(int x, int y)
+{
+	MyGame = Game::GetGameInstance();
+	MyGamer = MyGame->GetGamer();
+	MyInventory = MyGamer->GetInventory();
+	MyInventory->PutItemInInventory(x, y);
+}
 LuaAdapter::LuaAdapter(void)
 {
 	MyGame = Game::GetGameInstance();
@@ -68,6 +75,7 @@ LuaAdapter::LuaAdapter(void)
 	MyItems = MyGame->GetItems();
 	MyInterface = MyGame->GetInterface();
 	MyLog = MyGame->GetLog();
+	
 }
 
 
@@ -214,6 +222,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction("GetRoomHeight", &LuaAdapter::GetRoomHeight)
 			.addFunction("GetLevelTile", &LuaAdapter::GetLevelTile)
 			.addFunction("SetLevelTile", &LuaAdapter::SetLevelTile)
+			.addFunction("PutItemInInventoryFromCell", &LuaAdapter::PutItemInInventory)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)
@@ -857,6 +866,7 @@ int LuaAdapter::CheckItemID (int ID)
 
 void LuaAdapter::AddItemOnLevel (int ID, int Quantity, int x, int y)
 {
+	MyLevel = MyGame->GetLevel();
 	MyLevel->AddItem (ID, Quantity,x,y);
 	return;
 }

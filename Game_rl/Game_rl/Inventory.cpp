@@ -66,14 +66,23 @@ void Inventory::PrintItems()
 			if (MyItems->GetWeaponNeedsAmmo(p->ID) == 1)
 			{
 				int NumAmmo = MyItems->GetWeaponCurrentAmmoQuantity (p->ID);
-				char *temp3 = new char [4];
+				char *temp3 = new char [8];
 				_itoa (NumAmmo, temp3, 10);
 				stemp = stemp +'('+temp3+')';
 				delete [] temp3;
 			}
+			if (MyItems->GetWeaponIsAmmo(p->ID) == 1 && MyItems->GetTypeById(p->ID) == 22)
+			{
+				int Quality = MyItems->GetQuality(p->ID);
+				char *temp4 = new char[8];
+				_itoa(Quality, temp4, 10);
+				stemp = stemp + '(' + temp4 + "%)";
+				delete[] temp4;
+
+			}
 		terminal_print (startX, startY, temp);
-		terminal_print (startX+3, startY, stemp.c_str());
-		terminal_print (startX+30, startY, tempnums);
+		terminal_print_ext(startX + 3, startY, 50, 2, TK_ALIGN_DEFAULT, stemp.c_str());
+		terminal_print (startX+55, startY, tempnums);
 		p++;
 		startY++; startY++;
 		iter++;
@@ -118,17 +127,29 @@ void Inventory::PutItemInVector (int ID, bool Stackable, int nums)
 	return;
 }
 
-void Inventory::PutItemInInventory ()
-{
+void Inventory::PutItemInInventory (int x, int y) // если не передаются координаты или меньше 0 - то координаты игрока
+{													// используются
 	Game *MyGame;
 	MyGame = Game::GetGameInstance();
 	level *MyLevel;
 	MyLevel = MyGame->GetLevel();
 	Gamer *MyGamer;
 	MyGamer = MyGame->GetGamer();
+	Interface *MyInterface;
+	MyInterface = MyGame->GetInterface();
 	int CoordX, CoordY;
-	CoordX = MyGamer->GetCoordX();
-	CoordY = MyGamer->GetCoordY();
+
+	if (x < 0 || y < 0)
+	{
+		CoordX = MyGamer->GetCoordX();
+		CoordY = MyGamer->GetCoordY();
+	}
+	else
+	{
+		CoordX = x;
+		CoordY = y;
+
+	}
 	int StackQuantity;
 	StackQuantity = MyLevel->GetQuantityItemsOnCell(CoordX, CoordY);
 	/*if (StackQuantity == 1)
@@ -156,6 +177,17 @@ void Inventory::PutItemInInventory ()
 		bool Stackable = MyLevel->GetStackableByCell (CoordX, CoordY,itemnum);
 		PutItemInVector (ID, Stackable, ItemQuantity);
 		MyLevel->RemoveItemFromCell(CoordX, CoordY,itemnum, ItemQuantity);
+	}
+
+	if (StackQuantity == 0)
+	{
+		
+		wstring Message;
+		if (x < 0 || y < 0)
+			Message = L"Здесь ничего нет!!!";
+		else
+			Message = L"Там ничего нет.";
+		MyInterface->SetMessage(Message);
 	}
 
 	return;	

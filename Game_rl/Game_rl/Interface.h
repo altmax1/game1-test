@@ -22,6 +22,7 @@ private:
 
 	int MessageExist;
 	string Message;
+	wstring Message2;
 
 public:
 	void ReadIniFile ();
@@ -36,8 +37,10 @@ public:
 	int SelectTarget ();
 	//void PrintField ( int x, int y); вынести или нет в отдельный класс?
 	void SetMessage (string Message);
+	void SetMessage(wstring Message);
 	void PrintMessage ();
 	void PrintMessageNow (string Message);
+	void PrintMessageNow(wstring Message);
 	void PrintCreature (int x, int y,int LevelX, int LevelY, int NumOfCreature); 
 	void PrintHealthBar (int x, int y, int NumOfCreature, Bestiary *A);
 	void PrintHID ();

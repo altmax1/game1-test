@@ -16,7 +16,7 @@ int MaxCellCount;
 int CurrentCellCount;
 
 public:
-	void PutItemInInventory ();
+	void PutItemInInventory (int x = -1, int y = -1);
 	void PutItemInVector (int Id, bool Stackable, int nums);
 	void PrintInventory ();
 	void PrintItems ();

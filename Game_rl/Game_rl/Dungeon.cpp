@@ -365,3 +365,262 @@ void DungeonType1::ReturnDungeon (level *MyLevel)
 		MyLevel->cells[i].SetBaseType(DungeonCells[i]);
 	return;
 }
+
+
+//-------------------------DungeonType2---------------------------
+
+DungeonType2::DungeonType2(void)
+{
+	MapWidth = 80;
+	MapHeight = 40;
+}
+
+DungeonType2::~DungeonType2()
+{
+}
+
+void DungeonType2::InitDungeon()
+{
+	cells.clear();
+	MyCells.clear();
+	Rooms.clear();
+	FillArrayRandom();
+	CellsProcessing();
+	ConvertToMyCell();
+	FindRooms();
+	ConnectRooms();
+	PrintDungeon();
+}
+
+void DungeonType2::FillArrayRandom()
+{
+	srand( time(0) );
+	for (int y = 0; y < 40; y++)
+		for (int x = 0; x < 80; x++)
+		{
+			if (x == 0 || y == 0 || y == 39 || x == 79)
+				cells.push_back(100);
+			else
+				cells.push_back(rand() % 100);
+		}
+}
+
+void DungeonType2::CellsProcessing()
+{
+	for (int i = 0; i<1; i++)
+		for (int y = 1; y < MapHeight - 1; y++)
+			for (int x = 1; x < MapWidth - 1; x++)
+				Averaging(x, y);
+}
+
+void DungeonType2::Averaging(int x, int y)
+{
+	/*for (int a = -1; a<=1; a++)
+		for (int b = -1; b <= 1; b++)
+		{
+			int avg = (cells[DecToLin(x, y)] + cells[DecToLin(x + b, y + a)]) / 2;
+			cells[DecToLin(x, y)] = avg;
+		}*/
+	int avg = 0;
+	for (int a = -1; a <= 1; a++)
+		for (int b = -1; b <= 1; b++)
+		{
+			avg = avg + cells[DecToLin(x + b, y + a)];
+			
+		}
+	cells[DecToLin(x, y)] = avg/9;
+	
+}
+
+int DungeonType2::DecToLin(int x, int y)
+{
+	return y*MapWidth+x;
+}
+
+void DungeonType2::PrintDungeon()
+{
+	for (int y = 0; y< MapHeight; y++)
+		for (int x = 0; x < MapWidth; x++)
+		{
+			if (MyCells[DecToLin(x, y)].pasable == 1)
+				terminal_put(x, y, '.');
+			else
+				terminal_put(x, y, '#');
+		}
+	terminal_refresh();
+	cout <<endl<< Rooms.size() << endl;
+	for (auto a : Rooms)
+	{
+		cout << a.size() << endl;
+	}
+}
+
+void DungeonType2::ConvertToMyCell()
+{
+	PassableCells = 0;
+	for (int i = 0; i < MapHeight*MapWidth; i++)
+	{
+	 MyCell Temp;
+	 if (cells[i] > 47)
+	 {
+		 Temp.pasable = 0;
+		 Temp.visited = 0;
+	 }
+	 else
+	 {
+		 Temp.pasable = 1;
+		 Temp.visited = 0;
+		 PassableCells++;
+	 }
+	 MyCells.push_back(Temp);
+	 }
+}
+
+void DungeonType2::FindRooms()
+{
+	for (int y = 0; y< MapHeight; y++)
+		for (int x = 0; x < MapWidth; x++)
+		{
+			int Lin = DecToLin(x, y);
+			if (MyCells[Lin].pasable == 1 && MyCells[Lin].visited == 0)
+			{
+				vector <int> Stack;
+				set<int> Temp;
+				int a;
+				Stack.push_back(Lin);
+				MyCells[Lin].visited = 1;
+				while (Stack.size() > 0)
+				{
+					a = Stack.back();
+					Stack.pop_back();
+					Temp.insert(a);
+					int NewY = a / MapWidth;
+					int NewX = a - NewY*MapWidth;
+					for (int y2 = -1; y2<=1; y2++)
+						for (int x2 = -1; x2 <= 1; x2++)
+						{
+							int linear2 = DecToLin(NewX + x2, NewY+y2);
+							if (MyCells[linear2].pasable == 1 && MyCells[linear2].visited == 0)
+							{
+								Stack.push_back(linear2);
+								MyCells[linear2].visited = 1;
+							}
+
+
+						}
+
+
+				}
+
+				Rooms.push_back(Temp);
+			}
+
+		}
+	cout << "Rooms:: " << Rooms.size();
+	for (int i = 0; i < MyCells.size(); i++)
+		MyCells[i].visited = 0;
+}
+
+void DungeonType2::DrawLine(int x1, int y1, int x2, int y2)
+{
+	int x, y, xend, yend, s, dx, dy, d, inc1, inc2;
+	dx = abs(x2 - x1);
+	dy = abs(y2 - y1);
+	if (dx > dy)
+	{
+		inc1 = 2 * dy;
+		inc2 = 2 * (dy - dx);
+		d = 2 * dy - dx;
+		if (x1 < x2)
+		{
+			x = x1; y = y1; xend = x2;
+			if (y1 < y2) s = 1;
+			else s = -1;
+		}
+		else
+		{
+			x = x2;
+			y = y2;
+			xend = x1;
+			if (y1 > y2) s = 1;
+			else s = -1;
+		}
+		//SetPixel(hdc,x,y,cDraw);
+
+		while (x < xend)
+		{
+			x++;
+			if (d > 0)
+			{
+				y += s;
+				d += inc2;
+			}
+			else d += inc1;
+			// SetPixel(hdc,x,y,cDraw);
+			MyCells[DecToLin(x, y)].pasable = 1;
+		}
+	}
+	else
+	{
+		inc1 = 2 * dx;
+		inc2 = 2 * (dx - dy);
+		d = 2 * dx - dy;
+		if (y1 < y2)
+		{
+			y = y1; x = x1; yend = y2;
+			if (x1 < x2) s = 1;
+			else s = -1;
+		}
+		else
+		{
+			y = y2;
+			x = x2;
+			yend = y1;
+			if (x1 > x2)s = 1;
+			else s = -1;
+		}
+		//SetPixel(hdc,x,y,RGB(255,255,255));
+		while (y < yend)
+		{
+			y++;
+			if (d > 0)
+			{
+				x += s;
+				d += inc2;
+			}
+			else d += inc1;
+			//  SetPixel(hdc,x,y,RGB(255,255,255));
+			MyCells[DecToLin(x, y)].pasable = 1;
+		}
+	}
+	
+}
+
+void DungeonType2::ConnectRooms()
+{
+	while (Rooms.size() > 1)
+	{
+		int Set1Size = Rooms[0].size();
+		int CellNumber = rand() % Set1Size;
+		auto p1 = Rooms[0].begin();
+		for (int i = 0; i < CellNumber; i++)
+			p1++;
+		int y1 = *p1 / MapWidth;
+		int x1 = *p1 - y1*MapWidth;
+
+		Set1Size = Rooms[1].size();
+		CellNumber = rand() % Set1Size;
+		auto p2 = Rooms[1].begin();
+		for (int i = 0; i < CellNumber; i++)
+			p2++;
+		int y2 = *p2 / MapWidth;
+		int x2 = *p2 - y2*MapWidth;
+
+		DrawLine(x1, y1, x2, y2);
+		cout << "DrawLine" << endl;
+		for (auto a : MyCells)
+			a.visited = 0;
+		Rooms.clear();
+		FindRooms();
+	}
+}

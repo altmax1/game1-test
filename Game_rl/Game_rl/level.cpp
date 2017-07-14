@@ -602,7 +602,7 @@ void level::AddItem (int ID, int Quantity, int CoordX, int CoordY)
 	if (a == 0)
 		return;
 	int NewId = MyItems->GetIdForCreation (ID);
-	int Stackable = MyItems->GetStackable (ID);
+	int Stackable = MyItems->GetStackable (NewId);//!!!!
 	if (Stackable == 0)
 		Quantity = 1;
 	int coords = DecartToLinear(CoordX, CoordY);
