@@ -31,8 +31,11 @@ private:
 	FOV_MAP    map;
 	set <int> CellsUnderEffects;
 	vector <Connector> Connectors;
-	vector <LevelRoom> Rooms;
-	int NumOfLevel;
+	vector <LevelRoom> Rooms; // прямоугольные комнаты
+	vector < vector<int>> Rooms2; // комнаты не прямоугольные - линейные координаты
+	int NumOfLevel; // номер уровня - генерируется автоматически
+	int LevelIndex; // номер уровня - заполняется вручную по правилам;
+	string LevelName; // название уровня
 	
 public:
 	X_cell *cells;
@@ -102,6 +105,16 @@ public:
 	int GetRoomUpY(int Num);
 	int GetRoomWidth(int Num);
 	int GetRoomHeight(int Num);
+	void AddRoomToRooms2(vector<int> Room);
+	int GetLevelIndex();
+	void SetLevelIndex(int Index);
+	string GetLevelName();
+	void SetLevelName(string Name);
+	void SaveLevel();
+	void SaveMap(ofstream &MyStream);
+	void SaveConnectors(ofstream &MyStream);
+	void SaveRooms(ofstream &MyStream);
+	void SaveRooms2(ofstream &MyStream);
 
 
 };

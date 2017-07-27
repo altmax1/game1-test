@@ -71,6 +71,7 @@ private:
 	int PlayerMoved;
 	int Moves;
 	vector <level*> Levels;
+	int MemoryCell[100];
 
 public:
 	static Game* GetGameInstance ();
@@ -103,6 +104,9 @@ public:
 	lua_State* GetLuaState();
 	void MakeLuaadapter();
 	LuaAdapter* GetLuaadapter();
+	int GetMemotyCell(int Num);
+	void SetMemoryCell(int Num, int Value);
+	void SaveGame();
 
 	
 };

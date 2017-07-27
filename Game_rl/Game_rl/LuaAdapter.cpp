@@ -3,6 +3,23 @@
 
 using namespace std;
 using namespace luabridge;
+
+LuaAdapter::LuaAdapter(void)
+{
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyGamer = MyGame->GetGamer();
+	MyBestiary = MyGame->GetBestiary();
+	MyItems = MyGame->GetItems();
+	MyInterface = MyGame->GetInterface();
+	MyLog = MyGame->GetLog();
+
+}
+
+LuaAdapter::~LuaAdapter(void)
+{
+}
+
 int LuaAdapter::GetConnectorType(int ConnectorNum)
 {
 	Game *MyGame;
@@ -66,22 +83,52 @@ void LuaAdapter::PutItemInInventory(int x, int y)
 	MyInventory = MyGamer->GetInventory();
 	MyInventory->PutItemInInventory(x, y);
 }
-LuaAdapter::LuaAdapter(void)
+int LuaAdapter::GetMemoryCell(int Num)
 {
+	return MyGame->GetMemotyCell(Num);
+}
+void LuaAdapter::SetMemotyCell(int Num, int Value)
+{
+	MyGame->SetMemoryCell(Num,Value);
+}
+
+int LuaAdapter::GetLevelIndex()
+{
+	Game *MyGame;
 	MyGame = Game::GetGameInstance();
 	MyLevel = MyGame->GetLevel();
-	MyGamer = MyGame->GetGamer();
-	MyBestiary = MyGame->GetBestiary();
-	MyItems = MyGame->GetItems();
-	MyInterface = MyGame->GetInterface();
-	MyLog = MyGame->GetLog();
-	
+	return MyLevel->GetLevelIndex();
 }
 
-
-LuaAdapter::~LuaAdapter(void)
+void LuaAdapter::SetLevelIndex(int index)
 {
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetLevelIndex(index);
 }
+
+string LuaAdapter::GetLevelName()
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	return MyLevel->GetLevelName();
+}
+
+void LuaAdapter::SetLevelName(string Name)
+{
+	Game *MyGame;
+	MyGame = Game::GetGameInstance();
+	MyLevel = MyGame->GetLevel();
+	MyLevel->SetLevelName(Name);
+}
+
+void LuaAdapter::SaveGame()
+{
+	MyGame->SaveGame();
+}
+
 void LuaAdapter::LuaDesc (lua_State *L)
 {
 	
@@ -223,6 +270,13 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction("GetLevelTile", &LuaAdapter::GetLevelTile)
 			.addFunction("SetLevelTile", &LuaAdapter::SetLevelTile)
 			.addFunction("PutItemInInventoryFromCell", &LuaAdapter::PutItemInInventory)
+			.addFunction("GetMemoryCell", &LuaAdapter::GetMemoryCell)
+			.addFunction("SetMemotyCell", &LuaAdapter::SetMemotyCell)
+			.addFunction ("GetLevelIndex", &LuaAdapter::GetLevelIndex)
+			.addFunction("SetLevelIndex", &LuaAdapter::SetLevelIndex)
+			.addFunction("GetLevelName", &LuaAdapter::GetLevelName)
+			.addFunction("SetLevelName", &LuaAdapter::SetLevelName)
+			.addFunction("SaveGame", &LuaAdapter::SaveGame)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)

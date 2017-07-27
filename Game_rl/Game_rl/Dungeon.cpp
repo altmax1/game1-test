@@ -18,6 +18,8 @@ Dungeon* Dungeon::MakeDungeon (int Type, int Width, int Height, int Density)
 {
 	if (Type == 1)
 		return new DungeonType1 ( Width,Height,Density);
+	if (Type == 2)
+		return new DungeonType2 (Width, Height, Density);
 }
 
 
@@ -373,6 +375,18 @@ DungeonType2::DungeonType2(void)
 {
 	MapWidth = 80;
 	MapHeight = 40;
+	Density = 4;
+}
+
+DungeonType2::DungeonType2(int Width, int Height, int nums)
+{
+	MapWidth = Width;
+	MapHeight = Height;
+	Density = nums;
+	if (Density < 1)
+		Density = 1;
+	if (Density > 7)
+		Density = 7;
 }
 
 DungeonType2::~DungeonType2()
@@ -388,17 +402,18 @@ void DungeonType2::InitDungeon()
 	CellsProcessing();
 	ConvertToMyCell();
 	FindRooms();
+	AddRoomsToVector();
 	ConnectRooms();
-	PrintDungeon();
+	
 }
 
 void DungeonType2::FillArrayRandom()
 {
 	srand( time(0) );
-	for (int y = 0; y < 40; y++)
-		for (int x = 0; x < 80; x++)
+	for (int y = 0; y < MapHeight; y++)
+		for (int x = 0; x < MapWidth; x++)
 		{
-			if (x == 0 || y == 0 || y == 39 || x == 79)
+			if (x == 0 || y == 0 || y == MapHeight-1 || x == MapWidth-1)
 				cells.push_back(100);
 			else
 				cells.push_back(rand() % 100);
@@ -407,7 +422,7 @@ void DungeonType2::FillArrayRandom()
 
 void DungeonType2::CellsProcessing()
 {
-	for (int i = 0; i<1; i++)
+	for (int i = 0; i<Density; i++)
 		for (int y = 1; y < MapHeight - 1; y++)
 			for (int x = 1; x < MapWidth - 1; x++)
 				Averaging(x, y);
@@ -439,6 +454,14 @@ int DungeonType2::DecToLin(int x, int y)
 
 void DungeonType2::PrintDungeon()
 {
+	cells.clear();
+	MyCells.clear();
+	Rooms.clear();
+	FillArrayRandom();
+	CellsProcessing();
+	ConvertToMyCell();
+	FindRooms();
+	ConnectRooms();
 	for (int y = 0; y< MapHeight; y++)
 		for (int x = 0; x < MapWidth; x++)
 		{
@@ -513,12 +536,14 @@ void DungeonType2::FindRooms()
 				}
 
 				Rooms.push_back(Temp);
+				
 			}
 
 		}
 	cout << "Rooms:: " << Rooms.size();
-	for (int i = 0; i < MyCells.size(); i++)
-		MyCells[i].visited = 0;
+	
+	for (auto &a : MyCells)
+		a.visited = 0;
 }
 
 void DungeonType2::DrawLine(int x1, int y1, int x2, int y2)
@@ -618,9 +643,32 @@ void DungeonType2::ConnectRooms()
 
 		DrawLine(x1, y1, x2, y2);
 		cout << "DrawLine" << endl;
-		for (auto a : MyCells)
-			a.visited = 0;
 		Rooms.clear();
 		FindRooms();
 	}
+}
+
+void DungeonType2::ReturnDungeon(level * MyLev)
+{
+	MyLevel = MyLev;
+	InitDungeon();
+	for (int i = 0; i <(MapWidth)*(MapHeight); i++)
+		if (MyCells[i].pasable == 0)
+			MyLevel->cells[i].SetBaseType('#');
+		else if (MyCells[i].pasable ==1)
+			MyLevel->cells[i].SetBaseType('.');
+}
+
+void DungeonType2::AddRoomsToVector()
+{
+	for (auto vec : Rooms)
+	{
+		vector<int> temp;
+		for (auto a : vec)
+		{
+			temp.push_back(a);
+		}
+		MyLevel->AddRoomToRooms2(temp);
+	}
+
 }

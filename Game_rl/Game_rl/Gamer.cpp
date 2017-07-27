@@ -255,6 +255,12 @@ void Gamer::Move (int Direction)
 		MyGame = Game::GetGameInstance();
 		MyGame->ChangeGameMode();
 	}
+	if (Direction == TK_S && terminal_check(TK_SHIFT))
+	{
+		Game *MyGame;
+		MyGame = Game::GetGameInstance();
+		MyGame->SaveGame();
+	}
 	if (Direction == TK_PERIOD && terminal_check(TK_SHIFT))
 	{
 		if (MyLevel->GetTile(CoordX, CoordY) == 1000)

@@ -384,3 +384,46 @@ void X_cell::SetTile(int Tile)
 {
 	tile = Tile;
 }
+
+void X_cell::SaveCell(ofstream & MyStream)
+{
+	int temp;
+	MyStream.write((char*)&tile, sizeof tile);
+	MyStream.write((char*)&BaseType, sizeof BaseType);
+	temp = visible;
+	MyStream.write((char*)&temp, sizeof temp);
+	temp = opaque;
+	MyStream.write((char*)&temp, sizeof temp);
+	temp = visited;
+	MyStream.write((char*)&temp, sizeof temp);
+	temp = passable;
+	MyStream.write((char*)&temp, sizeof temp);
+	temp = items.size();
+	MyStream.write((char*)&temp, sizeof temp);
+	auto p = items.begin();
+	while (p!=items.end())
+	{
+		temp = p->ID;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = p->quantity;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = p->stackable;
+		MyStream.write((char*)&temp, sizeof temp);
+		p++;
+	}
+	temp = Effects.size();
+	auto p2 = Effects.begin();
+	while (p2 != Effects.end())
+	{
+		temp = p2->Power;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = p2->Time;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = p2->Type;
+		MyStream.write((char*)&temp, sizeof temp);
+		p2++;
+	}
+	MyStream.write((char*)&creature, sizeof creature);
+	MyStream.write((char*)&ConnectorNum, sizeof ConnectorNum);
+
+}

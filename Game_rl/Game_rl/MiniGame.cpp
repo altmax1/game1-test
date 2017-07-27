@@ -15,7 +15,7 @@ MiniGame::MiniGame()
 	for (int i = 0; i <6; i++)
 		LogicElements[i] = 0;// логические элементы
 	ColorOn = 0xffffffff;
-	ColorOff = 0x7fffffff;
+	ColorOff = 0xff7f7f7f;
 	CursorPosition = 0;
 }
 
@@ -27,11 +27,12 @@ MiniGame::~MiniGame()
 void MiniGame::PrintInterface()
 {
 	terminal_clear();
-	PrintElements();
+	//PrintElements();
 	PrintInputInterfaces();
 	PrintWires1Level();
 	PrintWires2Level();
 	PrintWires3Level();
+	PrintElements();
 	PrintInvertors();
 	PrintSwitcher();
 	PrintCursor();

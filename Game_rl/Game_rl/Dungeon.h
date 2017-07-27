@@ -69,18 +69,21 @@ struct MyCell {
 	int visited;
 };
 
-class DungeonType2 //: private Dungeon
+class DungeonType2 : public Dungeon
 {
 private:
 	int MapWidth;
 	int MapHeight;
+	int Density;
 	vector <int> cells;
 	vector <MyCell> MyCells;
 	int PassableCells; //проходимые клетки
 	vector <set <int>> Rooms;
+	level *MyLevel;
 
 public:
 	DungeonType2(void);
+	DungeonType2(int Width, int Height, int nums);
 	~DungeonType2(void);
 	void InitDungeon ();
 	void FillArrayRandom();
@@ -92,6 +95,7 @@ public:
 	void FindRooms();
 	void DrawLine(int x1, int y1, int x2, int y2);
 	void ConnectRooms();
-	
+	void ReturnDungeon(level* MyLevel);
+	void AddRoomsToVector(); // переносим комнаты в level
 
 };

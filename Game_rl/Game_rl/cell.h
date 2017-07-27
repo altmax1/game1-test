@@ -66,5 +66,6 @@ public:
 	void SetConnectorNum(int Num);
 	int GetTile();
 	void SetTile(int Tile);
+	void SaveCell(ofstream &MyStream);
 };
 

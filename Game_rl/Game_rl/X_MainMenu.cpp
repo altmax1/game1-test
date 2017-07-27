@@ -162,7 +162,7 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 			{	
 				int i = clock ();
 				//ptr->InitDungeon();
-				MD.InitDungeon();
+				MD.PrintDungeon();
 				terminal_clear;
 				//cout << "main cikle  "<< clock () -i<<endl;
 				if (terminal_read () == TK_ESCAPE)

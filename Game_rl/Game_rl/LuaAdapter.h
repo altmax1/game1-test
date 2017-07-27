@@ -174,6 +174,13 @@ public:
 	int GetLevelTile(int x, int y);
 	void SetLevelTile(int x, int y, int Tile);
 	void PutItemInInventory(int x, int y);
+	int GetMemoryCell(int Num);
+	void SetMemotyCell(int Num, int Value);
+	int GetLevelIndex();
+	void SetLevelIndex(int index);
+	string GetLevelName();
+	void SetLevelName(string Name);
+	void SaveGame();
 	
 		
 };

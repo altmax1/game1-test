@@ -746,3 +746,127 @@ int level::GetRoomHeight(int Num)
 {
 	return Rooms.at(Num).Height;
 }
+
+void level::AddRoomToRooms2(vector<int> Room)
+{
+	Rooms2.push_back (Room);
+}
+
+int level::GetLevelIndex()
+{
+	return LevelIndex;
+}
+
+void level::SetLevelIndex(int Index)
+{
+	LevelIndex = Index;
+}
+
+string level::GetLevelName()
+{
+	return LevelName;
+}
+
+void level::SetLevelName(string Name)
+{
+	LevelName = Name;
+}
+
+void level::SaveLevel()
+{
+	int a = clock();
+	ofstream out("level.sav", ios::binary | ios::out | ios::app);
+	int LevelSize = LevelWidth*LevelHeight;
+	out.write((char*)&NumOfLevel, sizeof NumOfLevel);
+	out.write((char*)&LevelSize, sizeof LevelSize);
+	out.write((char*)&LevelWidth, sizeof LevelWidth);
+	out.write((char*)&LevelHeight, sizeof LevelHeight);
+	SaveMap(out);
+	SaveConnectors(out);
+	SaveRooms(out);
+	SaveRooms2(out);
+	out.write((char*)&LevelIndex, sizeof LevelIndex);
+	int NameSize = LevelName.size();
+	out.write((char*)&NameSize, sizeof NameSize);
+	out.write(LevelName.c_str(), NameSize);
+	for (int i = 0; i < LevelSize; i++)
+	{
+		cells[i].SaveCell(out);
+	}
+	cout << endl << "Saved!!!" << endl;
+	cout << clock() - a;
+}
+
+void level::SaveMap(ofstream & MyStream)
+{
+	MyStream.write((char*)&map.Width, sizeof map.Width);
+	MyStream.write((char*)&map.Height, sizeof map.Height);
+	int size = sizeof map.Cells[0].Flags;
+	for (int i = 0; i < map.Width*map.Height; i++)
+	{
+		MyStream.write((char*)&map.Cells[i].Flags, sizeof map.Cells[i].Flags);
+	}
+}
+
+void level::SaveConnectors(ofstream & MyStream)
+{
+	int size = Connectors.size();
+	MyStream.write((char*)&size, sizeof size);
+	for (int i = 0; i < size; i++)
+	{
+		int temp;
+		temp = Connectors[i].StartX;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Connectors[i].StartY;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Connectors[i].DestinationX;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Connectors[i].DestinationY;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Connectors[i].DestinationZ;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Connectors[i].ConnectorCompleted;
+		MyStream.write((char*)&temp, sizeof temp);
+		int NameSize = Connectors[i].ConnectorName.size();
+		MyStream.write((char*)&NameSize, sizeof NameSize);
+		MyStream.write(Connectors[i].ConnectorName.c_str(), NameSize);
+		temp = Connectors[i].Type;
+		MyStream.write((char*)&temp, sizeof temp);
+
+	}
+}
+
+void level::SaveRooms(ofstream & MyStream)
+{
+	int size = Rooms.size();
+	MyStream.write((char*)&size, sizeof size);
+	for (int i = 0; i < size; i++)
+	{
+		int temp;
+		temp = Rooms[i].LeftX;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Rooms[i].UpY;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Rooms[i].Width;
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = Rooms[i].Height;
+		MyStream.write((char*)&temp, sizeof temp);
+	}
+}
+
+void level::SaveRooms2(ofstream & MyStream)
+{
+	int FirstSize = Rooms2.size();
+	MyStream.write((char*)&FirstSize, sizeof FirstSize);
+	for (int i = 0; i < FirstSize; i++)
+	{
+		int SecondSize = Rooms2[i].size();
+		MyStream.write((char*)&SecondSize, sizeof SecondSize);
+		int temp;
+		for (int k = 0; k < SecondSize; k++)
+		{
+			temp = Rooms2[i].at(k);
+			MyStream.write((char*)&temp, sizeof temp);
+		}
+	}
+}

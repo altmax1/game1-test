@@ -15,6 +15,8 @@ Game::Game(void)
 	PlayerMoved = 0;
 	Moves = 0;
 	FullLogging = 1;
+	for (int i = 0; i < 100; i++)
+		MemoryCell[i] = 0;
 	
 	//Luaad = new LuaAdapter;
 	//Luaad->LuaDesc(L);
@@ -140,7 +142,7 @@ void Game::GameInit()
 	MakeInterface();
 	MakeLuaadapter();
 	MyLevel->PlaceItems();
-	MyLevel->LevelPrint();
+	//MyLevel->LevelPrint();
 	MyGamer->GamerPlacing();
 	while (1)
 	{
@@ -260,4 +262,29 @@ void Game::MakeLuaadapter()
 LuaAdapter*  Game::GetLuaadapter()
 {
 	return Luaad;
+}
+
+int Game::GetMemotyCell(int Num)
+{
+	if (Num >= 0 && Num < 100)
+	return MemoryCell[Num];
+}
+
+void Game::SetMemoryCell(int Num, int Value)
+{
+	if (Num >= 0 && Num < 100)
+		MemoryCell[Num] = Value;
+}
+
+void Game::SaveGame()
+{
+	//MyLevel->SaveLevel();
+	ofstream out("level.sav", ios::binary | ios::out );
+	int NumOfLevels = Levels.size();
+	out.write((char*)&NumOfLevels, sizeof NumOfLevels);
+	for (int i = 0; i < NumOfLevels; i++)
+	{
+		Levels[i]->SaveLevel();
+	}
+
 }
