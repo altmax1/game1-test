@@ -7,6 +7,7 @@ private:
 	int NumInVector;
 	int CoordX;
 	int CoordY;
+	int CoordZ;
 	std::string Name;
 	std::string RName;
 	std::string RDesc;
@@ -25,11 +26,11 @@ private:
 	int AttackRange[3]; // радиус поражения
 	int Dex;  // ловкость
 	int Str;  //сила
-	int FlyAble:1; //способен к полету?
-	int Fly:1; //летает ли сейчас?
-	int Sleep:1;   // спит?
-	int Active:1;  //активен или ждёт
-	int Magic:1;  //пользуется ли магией
+	unsigned int FlyAble:1; //способен к полету?
+	unsigned int Fly:1; //летает ли сейчас?
+	unsigned int Sleep:1;   // спит?
+	unsigned int Active:1;  //активен или ждёт
+	unsigned int Magic:1;  //пользуется ли магией
 	int Behavior; // тип поведения 
 	std::vector <int> Effects; // наложенные эффекты
 	std::vector <int> EffectsTime; // время эффектов
@@ -46,6 +47,7 @@ public:
 	void LuaReg (lua_State* L);
 	void MakeMove ();
 	int MoveCreature (int x, int y, int MyMode=0);
+	void SaveCreature(std::ofstream &MyStream);
 
 	//----Setters AND Getters
 	void SetIsDead (int a);
@@ -54,8 +56,10 @@ public:
 	int GetID () const; 
 	void SetCoordX(int a);
 	void SetCoordY(int a);
+	void SetCoordZ(int a);
 	int GetCoordX () const;
 	int GetCoordY () const;
+	int GetCoordZ() const;
 	void SetName (std::string S);
 	std::string GetName () const;
 	void SetRName (std::string S);

@@ -152,8 +152,10 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction ("SetBeastHP", &LuaAdapter::SetBeastHP)
 			.addFunction ("GetBeastCoordX", &LuaAdapter::GetBeastCoordX)
 			.addFunction ("GetBeastCoordY", &LuaAdapter::GetBeastCoordY)
+			.addFunction ("GetBeastCoordZ", &LuaAdapter::GetBeastCoordZ)
 			.addFunction ("SetBeastCoordX", &LuaAdapter::SetBeastCoordX)
 			.addFunction ("SetBeastCoordY", &LuaAdapter::SetBeastCoordY)
+			.addFunction ("SetBeastCoordZ", &LuaAdapter::SetBeastCoordZ)
 			.addFunction ("GetBeastID", &LuaAdapter::GetBeastID)
 			.addFunction ("SetBeastID", &LuaAdapter::SetBeastID)
 			.addFunction ("GetBeastRName", &LuaAdapter::GetBeastRName)
@@ -300,6 +302,7 @@ void LuaAdapter::LuaDesc (lua_State *L)
 		.addFunction ("GetAttackRange", &Beast::GetAttackRange)
 		.addProperty ("CoordX", &Beast::GetCoordX, &Beast::SetCoordX)
 		.addProperty ("CoordY", &Beast::GetCoordY, &Beast::SetCoordY)
+		.addProperty ("CoordZ", &Beast::GetCoordZ, &Beast::SetCoordZ)
 		.addProperty ("HP", &Beast::GetHP,&Beast::SetHP)
 		.addProperty ("Dex", &Beast::GetDex, &Beast::SetDex)
 		.addProperty ("Energy", &Beast::GetEnergy, &Beast::SetEnergy)
@@ -595,6 +598,12 @@ void LuaAdapter::SetBeastCoordY (int Num, int y)
 	return;
 }
 
+void LuaAdapter::SetBeastCoordZ(int Num, int z)
+{
+	MyBestiary->SetCoordZ(Num, z);
+	return;
+}
+
 int LuaAdapter::GetBeastCoordX (int Num)
 {
 	return MyBestiary->GetCoordX(Num);
@@ -603,6 +612,11 @@ int LuaAdapter::GetBeastCoordX (int Num)
 int LuaAdapter::GetBeastCoordY (int Num)
 {
 	return MyBestiary->GetCoordY (Num);
+}
+
+int LuaAdapter::GetBeastCoordZ(int Num)
+{
+	return MyBestiary->GetCoordZ(Num);
 }
 
 void LuaAdapter::SetBeastID (int Num, int ID)

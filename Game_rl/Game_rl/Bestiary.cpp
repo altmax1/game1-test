@@ -199,6 +199,8 @@ void Bestiary::MakeCreature (int ID, int x, int y)
 	MyGame = Game::GetGameInstance();
 	level *MyLevel;
 	MyLevel = MyGame->GetLevel();
+	int LevelNum = MyLevel->GetLevelNum();
+	BeastsOfLevel[NumOfBeast].SetCoordZ(LevelNum);
 	MyLevel->SetCreature (NumOfBeast, x, y);
 	
 	return;
@@ -252,6 +254,32 @@ void Bestiary::MakeBeastsMove ()
 	return;
 }
 
+void Bestiary::SaveBestiary()
+{
+	ofstream Out(".\\Files\\save\\bestiary.sav", ios::binary | ios::out);
+	int Size;
+	Size = DeadBeasts.size();
+	Out.write((char*)&Size, sizeof Size);
+	for (auto a : DeadBeasts)
+	{
+		Out.write((char*)&a, sizeof a);
+	}
+	Size = ExistingBeastID.size();
+	Out.write((char*)&Size, sizeof Size);
+	for (auto a : ExistingBeastID)
+	{
+		Out.write((char*)&a, sizeof a);
+	}
+	Size = BeastsOfLevel.size();
+	Out.write((char*)&Size, sizeof Size);
+	for (auto &a : BeastsOfLevel)
+	{
+		a.SaveCreature(Out);
+	}
+	
+
+}
+
 void Bestiary::SetIsDead (int Num, int a)
 {
 	BeastsOfLevel[Num].SetIsDead (a);
@@ -289,6 +317,16 @@ void Bestiary::SetCoordY (int Num, int y)
 {
 	BeastsOfLevel[Num].SetCoordY (y);
 	return;
+}
+
+int Bestiary::GetCoordZ(int Num)
+{
+	return BeastsOfLevel[Num].GetCoordZ();
+}
+
+void Bestiary::SetCoordZ(int Num, int Z)
+{
+	BeastsOfLevel[Num].SetCoordZ(Z);
 }
 
 int Bestiary::GetCoordY (int Num)

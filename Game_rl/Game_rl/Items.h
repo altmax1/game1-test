@@ -65,7 +65,7 @@ private:
 	vector <Armour> UniqueArmour;
 	vector <Armour> CommonArmour;
 	vector <Armour> ArmourFromLevel;
-	set <int> ExistingID;
+	set <int> ExistingID; // для проверки корректности ID при ручном создании вещи
 public:
 	Items(void);
 	~Items(void);

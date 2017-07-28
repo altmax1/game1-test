@@ -388,16 +388,19 @@ void X_cell::SetTile(int Tile)
 void X_cell::SaveCell(ofstream & MyStream)
 {
 	int temp;
+	unsigned char tempchar;
 	MyStream.write((char*)&tile, sizeof tile);
 	MyStream.write((char*)&BaseType, sizeof BaseType);
-	temp = visible;
-	MyStream.write((char*)&temp, sizeof temp);
-	temp = opaque;
-	MyStream.write((char*)&temp, sizeof temp);
-	temp = visited;
-	MyStream.write((char*)&temp, sizeof temp);
-	temp = passable;
-	MyStream.write((char*)&temp, sizeof temp);
+	tempchar = 0;
+	if (visible)
+		tempchar | 0b00000001;
+	if (opaque)
+		tempchar | 0b00000010;
+	if (visited)
+		tempchar | 0b00000100;
+	if (empty_cell)
+		tempchar | 0b00001000;
+	MyStream.write((char*)&tempchar, sizeof tempchar);
 	temp = items.size();
 	MyStream.write((char*)&temp, sizeof temp);
 	auto p = items.begin();

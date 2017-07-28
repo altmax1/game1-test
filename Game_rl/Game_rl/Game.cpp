@@ -279,12 +279,13 @@ void Game::SetMemoryCell(int Num, int Value)
 void Game::SaveGame()
 {
 	//MyLevel->SaveLevel();
-	ofstream out("level.sav", ios::binary | ios::out );
+	ofstream out(".\\Files\\save\\level.sav", ios::binary | ios::out );
 	int NumOfLevels = Levels.size();
 	out.write((char*)&NumOfLevels, sizeof NumOfLevels);
 	for (int i = 0; i < NumOfLevels; i++)
 	{
 		Levels[i]->SaveLevel();
 	}
+	MyBestiary->SaveBestiary();
 
 }

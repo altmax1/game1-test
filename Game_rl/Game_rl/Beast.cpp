@@ -138,6 +138,77 @@ int Beast::MoveCreature (int x, int y, int MyMode)
 	return 0;
 }
 
+void Beast::SaveCreature(ofstream & MyStream)
+{
+	MyStream.write((char*)&IsDead, sizeof IsDead);
+	MyStream.write((char*)&ID, sizeof ID);
+	MyStream.write((char*)&NumInVector, sizeof NumInVector);
+	MyStream.write((char*)&CoordX, sizeof CoordX);
+	MyStream.write((char*)&CoordY, sizeof CoordY);
+	MyStream.write((char*)&CoordZ, sizeof CoordZ);
+	int size;
+	size = Name.size();
+	MyStream.write((char*)&size, sizeof size);
+	MyStream.write(Name.c_str(), size);
+	size = RName.size();
+	MyStream.write((char*)&size, sizeof size);
+	MyStream.write(RName.c_str(), size);
+	size = RDesc.size();
+	MyStream.write((char*)&size, sizeof size);
+	MyStream.write(RDesc.c_str(), size);
+	MyStream.write((char*)&HP, sizeof HP);
+	MyStream.write((char*)&MaxHP, sizeof MaxHP);
+	MyStream.write((char*)&Energy, sizeof Energy);
+	MyStream.write((char*)&RangeOfSight, sizeof RangeOfSight);
+	MyStream.write((char*)&Speed, sizeof Speed);
+	MyStream.write((char*)&RegenHP, sizeof RegenHP);
+	MyStream.write((char*)&RegenEnergy, sizeof RegenEnergy);
+	MyStream.write((char*)&LevelOfBeast, sizeof LevelOfBeast);
+	MyStream.write((char*)Defense, (sizeof Defense[0]) * 10);
+	MyStream.write((char*)MaxAttack, (sizeof MaxAttack[0]) * 3);
+	MyStream.write((char*)MinAttack, (sizeof MinAttack[0]) * 3);
+	MyStream.write((char*)AttackType, (sizeof AttackType[0]) * 3);
+	MyStream.write((char*)AttackRange, (sizeof AttackRange[0]) * 3);
+	MyStream.write((char*)&Dex, sizeof Dex);
+	MyStream.write((char*)&Str, sizeof Str);
+	char TempChar = 0;
+	if (FlyAble)
+		TempChar | 0b00000001;
+	if (Fly)
+		TempChar | 0b00000010;
+	if (Sleep)
+		TempChar | 0b00000100;
+	if (Active)
+		TempChar | 0b00001000;
+	if (Magic)
+		TempChar | 0b00010000;
+	MyStream.write((char*)&TempChar, sizeof TempChar);
+	MyStream.write((char*)&Behavior, sizeof Behavior);
+	size = Effects.size();
+	MyStream.write((char*)&size, sizeof size);
+	int temp;
+	for (int i = 0; i < size; i++)
+	{
+		temp = Effects[i];
+		MyStream.write((char*)&temp, sizeof temp);
+		temp = EffectsTime[i];
+		MyStream.write((char*)&temp, sizeof temp);
+	}
+	size = NextStep.size();
+	MyStream.write((char*)&size, sizeof size);
+	auto p = NextStep.begin();
+	while (p != NextStep.end())
+	{
+		temp = *p;
+		MyStream.write((char*)&temp, sizeof temp);
+		p++;
+	}
+	MyStream.write((char*)&CharCode, sizeof CharCode);
+	MyStream.write((char*)&ColorVisible, sizeof ColorVisible);
+	MyStream.write((char*)&ColorNotVisible, sizeof ColorNotVisible);
+	MyStream.write((char*)&MovePoints, sizeof MovePoints);
+}
+
 // ------------------------------ Getters and Setters -----------------------
 
 void Beast::SetIsDead (int a)
@@ -173,6 +244,11 @@ int Beast::GetID () const
 		CoordY = a;
 		return;
 	}
+	void Beast::SetCoordZ(int a)
+	{
+		CoordZ = a;
+		return;
+	}
 	int Beast::GetCoordX () const 
 	{
 		return CoordX;
@@ -180,6 +256,10 @@ int Beast::GetID () const
 	int Beast::GetCoordY () const
 	{
 		return CoordY;
+	}
+	int Beast::GetCoordZ() const
+	{
+		return CoordZ;
 	}
 	void Beast::SetName (std::string S)
 	{

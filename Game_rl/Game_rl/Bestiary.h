@@ -16,6 +16,7 @@ public:
 	void RemoveCreature (int Num);
 	Beast* GetCreatureFromLevel (int Num);
 	void MakeBeastsMove();
+	void SaveBestiary();
 	Bestiary(void);
 	~Bestiary(void);
 	void SetIsDead (int Num, int a);
@@ -28,6 +29,8 @@ public:
 	void SetCoordX (int Num, int x);
 	int GetCoordY (int Num);
 	void SetCoordY (int Num, int y);
+	int GetCoordZ(int Num);
+	void SetCoordZ(int Num, int Z);
 	int GetHP (int Num);
 	void SetHP (int Num, int HP);
 	int GetMaxHP (int Num);

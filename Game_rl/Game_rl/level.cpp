@@ -775,7 +775,7 @@ void level::SetLevelName(string Name)
 void level::SaveLevel()
 {
 	int a = clock();
-	ofstream out("level.sav", ios::binary | ios::out | ios::app);
+	ofstream out(".\\Files\\save\\level.sav", ios::binary | ios::out | ios::app);
 	int LevelSize = LevelWidth*LevelHeight;
 	out.write((char*)&NumOfLevel, sizeof NumOfLevel);
 	out.write((char*)&LevelSize, sizeof LevelSize);

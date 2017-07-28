@@ -61,8 +61,10 @@ public:
 	int GetBeastHP (int Num);
 	void SetBeastCoordX (int Num, int x);
 	void SetBeastCoordY (int Num, int y);
+	void SetBeastCoordZ(int Num, int z);
 	int GetBeastCoordX (int Num);
 	int GetBeastCoordY (int Num);
+	int GetBeastCoordZ(int Num);
 	void SetBeastID (int Num, int ID);
 	int GetBeastID (int Num);
 	string GetBeastRName (int Num);
