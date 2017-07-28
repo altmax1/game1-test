@@ -287,5 +287,6 @@ void Game::SaveGame()
 		Levels[i]->SaveLevel();
 	}
 	MyBestiary->SaveBestiary();
+	MyItems->SaveItems();
 
 }

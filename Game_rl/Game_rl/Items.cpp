@@ -987,3 +987,116 @@ string Items::GetDescription(int ID)
 		return CommonArmour[ID - 1900000].Description;
 	return "None description";
 }
+
+void Items::SaveItems()
+{ 
+	ofstream Out(".\\Files\\save\\items.sav", ios::binary | ios::out);
+	int Size = ExistingID.size();
+	Out.write((char*)&Size, sizeof Size);
+	for (auto a : ExistingID)
+	{
+		Out.write((char*)&a, sizeof a);
+	}
+	SaveWeapon(Out);
+	SaveArmour(Out);
+}
+
+void Items::SaveWeapon(ofstream & MyStream)
+{
+	int Size = WeaponFromLevel.size();
+	MyStream.write((char*)&Size, sizeof Size);
+	int temp;
+	for (auto a : WeaponFromLevel)
+	{
+		MyStream.write((char*)&a.ID, sizeof a.ID);
+		MyStream.write((char*)&a.Weight, sizeof a.Weight);
+		MyStream.write((char*)&a.Unique, sizeof a.Unique);
+		temp = a.Name.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.Name.c_str(), temp);
+		temp = a.RName.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.RName.c_str(), temp);
+		temp = a.Description.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.Description.c_str(), temp);
+		MyStream.write((char*)&a.Stackable, sizeof a.Stackable);
+		MyStream.write((char*)&a.Type, sizeof a.Type);
+		MyStream.write((char*)&a.Quality, sizeof a.Quality);
+		MyStream.write((char*)&a.Destroyed, sizeof a.Destroyed);
+		MyStream.write((char*)&a.CharCode, sizeof a.CharCode);
+		MyStream.write((char*)&a.ColorVisible, sizeof a.ColorVisible);
+		MyStream.write((char*)&a.ColorNotVisible, sizeof a.ColorNotVisible);
+		MyStream.write((char*)&a.MaxDamage, sizeof a.MaxDamage);
+		MyStream.write((char*)&a.MinDamage, sizeof a.MinDamage);
+		MyStream.write((char*)&a.NeedsAmmo, sizeof a.NeedsAmmo);
+		MyStream.write((char*)&a.IsAmmo, sizeof a.IsAmmo);
+		MyStream.write((char*)&a.Caliber, sizeof a.Caliber);
+		MyStream.write((char*)&a.AmmoQuantity, sizeof a.AmmoQuantity);
+		temp = a.Ammo.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		for (auto b : a.Ammo)
+		{
+			temp = b;
+			MyStream.write((char*)&temp, sizeof temp);
+		}
+		MyStream.write((char*)&a.Range, sizeof a.Range);
+		MyStream.write((char*)&a.BlastRadius, sizeof a.BlastRadius);
+		MyStream.write((char*)&a.ShotsPerStep, sizeof a.ShotsPerStep);
+		MyStream.write((char*)&a.AfterEffectType, sizeof a.AfterEffectType);
+		MyStream.write((char*)&a.AfterEffectTime, sizeof a.AfterEffectTime);
+		MyStream.write((char*)&a.AfterEffectPower, sizeof a.AfterEffectPower);
+		MyStream.write((char*)&a.MaxDamage2, sizeof a.MaxDamage2);
+		MyStream.write((char*)&a.MinDamage2, sizeof a.MinDamage2);
+		MyStream.write((char*)&a.Damage2Type, sizeof a.Damage2Type);
+		MyStream.write((char*)&a.MaxDamage3, sizeof a.MaxDamage3);
+		MyStream.write((char*)&a.MinDamage3, sizeof a.MinDamage3);
+		MyStream.write((char*)&a.Damage3Type, sizeof a.Damage3Type);
+		MyStream.write((char*)&a.NeedsEnergy, sizeof a.NeedsEnergy);
+		MyStream.write((char*)&a.EnergyPerUse, sizeof a.EnergyPerUse);
+		MyStream.write((char*)&a.FacultativeEnergy, sizeof a.FacultativeEnergy);
+
+	}
+}
+
+void Items::SaveArmour(ofstream & MyStream)
+{
+	int Size = ArmourFromLevel.size();
+	MyStream.write((char*)&Size, sizeof Size);
+	int temp;
+	for (auto a : ArmourFromLevel)
+	{
+		MyStream.write((char*)&a.ID, sizeof a.ID);
+		MyStream.write((char*)&a.Weight, sizeof a.Weight);
+		MyStream.write((char*)&a.Unique, sizeof a.Unique);
+		temp = a.Name.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.Name.c_str(), temp);
+		temp = a.RName.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.RName.c_str(), temp);
+		temp = a.Description.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.Description.c_str(), temp);
+		MyStream.write((char*)&a.Stackable, sizeof a.Stackable);
+		MyStream.write((char*)&a.Type, sizeof a.Type);
+		MyStream.write((char*)&a.Quality, sizeof a.Quality);
+		MyStream.write((char*)&a.Destroyed, sizeof a.Destroyed);
+		MyStream.write((char*)&a.CharCode, sizeof a.CharCode);
+		MyStream.write((char*)&a.ColorVisible, sizeof a.ColorVisible);
+		MyStream.write((char*)&a.ColorNotVisible, sizeof a.ColorNotVisible);
+		MyStream.write((char*)&a.Type2, sizeof a.Type2);
+		MyStream.write((char*)a.Defense, (sizeof a.Defense[0]) * 10);
+		MyStream.write((char*)&a.CanBuiltedIn, sizeof a.CanBuiltedIn);
+		MyStream.write((char*)&a.NumOfBuiltedInSlots, sizeof a.NumOfBuiltedInSlots);
+		temp = a.SlotForBuiltIn.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		for (auto b : a.SlotForBuiltIn)
+		{
+			temp = b;
+			MyStream.write((char*)&temp, sizeof temp);
+		}
+		MyStream.write((char*)&a.BuiltInType, sizeof a.BuiltInType);
+
+	}
+}

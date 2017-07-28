@@ -148,5 +148,8 @@ public:
 	int GetWeaponFaccultativeEnergy(int ID);
 	void SetWeaponFacultativeEnergy(int ID, int Param);
 	string GetDescription(int ID);
+	void SaveItems();
+	void SaveWeapon(ofstream &MyStream);
+	void SaveArmour(ofstream &MyStream);
 };
 
