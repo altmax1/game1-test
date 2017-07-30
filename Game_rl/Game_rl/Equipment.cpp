@@ -526,3 +526,21 @@ using namespace luabridge;
 
 
 }
+
+void Equipment::SaveEquipment()
+{
+	ofstream out(".\\Files\\Save\\equipmetn.sav", ios::binary | ios::out);
+	out.write((char*)&HeadEq, sizeof HeadEq);
+	out.write((char*)&BodyEq, sizeof BodyEq);
+	out.write((char*)&ArmsEq, sizeof ArmsEq);
+	out.write((char*)&GlovesEq, sizeof GlovesEq);
+	out.write((char*)&LegsEq, sizeof LegsEq);
+	out.write((char*)&BootsEq, sizeof BootsEq);
+	out.write((char*)&LeftArmWeapon, sizeof LeftArmWeapon);
+	out.write((char*)&RightArmWeapon, sizeof RightArmWeapon);
+	out.write((char*)&MenuX, sizeof MenuX);
+	out.write((char*)&MenuY, sizeof MenuY);
+	out.write((char*)&DeltaXName, sizeof DeltaXName);
+
+
+}

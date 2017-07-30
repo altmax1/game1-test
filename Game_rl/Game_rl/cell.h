@@ -67,5 +67,6 @@ public:
 	int GetTile();
 	void SetTile(int Tile);
 	void SaveCell(ofstream &MyStream);
+	void LoadCell(ifstream &MyStream);
 };
 

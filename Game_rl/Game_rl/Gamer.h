@@ -77,5 +77,6 @@ public:
 	void ReloadWeapon ();
 	void UnloadWeapon ();
 	void LevelUpdate();
+	void SaveGamer();
 };
 

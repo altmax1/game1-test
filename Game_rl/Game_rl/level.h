@@ -115,6 +115,11 @@ public:
 	void SaveConnectors(ofstream &MyStream);
 	void SaveRooms(ofstream &MyStream);
 	void SaveRooms2(ofstream &MyStream);
+	void LoadLevel();
+	void LoadMap(ifstream &in);
+	void LoadConnectors(ifstream &MyStream);
+	void LoadRooms(ifstream &MyStream);
+	void LoadRooms2(ifstream &MyStream);
 
 
 };

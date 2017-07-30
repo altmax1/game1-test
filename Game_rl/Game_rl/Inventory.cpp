@@ -356,6 +356,22 @@ int Inventory::GetQuantityByNum (int Num)
 	return -1;
 }
 
+void Inventory::SaveInventory()
+{
+	ofstream out(".\\Files\\Save\\inventory.sav", ios::binary | ios::out);
+	out.write((char*)&MaxCellCount, sizeof MaxCellCount);
+	out.write((char*)&CurrentCellCount, sizeof CurrentCellCount);
+	int temp = MyInventory.size();
+	out.write((char*)&temp, sizeof temp);
+	for (auto a : MyInventory)
+	{
+		out.write((char*)&a.ID, sizeof a.ID);
+		out.write((char*)&a.Quantity, sizeof a.Quantity);
+		out.write((char*)&a.stackable, sizeof a.stackable);
+	}
+
+}
+
 void Inventory::FindItemsByCaliber (vector <int> &temp, int Caliber)
 {
 	Game *MyGame;

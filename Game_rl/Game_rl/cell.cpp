@@ -398,8 +398,10 @@ void X_cell::SaveCell(ofstream & MyStream)
 		tempchar | 0b00000010;
 	if (visited)
 		tempchar | 0b00000100;
-	if (empty_cell)
+	if (passable)
 		tempchar | 0b00001000;
+	if (empty_cell)
+		tempchar | 0b00010000;
 	MyStream.write((char*)&tempchar, sizeof tempchar);
 	temp = items.size();
 	MyStream.write((char*)&temp, sizeof temp);
@@ -415,6 +417,7 @@ void X_cell::SaveCell(ofstream & MyStream)
 		p++;
 	}
 	temp = Effects.size();
+	MyStream.write((char*)&temp, sizeof temp);
 	auto p2 = Effects.begin();
 	while (p2 != Effects.end())
 	{
@@ -429,4 +432,62 @@ void X_cell::SaveCell(ofstream & MyStream)
 	MyStream.write((char*)&creature, sizeof creature);
 	MyStream.write((char*)&ConnectorNum, sizeof ConnectorNum);
 
+}
+
+void X_cell::LoadCell(ifstream & MyStream)
+{
+	int temp;
+	unsigned char tempchar;
+	MyStream.read((char*)&tile, sizeof tile);
+	MyStream.read((char*)&BaseType, sizeof BaseType);
+	MyStream.read((char*)&tempchar, sizeof tempchar);
+	if (tempchar & 0b00000001)
+		visible = 1;
+	else
+		visible = 0;
+	if (tempchar & 0b00000010)
+		opaque = 1;
+	else
+		opaque = 0;
+	if (tempchar & 0b00000100)
+		visited = 1;
+	else
+		visited = 0;
+	if (tempchar & 0b00001000)
+		passable = 1;
+	else
+		passable = 0;
+	if (tempchar & 0b00010000)
+		empty_cell = 1;
+	else
+		empty_cell = 0;
+	int size;
+	MyStream.read((char*)&size, sizeof size);
+	items.clear();
+	for (int i = 0; i < size; i++)
+	{
+		CellItems tempitems;
+		MyStream.read((char*)&temp, sizeof temp);
+		tempitems.ID = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		tempitems.quantity = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		tempitems.stackable = temp;
+		items.push_back(tempitems);
+	}
+	MyStream.read((char*)&size, sizeof size);
+	Effects.clear();
+	for (int i = 0; i < size; i++)
+	{
+		Effect tempef;
+		MyStream.read((char*)&temp, sizeof temp);
+		tempef.Power = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		tempef.Time = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		tempef.Type = temp;
+		Effects.push_back(tempef);
+	}
+	MyStream.read((char*)&creature, sizeof creature);
+	MyStream.read((char*)&ConnectorNum, sizeof ConnectorNum);
 }

@@ -463,6 +463,30 @@ void Gamer::LevelUpdate()
 	MyLevel = MyGame->GetLevel();
 }
 
+void Gamer::SaveGamer()
+{
+	ofstream out(".\\Files\\Save\\gamer.sav", ios::binary | ios::out);
+	out.write((char*)&CoordX, sizeof CoordX);
+	out.write((char*)&CoordY, sizeof CoordY);
+	out.write((char*)&HP, sizeof HP);
+	out.write((char*)&MaxHP, sizeof MaxHP);
+	out.write((char*)&Str, sizeof Str);
+	out.write((char*)&Dex, sizeof Dex);
+	out.write((char*)&Energy, sizeof Energy);
+	out.write((char*)&RangeOfSight, sizeof RangeOfSight);
+	out.write((char*)&MaxEnergy, sizeof MaxEnergy);
+	out.write((char*)&MaxAttack, sizeof MaxAttack);
+	out.write((char*)&MinAttack, sizeof MinAttack);
+	out.write((char*)&Defense, (sizeof Defense[0]) * 10);
+	out.write((char*)&BaseDefense, (sizeof BaseDefense[0]) * 10);
+	out.write((char*)&RegenHP, sizeof RegenHP);
+	out.write((char*)&RegenEnergy, sizeof RegenEnergy);
+	MyInventory->SaveInventory();
+	MyEquipment->SaveEquipment();
+
+
+}
+
 void Gamer::GamerMakeCheatsLua ()
 {
 	using namespace luabridge;

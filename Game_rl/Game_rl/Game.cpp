@@ -144,6 +144,7 @@ void Game::GameInit()
 	MyLevel->PlaceItems();
 	//MyLevel->LevelPrint();
 	MyGamer->GamerPlacing();
+	//MyLevel->LoadLevel();
 	while (1)
 	{
 	terminal_color (0xFFDFDFA9);
@@ -288,5 +289,6 @@ void Game::SaveGame()
 	}
 	MyBestiary->SaveBestiary();
 	MyItems->SaveItems();
+	MyGamer->SaveGamer();
 
 }

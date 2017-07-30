@@ -870,3 +870,114 @@ void level::SaveRooms2(ofstream & MyStream)
 		}
 	}
 }
+
+void level::LoadLevel()
+{
+	ifstream in(".\\Files\\save\\level.sav", ios::binary | ios::in);
+	int LevelSize;
+	//in.read((char*)&LevelSize, sizeof LevelSize);
+	in.read((char*)&NumOfLevel, sizeof NumOfLevel);
+	in.read((char*)&LevelSize, sizeof LevelSize);
+	in.read((char*)&LevelWidth, sizeof LevelWidth);
+	in.read((char*)&LevelHeight, sizeof LevelHeight);
+	LoadMap(in);
+	LoadConnectors(in);
+	LoadRooms(in);
+	LoadRooms2(in);
+	in.read((char*)&LevelIndex, sizeof LevelIndex);
+	int NameSize;
+	char *tempchar;
+	in.read((char*)&NameSize, sizeof NameSize);
+	tempchar = new char[NameSize + 1];
+	in.read((char*)tempchar, NameSize);
+	if (cells)
+		delete[]cells;
+	cells = new X_cell[LevelSize];
+	for (int i = 0; i < LevelSize; i++)
+	{
+		cells[i].LoadCell(in);
+
+	}
+
+}
+
+void level::LoadMap(ifstream & in)
+{
+	in.read((char*)&map.Width, sizeof map.Width);
+	in.read((char*)&map.Height, sizeof map.Height);
+	int size = sizeof map.Cells[0].Flags;
+	for (int i = 0; i < map.Width*map.Height; i++)
+	{
+		in.read((char*)&map.Cells[i].Flags, size);
+	}
+}
+
+void level::LoadConnectors(ifstream & MyStream)
+{
+	int size;
+	MyStream.read((char*)&size, sizeof size);
+	Connectors.clear();
+	for (int i = 0; i < size; i++)
+	{
+		Connector temp;
+		MyStream.read((char*)&temp.StartX, sizeof temp.StartX);
+		MyStream.read((char*)&temp.StartY, sizeof temp.StartY);
+		MyStream.read((char*)&temp.DestinationX, sizeof temp.DestinationX);
+		MyStream.read((char*)&temp.DestinationY, sizeof temp.DestinationY);
+		MyStream.read((char*)&temp.DestinationZ, sizeof temp.DestinationY);
+		MyStream.read((char*)&temp.ConnectorCompleted, sizeof temp.ConnectorCompleted);
+		int namesize;
+		MyStream.read((char*)&namesize, sizeof namesize);
+		char *tempchar;
+		tempchar = new char[namesize + 1];
+		tempchar[namesize] = 0;
+		MyStream.read((char*)tempchar, namesize);
+		temp.ConnectorName = tempchar;
+		MyStream.read((char*)&temp.Type, sizeof temp.Type);
+		Connectors.push_back(temp);
+		delete[] tempchar;
+	}
+}
+
+void level::LoadRooms(ifstream & MyStream)
+{
+	int size;
+	MyStream.read((char*)&size, sizeof size);
+	Rooms.clear();
+	for (int i = 0; i < size; i++)
+	{
+		LevelRoom MyRoom;
+		int temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		MyRoom.LeftX = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		MyRoom.UpY = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		MyRoom.Width = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		MyRoom.Height = temp;
+		Rooms.push_back(MyRoom);
+
+	}
+
+}
+
+void level::LoadRooms2(ifstream & MyStream)
+{
+	int FirstSize;
+	MyStream.read((char*)&FirstSize, sizeof FirstSize);
+	Rooms2.clear();
+	for (int i = 0; i < FirstSize; i++)
+	{
+		int SecondSize;
+		MyStream.read((char*)&SecondSize, sizeof SecondSize);
+		vector<int> tempvec;
+		int temp;
+		for (int k = 0; k < SecondSize; k++)
+		{
+			MyStream.read((char*)&temp, sizeof temp);
+			tempvec.push_back(temp);
+		}
+		Rooms2.push_back(tempvec);
+	}
+}

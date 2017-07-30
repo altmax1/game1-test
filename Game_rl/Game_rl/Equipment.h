@@ -39,6 +39,7 @@ public:
 	int GetDefBySlotAdvansed (int Num, int NumOfDefense);
 	int GetIdBySlot (int Slot);
 	void LuaMakeSumOfDef ();
+	void SaveEquipment();
 
 };
 
