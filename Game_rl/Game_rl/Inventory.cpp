@@ -372,6 +372,24 @@ void Inventory::SaveInventory()
 
 }
 
+void Inventory::LoadInventory()
+{
+	ifstream in(".\\Files\\Save\\inventory.sav", ios::binary | ios::in);
+	in.read((char*)&MaxCellCount, sizeof MaxCellCount);
+	in.read((char*)&CurrentCellCount, sizeof CurrentCellCount);
+	int temp;
+	MyInventory.clear();
+	in.read((char*)&temp, sizeof temp);
+	for (int i = 0; i < temp; i++)
+	{
+		InventoryCell a;
+		in.read((char*)&a.ID, sizeof a.ID);
+		in.read((char*)&a.Quantity, sizeof a.Quantity);
+		in.read((char*)&a.stackable, sizeof a.stackable);
+		MyInventory.push_back(a);
+	}
+}
+
 void Inventory::FindItemsByCaliber (vector <int> &temp, int Caliber)
 {
 	Game *MyGame;

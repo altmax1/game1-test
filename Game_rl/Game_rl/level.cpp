@@ -871,9 +871,9 @@ void level::SaveRooms2(ofstream & MyStream)
 	}
 }
 
-void level::LoadLevel()
+void level::LoadLevel(ifstream &in)
 {
-	ifstream in(".\\Files\\save\\level.sav", ios::binary | ios::in);
+	//ifstream in(".\\Files\\save\\level.sav", ios::binary | ios::in);
 	int LevelSize;
 	//in.read((char*)&LevelSize, sizeof LevelSize);
 	in.read((char*)&NumOfLevel, sizeof NumOfLevel);

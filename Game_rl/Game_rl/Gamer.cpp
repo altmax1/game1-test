@@ -487,6 +487,29 @@ void Gamer::SaveGamer()
 
 }
 
+void Gamer::LoadGamer()
+{
+	ifstream in(".\\Files\\Save\\gamer.sav", ios::binary | ios::in);
+	in.read((char*)&CoordX, sizeof CoordX);
+	in.read((char*)&CoordY, sizeof CoordY);
+	in.read((char*)&HP, sizeof HP);
+	in.read((char*)&MaxHP, sizeof MaxHP);
+	in.read((char*)&Str, sizeof Str);
+	in.read((char*)&Dex, sizeof Dex);
+	in.read((char*)&Energy, sizeof Energy);
+	in.read((char*)&RangeOfSight, sizeof RangeOfSight);
+	in.read((char*)&MaxEnergy, sizeof MaxEnergy);
+	in.read((char*)&MaxAttack, sizeof MaxAttack);
+	in.read((char*)&MinAttack, sizeof MinAttack);
+	in.read((char*)&Defense, (sizeof Defense[0]) * 10);
+	in.read((char*)&BaseDefense, (sizeof BaseDefense[0]) * 10);
+	in.read((char*)&RegenHP, sizeof RegenHP);
+	in.read((char*)&RegenEnergy, sizeof RegenEnergy);
+
+	MyInventory->LoadInventory();
+	MyEquipment->LoadEquipment();
+}
+
 void Gamer::GamerMakeCheatsLua ()
 {
 	using namespace luabridge;

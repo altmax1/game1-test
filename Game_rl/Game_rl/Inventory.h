@@ -36,5 +36,6 @@ public:
 	int GetIdByNum (int Num);
 	int GetQuantityByNum( int Num);
 	void SaveInventory();
+	void LoadInventory();
 };
 

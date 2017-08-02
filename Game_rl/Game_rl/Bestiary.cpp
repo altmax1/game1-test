@@ -280,6 +280,35 @@ void Bestiary::SaveBestiary()
 
 }
 
+void Bestiary::LoadBestiary()
+{
+	ifstream in(".\\Files\\Save\\bedtiary.sav", ios::binary | ios::in);
+	int Size;
+	int tempint;
+	DeadBeasts.clear();
+	ExistingBeastID.clear();
+	BeastsOfLevel.clear();
+	in.read((char*)&Size, sizeof Size);
+	for (int i = 0; i < Size; i++)
+	{
+		in.read((char*)&tempint, sizeof tempint);
+		DeadBeasts.insert(tempint);
+	}
+	in.read((char*)&Size, sizeof Size);
+	for (int i = 0; i < Size; i++)
+	{
+		in.read((char*)&tempint, sizeof tempint);
+		ExistingBeastID.insert(tempint);
+	}
+	in.read((char*)&Size, sizeof Size);
+	for (int i = 0; i < Size; i++)
+	{
+		Beast tempbeast;
+		tempbeast.LoadCreature(in);
+		BeastsOfLevel.push_back(tempbeast);
+	}
+}
+
 void Bestiary::SetIsDead (int Num, int a)
 {
 	BeastsOfLevel[Num].SetIsDead (a);

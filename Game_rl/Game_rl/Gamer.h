@@ -78,5 +78,6 @@ public:
 	void UnloadWeapon ();
 	void LevelUpdate();
 	void SaveGamer();
+	void LoadGamer();
 };
 

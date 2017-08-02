@@ -40,6 +40,7 @@ public:
 	int GetIdBySlot (int Slot);
 	void LuaMakeSumOfDef ();
 	void SaveEquipment();
+	void LoadEquipment();
 
 };
 

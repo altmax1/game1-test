@@ -544,3 +544,20 @@ void Equipment::SaveEquipment()
 
 
 }
+
+void Equipment::LoadEquipment()
+{
+	ifstream in(".\\Files\\Save\\equipmetn.sav", ios::binary | ios::in);
+	in.read((char*)&HeadEq, sizeof HeadEq);
+	in.read((char*)&BodyEq, sizeof BodyEq);
+	in.read((char*)&ArmsEq, sizeof ArmsEq);
+	in.read((char*)&GlovesEq, sizeof GlovesEq);
+	in.read((char*)&LegsEq, sizeof LegsEq);
+	in.read((char*)&BootsEq, sizeof BootsEq);
+	in.read((char*)&LeftArmWeapon, sizeof LeftArmWeapon);
+	in.read((char*)&RightArmWeapon, sizeof RightArmWeapon);
+	in.read((char*)&MenuX, sizeof MenuX);
+	in.read((char*)&MenuY, sizeof MenuY);
+	in.read((char*)&DeltaXName, sizeof DeltaXName);
+
+}

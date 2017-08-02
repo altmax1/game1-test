@@ -48,6 +48,7 @@ public:
 	void MakeMove ();
 	int MoveCreature (int x, int y, int MyMode=0);
 	void SaveCreature(std::ofstream &MyStream);
+	void LoadCreature(std::ifstream &MyStream);
 
 	//----Setters AND Getters
 	void SetIsDead (int a);

@@ -283,6 +283,7 @@ void Game::SaveGame()
 	ofstream out(".\\Files\\save\\level.sav", ios::binary | ios::out );
 	int NumOfLevels = Levels.size();
 	out.write((char*)&NumOfLevels, sizeof NumOfLevels);
+	out.close();
 	for (int i = 0; i < NumOfLevels; i++)
 	{
 		Levels[i]->SaveLevel();
@@ -290,5 +291,48 @@ void Game::SaveGame()
 	MyBestiary->SaveBestiary();
 	MyItems->SaveItems();
 	MyGamer->SaveGamer();
+	SaveGameVariables();
 
+}
+
+void Game::LoadGame()
+{
+	ifstream in(".\\Files\\save\\level.sav", ios::binary | ios::in);
+	int NumOfLevels;
+	in.read((char*)&NumOfLevels, sizeof NumOfLevels);
+	Levels.clear();
+	for (int i = 0; i<NumOfLevels; i++)
+	{
+		MyLevel = new level;
+		MyLevel->LoadLevel(in);
+		Levels.push_back(MyLevel);
+	}
+	MyBestiary->LoadBestiary();
+	MyItems->LoadItems();
+	MyGamer->LoadGamer();
+	LoadGameVariables();
+
+}
+
+void Game::SaveGameVariables()
+{
+	ofstream out(".\\Files\\Save\\game.sav", ios::binary | ios::out);
+	int temp = MyLevel->GetLevelNum();
+	out.write((char*)&temp, sizeof temp);
+	out.write((char*)&DeveloperMode, sizeof DeveloperMode);
+	out.write((char*)&FullLogging, sizeof FullLogging);
+	out.write((char*)&PlayerMoved, sizeof PlayerMoved);
+	out.write((char*)MemoryCell, sizeof MemoryCell[0] * 100);
+}
+
+void Game::LoadGameVariables()
+{
+	ifstream in(".\\Files\\Save\\game.sav", ios::binary | ios::in);
+	int temp;
+	in.read((char*)&temp, sizeof temp);
+	in.read((char*)&DeveloperMode, sizeof DeveloperMode);
+	in.read((char*)&FullLogging, sizeof FullLogging);
+	in.read((char*)&PlayerMoved, sizeof PlayerMoved);
+	in.read((char*)MemoryCell, sizeof MemoryCell[0] * 100);
+	MyLevel = Levels[temp - 1];
 }

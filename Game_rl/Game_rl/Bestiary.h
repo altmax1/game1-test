@@ -17,6 +17,7 @@ public:
 	Beast* GetCreatureFromLevel (int Num);
 	void MakeBeastsMove();
 	void SaveBestiary();
+	void LoadBestiary();
 	Bestiary(void);
 	~Bestiary(void);
 	void SetIsDead (int Num, int a);

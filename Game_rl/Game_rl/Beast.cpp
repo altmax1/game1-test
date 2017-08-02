@@ -209,6 +209,90 @@ void Beast::SaveCreature(ofstream & MyStream)
 	MyStream.write((char*)&MovePoints, sizeof MovePoints);
 }
 
+void Beast::LoadCreature(std::ifstream & MyStream)
+{
+	MyStream.read((char*)&IsDead, sizeof IsDead);
+	MyStream.read((char*)&ID, sizeof ID);
+	MyStream.read((char*)&NumInVector, sizeof NumInVector);
+	MyStream.read((char*)&CoordX, sizeof CoordX);
+	MyStream.read((char*)&CoordY, sizeof CoordY);
+	MyStream.read((char*)&CoordZ, sizeof CoordZ);
+	int size;
+	char *tempchar;
+	MyStream.read((char*)&size, sizeof size);
+	tempchar = new char(size + 1);
+	MyStream.read(tempchar, size);
+	Name = tempchar;
+	delete[] tempchar;
+	MyStream.read((char*)&size, sizeof size);
+	tempchar = new char(size + 1);
+	MyStream.read(tempchar, size);
+	RName = tempchar;
+	delete[] tempchar;
+	MyStream.read((char*)&size, sizeof size);
+	tempchar = new char(size + 1);
+	MyStream.read(tempchar, size);
+	RDesc = tempchar;
+	delete[] tempchar;
+	MyStream.read((char*)&HP, sizeof HP);
+	MyStream.read((char*)&MaxHP, sizeof MaxHP);
+	MyStream.read((char*)&Energy, sizeof Energy);
+	MyStream.read((char*)&RangeOfSight, sizeof RangeOfSight);
+	MyStream.read((char*)&Speed, sizeof Speed);
+	MyStream.read((char*)&RegenHP, sizeof RegenHP);
+	MyStream.read((char*)&RegenEnergy, sizeof RegenEnergy);
+	MyStream.read((char*)&LevelOfBeast, sizeof LevelOfBeast);
+	MyStream.read((char*)Defense, (sizeof Defense[0]) * 10);
+	MyStream.read((char*)MaxAttack, (sizeof MaxAttack[0]) * 3);
+	MyStream.read((char*)MinAttack, (sizeof MinAttack[0]) * 3);
+	MyStream.read((char*)AttackType, (sizeof AttackType[0]) * 3);
+	MyStream.read((char*)AttackRange, (sizeof AttackRange[0]) * 3);
+	MyStream.read((char*)&Dex, sizeof Dex);
+	MyStream.read((char*)&Str, sizeof Str);
+	char TempChar;
+	MyStream.read((char*)&TempChar, sizeof TempChar);
+	if (TempChar & 0b00000001)
+		FlyAble = 1;
+	else
+		FlyAble = 0;
+	if (TempChar & 0b00000010)
+		Fly = 1;
+	else
+		Fly = 0;
+	if (TempChar & 0b00000100)
+		Sleep = 1;
+	else
+		Sleep = 0;
+	if (TempChar & 0b00001000)
+		Active = 1;
+	else
+		Active = 0;
+	if (TempChar & 0b00010000)
+		Magic = 1;
+	else
+		Magic = 0;
+	MyStream.read((char*)&Behavior, sizeof Behavior);
+	MyStream.read((char*)&size, sizeof size);
+	int temp;
+	for (int i = 0; i < size; i++)
+	{
+		MyStream.read((char*)&temp, sizeof temp);
+		Effects[i] = temp;
+		MyStream.read((char*)&temp, sizeof temp);
+		EffectsTime[i] = temp;
+	}
+	MyStream.read((char*)&size, sizeof size);
+	for (int i = 0; i < size; i++)
+	{
+		MyStream.read((char*)&temp, sizeof temp);
+		NextStep.push_back(temp);
+	}
+	MyStream.read((char*)&CharCode, sizeof CharCode);
+	MyStream.read((char*)&ColorVisible, sizeof ColorVisible);
+	MyStream.read((char*)&ColorNotVisible, sizeof ColorNotVisible);
+	MyStream.read((char*)&MovePoints, sizeof MovePoints);
+}
+
 // ------------------------------ Getters and Setters -----------------------
 
 void Beast::SetIsDead (int a)

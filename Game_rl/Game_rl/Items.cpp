@@ -1100,3 +1100,154 @@ void Items::SaveArmour(ofstream & MyStream)
 
 	}
 }
+
+void Items::LoadItems()
+{
+	ifstream in(".\\Files\\save\\items.sav", ios::binary | ios::in);
+	int Size;
+	in.read((char*)&Size, sizeof Size);
+	ExistingID.clear();
+	int Temp;
+	for (int i = 0; i < Size; i++)
+	{
+		in.read((char*)&Temp, sizeof Temp);
+		ExistingID.insert(Temp);
+	}
+	LoadWeapons(in);
+	LoadArmour(in);
+	in.close();
+}
+
+void Items::LoadWeapons(ifstream & MyStream)
+{
+	int Size;
+	MyStream.read((char*)&Size, sizeof Size);
+	WeaponFromLevel.clear();
+	int temp;
+	char *tempchar;
+	for (int i = 0; i < Size; i++)
+	{
+		Weapon a;
+		MyStream.read((char*)&a.ID, sizeof a.ID);
+		MyStream.read((char*)&a.Weight, sizeof a.Weight);
+		MyStream.read((char*)&a.Unique, sizeof a.Unique);
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		a.Name = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		a.RName = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		a.Description = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&a.Stackable, sizeof a.Stackable);
+		MyStream.read((char*)&a.Type, sizeof a.Type);
+		MyStream.read((char*)&a.Quality, sizeof a.Quality);
+		MyStream.read((char*)&a.Destroyed, sizeof a.Destroyed);
+		MyStream.read((char*)&a.CharCode, sizeof a.CharCode);
+		MyStream.read((char*)&a.ColorVisible, sizeof a.ColorVisible);
+		MyStream.read((char*)&a.ColorNotVisible, sizeof a.ColorNotVisible);
+		MyStream.read((char*)&a.MaxDamage, sizeof a.MaxDamage);
+		MyStream.read((char*)&a.MinDamage, sizeof a.MinDamage);
+		MyStream.read((char*)&a.NeedsAmmo, sizeof a.NeedsAmmo);
+		MyStream.read((char*)&a.IsAmmo, sizeof a.IsAmmo);
+		MyStream.read((char*)&a.Caliber, sizeof a.Caliber);
+		MyStream.read((char*)&a.AmmoQuantity, sizeof a.AmmoQuantity);
+
+		MyStream.read((char*)&temp, sizeof temp);
+		int temp2;
+		for (int i = 0; i < temp; i++)
+		{
+			MyStream.read((char*)&temp2, sizeof temp2);
+			a.Ammo.push_back(temp2);
+		}
+
+		MyStream.read((char*)&a.Range, sizeof a.Range);
+		MyStream.read((char*)&a.BlastRadius, sizeof a.BlastRadius);
+		MyStream.read((char*)&a.ShotsPerStep, sizeof a.ShotsPerStep);
+		MyStream.read((char*)&a.AfterEffectType, sizeof a.AfterEffectType);
+		MyStream.read((char*)&a.AfterEffectTime, sizeof a.AfterEffectTime);
+		MyStream.read((char*)&a.AfterEffectPower, sizeof a.AfterEffectPower);
+		MyStream.read((char*)&a.MaxDamage2, sizeof a.MaxDamage2);
+		MyStream.read((char*)&a.MinDamage2, sizeof a.MinDamage2);
+		MyStream.read((char*)&a.Damage2Type, sizeof a.Damage2Type);
+		MyStream.read((char*)&a.MaxDamage3, sizeof a.MaxDamage3);
+		MyStream.read((char*)&a.MinDamage3, sizeof a.MinDamage3);
+		MyStream.read((char*)&a.Damage3Type, sizeof a.Damage3Type);
+		MyStream.read((char*)&a.NeedsEnergy, sizeof a.NeedsEnergy);
+		MyStream.read((char*)&a.EnergyPerUse, sizeof a.EnergyPerUse);
+		MyStream.read((char*)&a.FacultativeEnergy, sizeof a.FacultativeEnergy);
+
+		WeaponFromLevel.push_back(a);
+	}
+}
+
+void Items::LoadArmour(ifstream & MyStream)
+{
+	int Size;
+	MyStream.read((char*)&Size, sizeof Size);
+	ArmourFromLevel.clear();
+	int temp;
+	char *tempchar;
+	for (int i = 0; i < Size; i++)
+	{
+		Armour a;
+		MyStream.read((char*)&a.ID, sizeof a.ID);
+		MyStream.read((char*)&a.Weight, sizeof a.Weight);
+		MyStream.read((char*)&a.Unique, sizeof a.Unique);
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		a.Name = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		a.RName = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		a.Description = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&a.Stackable, sizeof a.Stackable);
+		MyStream.read((char*)&a.Type, sizeof a.Type);
+		MyStream.read((char*)&a.Quality, sizeof a.Quality);
+		MyStream.read((char*)&a.Destroyed, sizeof a.Destroyed);
+		MyStream.read((char*)&a.CharCode, sizeof a.CharCode);
+		MyStream.read((char*)&a.ColorVisible, sizeof a.ColorVisible);
+		MyStream.read((char*)&a.ColorNotVisible, sizeof a.ColorNotVisible);
+		MyStream.read((char*)&a.Type2, sizeof a.Type2);
+		MyStream.read((char*)a.Defense, (sizeof a.Defense[0]) * 10);
+		MyStream.read((char*)&a.CanBuiltedIn, sizeof a.CanBuiltedIn);
+		MyStream.read((char*)&a.NumOfBuiltedInSlots, sizeof a.NumOfBuiltedInSlots);
+
+		MyStream.read((char*)&temp, sizeof temp);
+		int temp2;
+		for (int i = 0; i < temp; i++)
+		{
+			MyStream.read((char*)&temp2, sizeof temp2);
+			a.SlotForBuiltIn.push_back(temp2);
+		}
+
+		MyStream.read((char*)&a.BuiltInType, sizeof a.BuiltInType);
+
+		ArmourFromLevel.push_back(a);
+
+	}
+
+}

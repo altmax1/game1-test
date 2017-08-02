@@ -107,6 +107,9 @@ public:
 	int GetMemotyCell(int Num);
 	void SetMemoryCell(int Num, int Value);
 	void SaveGame();
+	void LoadGame();
+	void SaveGameVariables();
+	void LoadGameVariables();
 
 	
 };

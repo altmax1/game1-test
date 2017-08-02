@@ -151,5 +151,8 @@ public:
 	void SaveItems();
 	void SaveWeapon(ofstream &MyStream);
 	void SaveArmour(ofstream &MyStream);
+	void LoadItems();
+	void LoadWeapons(ifstream &MyStream);
+	void LoadArmour(ifstream &MyStream);
 };
 
