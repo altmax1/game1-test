@@ -282,7 +282,7 @@ void Bestiary::SaveBestiary()
 
 void Bestiary::LoadBestiary()
 {
-	ifstream in(".\\Files\\Save\\bedtiary.sav", ios::binary | ios::in);
+	ifstream in(".\\Files\\Save\\bestiary.sav", ios::binary | ios::in);
 	int Size;
 	int tempint;
 	DeadBeasts.clear();

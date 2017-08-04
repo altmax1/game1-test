@@ -218,22 +218,25 @@ void Beast::LoadCreature(std::ifstream & MyStream)
 	MyStream.read((char*)&CoordY, sizeof CoordY);
 	MyStream.read((char*)&CoordZ, sizeof CoordZ);
 	int size;
-	char *tempchar;
+	char *TempChar;
 	MyStream.read((char*)&size, sizeof size);
-	tempchar = new char(size + 1);
-	MyStream.read(tempchar, size);
-	Name = tempchar;
-	delete[] tempchar;
+	TempChar = new char[size + 1];
+	MyStream.read(TempChar, size);
+	TempChar[size] = '\0';
+	Name = TempChar;
+	delete[] TempChar;
 	MyStream.read((char*)&size, sizeof size);
-	tempchar = new char(size + 1);
-	MyStream.read(tempchar, size);
-	RName = tempchar;
-	delete[] tempchar;
+	TempChar = new char[size + 1];
+	MyStream.read(TempChar, size);
+	TempChar[size] = '\0';
+	RName = TempChar;
+	delete[] TempChar;
 	MyStream.read((char*)&size, sizeof size);
-	tempchar = new char(size + 1);
-	MyStream.read(tempchar, size);
-	RDesc = tempchar;
-	delete[] tempchar;
+	TempChar = new char[size + 1];
+	MyStream.read(TempChar, size);
+	TempChar[size] = '\0';
+	RDesc = TempChar;
+	delete[] TempChar;
 	MyStream.read((char*)&HP, sizeof HP);
 	MyStream.read((char*)&MaxHP, sizeof MaxHP);
 	MyStream.read((char*)&Energy, sizeof Energy);
@@ -249,25 +252,25 @@ void Beast::LoadCreature(std::ifstream & MyStream)
 	MyStream.read((char*)AttackRange, (sizeof AttackRange[0]) * 3);
 	MyStream.read((char*)&Dex, sizeof Dex);
 	MyStream.read((char*)&Str, sizeof Str);
-	char TempChar;
-	MyStream.read((char*)&TempChar, sizeof TempChar);
-	if (TempChar & 0b00000001)
+	char TempChar2;
+	MyStream.read((char*)&TempChar2, sizeof TempChar2);
+	if (TempChar2 & 0b00000001)
 		FlyAble = 1;
 	else
 		FlyAble = 0;
-	if (TempChar & 0b00000010)
+	if (TempChar2 & 0b00000010)
 		Fly = 1;
 	else
 		Fly = 0;
-	if (TempChar & 0b00000100)
+	if (TempChar2 & 0b00000100)
 		Sleep = 1;
 	else
 		Sleep = 0;
-	if (TempChar & 0b00001000)
+	if (TempChar2 & 0b00001000)
 		Active = 1;
 	else
 		Active = 0;
-	if (TempChar & 0b00010000)
+	if (TempChar2 & 0b00010000)
 		Magic = 1;
 	else
 		Magic = 0;

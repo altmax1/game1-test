@@ -393,15 +393,15 @@ void X_cell::SaveCell(ofstream & MyStream)
 	MyStream.write((char*)&BaseType, sizeof BaseType);
 	tempchar = 0;
 	if (visible)
-		tempchar | 0b00000001;
+		tempchar = tempchar | 0b00000001;
 	if (opaque)
-		tempchar | 0b00000010;
+		tempchar = tempchar | 0b00000010;
 	if (visited)
-		tempchar | 0b00000100;
+		tempchar = tempchar | 0b00000100;
 	if (passable)
-		tempchar | 0b00001000;
+		tempchar = tempchar | 0b00001000;
 	if (empty_cell)
-		tempchar | 0b00010000;
+		tempchar = tempchar | 0b00010000;
 	MyStream.write((char*)&tempchar, sizeof tempchar);
 	temp = items.size();
 	MyStream.write((char*)&temp, sizeof temp);

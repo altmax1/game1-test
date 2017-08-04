@@ -1135,18 +1135,21 @@ void Items::LoadWeapons(ifstream & MyStream)
 		MyStream.read((char*)&temp, sizeof temp);
 		tempchar = new char[temp + 1];
 		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
 		a.Name = tempchar;
-		delete[] tempchar;
+		delete [] tempchar;
 
 		MyStream.read((char*)&temp, sizeof temp);
 		tempchar = new char[temp + 1];
 		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
 		a.RName = tempchar;
 		delete[] tempchar;
 
 		MyStream.read((char*)&temp, sizeof temp);
 		tempchar = new char[temp + 1];
 		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
 		a.Description = tempchar;
 		delete[] tempchar;
 
@@ -1209,18 +1212,21 @@ void Items::LoadArmour(ifstream & MyStream)
 		MyStream.read((char*)&temp, sizeof temp);
 		tempchar = new char[temp + 1];
 		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
 		a.Name = tempchar;
 		delete[] tempchar;
 
 		MyStream.read((char*)&temp, sizeof temp);
 		tempchar = new char[temp + 1];
 		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
 		a.RName = tempchar;
 		delete[] tempchar;
 
 		MyStream.read((char*)&temp, sizeof temp);
 		tempchar = new char[temp + 1];
 		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
 		a.Description = tempchar;
 		delete[] tempchar;
 

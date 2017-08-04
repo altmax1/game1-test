@@ -72,6 +72,8 @@ private:
 	int Moves;
 	vector <level*> Levels;
 	int MemoryCell[100];
+	int InitFromSave;
+	bool BreakGame;
 
 public:
 	static Game* GetGameInstance ();
@@ -110,6 +112,8 @@ public:
 	void LoadGame();
 	void SaveGameVariables();
 	void LoadGameVariables();
+	void SetInitFromSave(int a);
+	void SetBreakGame();
 
 	
 };

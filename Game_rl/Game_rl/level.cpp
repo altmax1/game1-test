@@ -890,8 +890,8 @@ void level::LoadLevel(ifstream &in)
 	in.read((char*)&NameSize, sizeof NameSize);
 	tempchar = new char[NameSize + 1];
 	in.read((char*)tempchar, NameSize);
-	if (cells)
-		delete[]cells;
+	//if (cells)
+		//delete[]cells;
 	cells = new X_cell[LevelSize];
 	for (int i = 0; i < LevelSize; i++)
 	{
@@ -906,9 +906,13 @@ void level::LoadMap(ifstream & in)
 	in.read((char*)&map.Width, sizeof map.Width);
 	in.read((char*)&map.Height, sizeof map.Height);
 	int size = sizeof map.Cells[0].Flags;
+	char temp;
+	map.Cells = new FOV_CELL[map.Width*map.Height];
 	for (int i = 0; i < map.Width*map.Height; i++)
 	{
-		in.read((char*)&map.Cells[i].Flags, size);
+		in.read((char*)&temp, size);
+		//in.read((char*)&map.Cells[i].Flags, size);
+		map.Cells[i].Flags = temp;
 	}
 }
 

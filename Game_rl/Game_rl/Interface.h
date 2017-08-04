@@ -53,5 +53,6 @@ public:
 	int GetInputKey();
 	Interface(void);
 	~Interface(void);
+	void ExitMenu();
 };
 

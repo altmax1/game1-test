@@ -188,6 +188,15 @@ inline void X_MainMenu::MakeChoise( int TerminalRead )
 			delete MyGame;
 			return;		
 		}
+		if (MenuState == 1)
+		{
+			Game *MyGame;
+			MyGame = Game::GetGameInstance();
+			MyGame->SetInitFromSave(1);
+			MyGame->GameInit();
+			delete MyGame;
+			return;
+		}
 	
 	}
 	

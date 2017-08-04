@@ -17,6 +17,54 @@ Interface::~Interface(void)
 {
 }
 
+void Interface::ExitMenu()
+{
+	int State = 0;
+	int a;
+	while (1)
+	{
+		terminal_clear();
+		//terminal_color(0xAFAFAF);
+		terminal_printf(10, 10, L"ÂÛ ÄÅÉÑÒÂÈÒÅËÜÍÎ ÕÎÒÈÒÅ ÂÛÉÒÈ?");
+		terminal_printf(10, 14, L"Ïðîäîëæèòü èãðó");
+		terminal_printf(10, 16, L"Ñîõðàíèòü è âûéòè");
+		terminal_printf(10, 18, L"Âûéòè áåç ñîõðàíåíèÿ");
+		//terminal_color(0xFFFFFF);
+		terminal_put(8, 14 + State * 2, '>');
+		terminal_refresh();
+		a = terminal_read();
+		if (a == TK_UP && State > 0)
+			State = State - 1;
+		if (a == TK_DOWN && State < 2)
+			State = State + 1;
+		if (a == TK_ESCAPE)
+			break;
+		if (a == TK_ENTER)
+		{
+			if (State == 0)
+				break;
+			if (State == 1)
+			{
+				Game *MyGame;
+				MyGame = Game::GetGameInstance();
+				MyGame->SaveGame();
+				MyGame->SetBreakGame();
+				break;
+			}
+
+			if (State == 2)
+			{
+				Game *MyGame;
+				MyGame = Game::GetGameInstance();
+				MyGame->SetBreakGame();
+				break;
+			}
+
+		}
+	}
+
+}
+
 void Interface::ReadIniFile()
 {
 	FileContent MyFile;

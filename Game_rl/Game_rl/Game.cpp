@@ -17,6 +17,8 @@ Game::Game(void)
 	FullLogging = 1;
 	for (int i = 0; i < 100; i++)
 		MemoryCell[i] = 0;
+	InitFromSave = 0;
+	BreakGame = 0;
 	
 	//Luaad = new LuaAdapter;
 	//Luaad->LuaDesc(L);
@@ -134,17 +136,32 @@ Log * Game::GetLog()
 void Game::GameInit()
 {
 	int KeyCode;
-	MakeLog();
-	MakeItems();
-	MakeBestiary();
-	MakeLevel (1,128,40,40);
-	MakeGamer ();
-	MakeInterface();
-	MakeLuaadapter();
-	MyLevel->PlaceItems();
-	//MyLevel->LevelPrint();
-	MyGamer->GamerPlacing();
-	//MyLevel->LoadLevel();
+	if (InitFromSave == 0)
+	{
+		MakeLog();
+		MakeItems();
+		MakeBestiary();
+		MakeLevel(1, 128, 40, 40);
+		MakeGamer();
+		MakeInterface();
+		MakeLuaadapter();
+		MyLevel->PlaceItems();
+		//MyLevel->LevelPrint();
+		MyGamer->GamerPlacing();
+		//MyLevel->LoadLevel();
+	}
+	else if (InitFromSave = 1)
+	{
+		MakeLog();
+		MakeItems();
+		MakeBestiary();
+		MakeLevel(1, 128, 40, 40);
+		MakeGamer();
+		MakeInterface();
+		MakeLuaadapter();
+		LoadGame();
+	}
+
 	while (1)
 	{
 	terminal_color (0xFFDFDFA9);
@@ -153,6 +170,8 @@ void Game::GameInit()
 	terminal_refresh();
 	KeyCode = terminal_read();
 	if (KeyCode == TK_ESCAPE)
+		MyInterface->ExitMenu();
+	if (BreakGame)
 		break;
 	MyGamer->Move(KeyCode);
 	MyLevel->LevelProcessEffects();
@@ -335,4 +354,15 @@ void Game::LoadGameVariables()
 	in.read((char*)&PlayerMoved, sizeof PlayerMoved);
 	in.read((char*)MemoryCell, sizeof MemoryCell[0] * 100);
 	MyLevel = Levels[temp - 1];
+}
+
+void Game::SetInitFromSave(int a)
+{
+	InitFromSave = a;
+	return;
+}
+
+void Game::SetBreakGame()
+{
+	BreakGame = 1;
 }
