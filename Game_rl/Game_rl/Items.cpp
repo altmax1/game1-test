@@ -9,6 +9,8 @@ Items::Items(void)
 	GetCommonWeaponsFromFile ();
 	GetUniqueArmourFromFile();
 	GetCommonArmourFromFile();
+	GetUniqueStuffFromFile();
+	GetCommonStuffFromFile();
 }
 
 
@@ -28,6 +30,10 @@ bool Items::GetStackable (int ID)
 		return ArmourFromLevel[ID-1000000].Stackable;
 	if (ID >= 1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].Stackable;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].Stackable;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].Stackable;
 	return 0;
 }
 
@@ -332,6 +338,107 @@ void Items::ReadArmourFromMap(map<string, string>& MyMap, Armour & TempArmour)
 	return;
 }
 
+void Items::GetUniqueStuffFromFile()
+{
+	vector <map<string, string>> Temp;
+	FileContent Content;
+	X_File::X_ReadFile((LPCTSTR)L".\\Files\\UniqueStuff.ini", Content);
+	X_File::X_ParseIniFile(Content, Temp);
+	InsertUniqueStuffInStorage(Temp);
+	return;
+}
+
+void Items::GetCommonStuffFromFile()
+{
+	vector <map<string, string>> Temp;
+	FileContent Content;
+	X_File::X_ReadFile((LPCTSTR)L".\\Files\\CommonStuff.ini", Content);
+	X_File::X_ParseIniFile(Content, Temp);
+	InsertCommonStuffInStorage(Temp);
+	return;
+}
+
+void Items::InsertUniqueStuffInStorage(vector<map<string, string>> Temp)
+{
+	vector <map<string, string>>::iterator p;
+	p = Temp.begin();
+	while (p != Temp.end())
+	{
+		Stuff TempStuff;
+		ReadStuffFromMap(*p, TempStuff);
+		try {
+			if (TempStuff.ID - 2000000 != UniqueStuff.size())
+				throw "BAD_ID_IN_CommonWeapon";
+		}
+		catch (char *str)//сюда передастся строка
+		{
+			cout << str << endl;
+		}
+		UniqueStuff.push_back(TempStuff);
+		p++;
+
+	}
+}
+
+void Items::InsertCommonStuffInStorage(vector<map<string, string>> Temp)
+{
+	vector <map<string, string>>::iterator p;
+	p = Temp.begin();
+	while (p != Temp.end())
+	{
+		Stuff TempStuff;
+		ReadStuffFromMap(*p, TempStuff);
+		try {
+			if (TempStuff.ID - 2900000 != CommonStuff.size())
+				throw "BAD_ID_IN_CommonWeapon";
+		}
+		catch (char *str)//сюда передастся строка
+		{
+			cout << str << endl;
+		}
+		CommonStuff.push_back(TempStuff);
+		p++;
+
+	}
+}
+
+void Items::ReadStuffFromMap(map<string, string>& MyMap, Stuff & TempStuff)
+{
+	map <string, string>::iterator MapPtr;
+	MapPtr = MyMap.find("ID");
+	TempStuff.ID = atoi(MapPtr->second.c_str());
+	ExistingID.insert(TempStuff.ID);
+	MapPtr = MyMap.find("Weight");
+	TempStuff.Weight = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Unique");
+	TempStuff.Unique = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Name");
+	TempStuff.Name = MapPtr->second;
+	MapPtr = MyMap.find("RName");
+	TempStuff.RName = MapPtr->second;
+	if (MyMap.count("Desccription") > 0)
+	{
+		MapPtr = MyMap.find("Desccription");
+		TempStuff.Description = MapPtr->second;
+	}
+	else TempStuff.Description = "None";
+	MapPtr = MyMap.find("Stackable");
+	TempStuff.Stackable = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Type");
+	TempStuff.Type = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Quality");
+	TempStuff.Weight = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("Destroyed");
+	TempStuff.Destroyed = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("CharCode");
+	TempStuff.Unique = atoi(MapPtr->second.c_str());
+	MapPtr = MyMap.find("ColorVisible");
+	TempStuff.ColorVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+	MapPtr = MyMap.find("ColorNotVisible");
+	TempStuff.ColorNotVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+
+}
+
 void Items::InsertUniqueArmourInStorage (vector <map<string,string>> Temp)
 {
 	char *temp = new char [3];
@@ -386,6 +493,14 @@ int Items::GetIdForCreation (int Id)
 		ArmourFromLevel.push_back (UniqueArmour[Id-1000000]);
 		return size+1000000;
 	}
+	if (Id >= 2'900'000 && Id < 3'000'000)
+		return Id;
+	if (Id>= 2'000'000 && Id < 2'900'000)
+	{
+		int size = StuffFromLevel.size();
+		StuffFromLevel.push_back(UniqueStuff[Id - 2'000'000]);
+		return size + 2'000'000;
+	}
 }
 
 
@@ -411,6 +526,10 @@ string Items::GetNameById (int ID)
 		return ArmourFromLevel[ID-1000000].RName;
 	if (ID >= 1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].RName;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].RName;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].RName;
 	return "NOT FOUND";
 
 }
@@ -425,6 +544,10 @@ int Items::GetTypeById (int ID)
 		return ArmourFromLevel[ID-1000000].Type;
 	if (ID >=1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].Type;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].Type;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].Type;
 	return -1;
 
 }
@@ -463,6 +586,8 @@ int Items::GetGlobalType (int ID)
 		return 0; // 0 - оружие
 	if (ID >= 1000000 && ID < 2000000)
 		return 1; // 1 - броня и одежда
+	if (ID >= 2'000'000 && ID < 3'000'000)
+		return 2; //2- разная фигня
 	return -1;
 }
 
@@ -476,6 +601,10 @@ int Items::GetWeightById (int ID)
 		return ArmourFromLevel[ID-1000000].Weight;
 	if (ID >=1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].Weight;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].Weight;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].Weight;
 	return 0;
 }
 
@@ -572,6 +701,14 @@ int Items::GetQuality (int Id)
 		return WeaponFromLevel[Id].Quality;
 	if (Id>=900000 && Id<1000000)
 		return CommonWeapon[Id-900000].Quality;
+	if (Id >= 1'000'000 && Id < 1'900'000)
+		return ArmourFromLevel[Id - 1'000'000].Quality;
+	if (Id >= 1'900'000 && Id < 2'000'000)
+		return CommonArmour[Id - 1'900'000].Quality;
+	if (Id >= 2'000'000 && Id < 2'900'000)
+		return StuffFromLevel[Id - 2'000'000].Quality;
+	if (Id >= 2'900'000 && Id < 3'000'000)
+		return CommonStuff[Id - 2'900'000].Quality;
 	return 0;
 }
 
@@ -581,6 +718,14 @@ void Items::SetQuality (int Id, int Quality)
 		WeaponFromLevel[Id].Quality = Quality;
 	if (Id>=900000 && Id < 1000000)
 		CommonWeapon[Id-900000].Quality = Quality;
+	if (Id >= 1'000'000 && Id < 1'900'000)
+		ArmourFromLevel[Id - 1'000'000].Quality = Quality;
+	if (Id >= 1'900'000 && Id < 2'000'000)
+		CommonArmour[Id - 1'900'000].Quality = Quality;
+	if (Id >= 2'000'000 && Id < 2'900'000)
+		StuffFromLevel[Id - 2'000'000].Quality = Quality;
+	if (Id >= 2'900'000 && Id < 3'000'000)
+		CommonStuff[Id - 2'900'000].Quality = Quality;
 }
 
 //void Items::SetWeaponAmmoQuantity (int Id, int Quality)
@@ -597,6 +742,14 @@ int Items::GetIsDestroyed (int Id)
 		return WeaponFromLevel[Id].Destroyed;
 	if (Id>=900000 && Id<1000000)
 		return CommonWeapon[Id-900000].Destroyed;
+	if (Id >= 1'000'000 && Id < 1'900'000)
+		return ArmourFromLevel[Id - 1'000'000].Destroyed;
+	if (Id >= 1'900'000 && Id < 2'000'000)
+		return CommonArmour[Id - 1'900'000].Destroyed;
+	if (Id >= 2'000'000 && Id < 2'900'000)
+		return StuffFromLevel[Id - 2'000'000].Destroyed;
+	if (Id >= 2'900'000 && Id < 3'000'000)
+		return CommonStuff[Id - 2'900'000].Destroyed;
 	return 0;
 }
 
@@ -609,13 +762,56 @@ void Items::SetIsDestroyed (int Id, int a)
 		else 
 			WeaponFromLevel[Id].Destroyed = 1;
 	}
-	if (Id>=900000 && Id < 1000000)
+	else if (Id>=900000 && Id < 1000000)
 	{
 		if (a==0)
 			CommonWeapon[Id-900000].Destroyed = 0;
 		else
 			CommonWeapon[Id-900000].Destroyed = 1;
 	}
+	else if (Id >= 1'000'000 && Id<1'900'000)
+	{
+		if (a == 0)
+			ArmourFromLevel[Id-1'000'000].Destroyed = 0;
+		else
+			ArmourFromLevel[Id - 1'000'000].Destroyed = 1;
+	}
+	else if (Id >= 1'900'000 && Id < 2'000'000)
+	{
+		if (a == 0)
+			CommonArmour[Id - 1'900'000].Destroyed = 0;
+		else
+			CommonArmour[Id - 1'900'000].Destroyed = 1;
+	}
+	else if (Id >= 1'000'000 && Id<1'900'000)
+	{
+		if (a == 0)
+			ArmourFromLevel[Id - 1'000'000].Destroyed = 0;
+		else
+			ArmourFromLevel[Id - 1'000'000].Destroyed = 1;
+	}
+	else if (Id >= 1'900'000 && Id < 2'000'000)
+	{
+		if (a == 0)
+			CommonArmour[Id - 1'900'000].Destroyed = 0;
+		else
+			CommonArmour[Id - 1'900'000].Destroyed = 1;
+	}
+	else if (Id >= 2'000'000 && Id<2'900'000)
+	{
+		if (a == 0)
+			StuffFromLevel[Id - 2'000'000].Destroyed = 0;
+		else
+			StuffFromLevel[Id - 2'000'000].Destroyed = 1;
+	}
+	else if (Id >= 2'900'000 && Id < 3'000'000)
+	{
+		if (a == 0)
+			CommonStuff[Id - 2'900'000].Destroyed = 0;
+		else
+			CommonStuff[Id - 2'900'000].Destroyed = 1;
+	}
+	else return;
 }
 
 int Items::GetWeaponRange (int Id)
@@ -730,6 +926,10 @@ int Items::GetCharCode (int ID)
 		return ArmourFromLevel[ID-1000000].CharCode;
 	if (ID >=1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].CharCode;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].CharCode;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].CharCode;
 	return 0;
 }
 
@@ -743,6 +943,10 @@ int Items::GetColorVisible (int ID)
 		return ArmourFromLevel[ID-1000000].ColorVisible;
 	if (ID >=1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].ColorVisible;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].ColorVisible;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].ColorVisible;
 	return 0xFFFFFFFF;
 }
 
@@ -756,6 +960,10 @@ int Items::GetColorNotVisible (int ID)
 		return ArmourFromLevel[ID-1000000].ColorNotVisible;
 	if (ID >=1900000 && ID < 2000000)
 		return CommonArmour[ID-1900000].ColorNotVisible;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].ColorNotVisible;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].ColorNotVisible;
 	return 0;
 }
 
@@ -765,6 +973,8 @@ void Items::SetCharCode (int ID, int Code)
 		WeaponFromLevel[ID].CharCode = Code;
 	if (ID>=1000000 && ID<1900000)
 		ArmourFromLevel[ID-1000000].CharCode = Code;
+	if (ID >= 2000000 && ID < 2900000)
+		StuffFromLevel[ID - 2'000'000].CharCode = Code;
 	return;
 }
 
@@ -774,6 +984,8 @@ void Items::SetColorVisible (int ID, int Color)
 		WeaponFromLevel[ID].ColorVisible = Color;
 	if (ID>=1000000 && ID<1900000)
 		ArmourFromLevel[ID-1000000].ColorVisible = Color;
+	if (ID >= 2000000 && ID < 2900000)
+		StuffFromLevel[ID - 2'000'000].ColorVisible = Color;
 	return;
 }
 
@@ -783,6 +995,8 @@ void Items::SetColorNotVisible (int ID, int Color)
 		WeaponFromLevel[ID].ColorNotVisible = Color;
 	if (ID>=1000000 && ID<1900000)
 		ArmourFromLevel[ID-1000000].ColorNotVisible = Color;
+	if (ID >= 2000000 && ID < 2900000)
+		StuffFromLevel[ID - 2'000'000].ColorNotVisible = Color;
 	return;
 }
 
@@ -985,6 +1199,10 @@ string Items::GetDescription(int ID)
 		return ArmourFromLevel[ID - 1000000].Description;
 	if (ID >= 1900000 && ID < 2000000)
 		return CommonArmour[ID - 1900000].Description;
+	if (ID >= 2'000'000 && ID < 2'900'000)
+		return StuffFromLevel[ID - 2'000'000].Description;
+	if (ID >= 2'900'000 && ID < 3'000'000)
+		return CommonStuff[ID - 2'900'000].Description;
 	return "None description";
 }
 
@@ -999,6 +1217,7 @@ void Items::SaveItems()
 	}
 	SaveWeapon(Out);
 	SaveArmour(Out);
+	SaveStuff(Out);
 }
 
 void Items::SaveWeapon(ofstream & MyStream)
@@ -1101,6 +1320,35 @@ void Items::SaveArmour(ofstream & MyStream)
 	}
 }
 
+void Items::SaveStuff(ofstream & MyStream)
+{
+	int Size = StuffFromLevel.size();
+	MyStream.write((char*)&Size, sizeof Size);
+	int temp;
+	for (auto a : StuffFromLevel)
+	{
+		MyStream.write((char*)&a.ID, sizeof a.ID);
+		MyStream.write((char*)&a.Weight, sizeof a.Weight);
+		MyStream.write((char*)&a.Unique, sizeof a.Unique);
+		temp = a.Name.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.Name.c_str(), temp);
+		temp = a.RName.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.RName.c_str(), temp);
+		temp = a.Description.size();
+		MyStream.write((char*)&temp, sizeof temp);
+		MyStream.write(a.Description.c_str(), temp);
+		MyStream.write((char*)&a.Stackable, sizeof a.Stackable);
+		MyStream.write((char*)&a.Type, sizeof a.Type);
+		MyStream.write((char*)&a.Quality, sizeof a.Quality);
+		MyStream.write((char*)&a.Destroyed, sizeof a.Destroyed);
+		MyStream.write((char*)&a.CharCode, sizeof a.CharCode);
+		MyStream.write((char*)&a.ColorVisible, sizeof a.ColorVisible);
+		MyStream.write((char*)&a.ColorNotVisible, sizeof a.ColorNotVisible);
+	}
+}
+
 void Items::LoadItems()
 {
 	ifstream in(".\\Files\\save\\items.sav", ios::binary | ios::in);
@@ -1115,6 +1363,7 @@ void Items::LoadItems()
 	}
 	LoadWeapons(in);
 	LoadArmour(in);
+	LoadStuff(in);
 	in.close();
 }
 
@@ -1256,4 +1505,50 @@ void Items::LoadArmour(ifstream & MyStream)
 
 	}
 
+}
+
+void Items::LoadStuff(ifstream & MyStream)
+{
+	int Size;
+	MyStream.read((char*)&Size, sizeof Size);
+	StuffFromLevel.clear();
+	int temp;
+	char *tempchar;
+	for (int i = 0; i < Size; i++)
+	{
+		Stuff a;
+		MyStream.read((char*)&a.ID, sizeof a.ID);
+		MyStream.read((char*)&a.Weight, sizeof a.Weight);
+		MyStream.read((char*)&a.Unique, sizeof a.Unique);
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
+		a.Name = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
+		a.RName = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&temp, sizeof temp);
+		tempchar = new char[temp + 1];
+		MyStream.read(tempchar, temp);
+		tempchar[temp] = '\0';
+		a.Description = tempchar;
+		delete[] tempchar;
+
+		MyStream.read((char*)&a.Stackable, sizeof a.Stackable);
+		MyStream.read((char*)&a.Type, sizeof a.Type);
+		MyStream.read((char*)&a.Quality, sizeof a.Quality);
+		MyStream.read((char*)&a.Destroyed, sizeof a.Destroyed);
+		MyStream.read((char*)&a.CharCode, sizeof a.CharCode);
+		MyStream.read((char*)&a.ColorVisible, sizeof a.ColorVisible);
+		MyStream.read((char*)&a.ColorNotVisible, sizeof a.ColorNotVisible);
+		StuffFromLevel.push_back(a);
+	}
 }

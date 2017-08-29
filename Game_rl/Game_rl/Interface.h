@@ -3,6 +3,13 @@
 #include "Bestiary.h"
 #include "Gamer.h"
 
+struct CharOut 
+{
+	int Code;
+	int ColorVisible;
+	int ColorNotVisible;
+};
+
 class Interface
 {
 private:
@@ -23,9 +30,11 @@ private:
 	int MessageExist;
 	string Message;
 	wstring Message2;
+	map <int, CharOut> CharCode;
 
 public:
 	void ReadIniFile ();
+	void ReadIniCharCode();
 	void GetGamerAndLevel ();
 	void PrintFOV ();
 	void PrintMiniMap ();

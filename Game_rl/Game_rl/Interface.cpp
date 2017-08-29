@@ -9,6 +9,7 @@
 Interface::Interface(void)
 {
 	ReadIniFile();
+	ReadIniCharCode();
 	MessageExist = 0;
 }
 
@@ -85,6 +86,30 @@ void Interface::ReadIniFile()
 	MapPtr = temp[0].find("MiniMapCoordY");
 	MiniMapCoordY = atoi(MapPtr->second.c_str());
 	return;
+
+}
+void Interface::ReadIniCharCode()
+{
+	FileContent MyFile;
+	vector <map <string, string>> temp;
+	X_File::X_ReadFile((LPCTSTR)L".\\Files\\InrefaceCharOut.ini", MyFile);
+	X_File::X_ParseIniFile(MyFile, temp);
+	for (auto a : temp)
+	{
+		map<string, string>::iterator MapPtr;
+		int ID;
+		CharOut TempS;
+		MapPtr = a.find("ID");
+		ID = atoi(MapPtr->second.c_str());
+		MapPtr = a.find("Code");
+		TempS.Code = strtoul(MapPtr->second.c_str(), NULL, 16);
+		MapPtr = a.find("ColorVisible");
+		TempS.ColorVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+		MapPtr = a.find("ColorNotVisible");
+		TempS.ColorNotVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
+
+		CharCode.insert(pair<int, CharOut>(ID, TempS));
+	}
 
 }
 void Interface::GetGamerAndLevel ()
@@ -260,19 +285,29 @@ void Interface::PrintFOV ()
 			terminal_put (x+1,y+1,c);
 			if (Tile >= 0)
 			{
+				//if ((Mylevel->GetFlagsFOV(x + LeftUpX, y + LeftUpY))&FOV_CELL_VISIBLE)
+				//	terminal_color(0xffbf9e30); //желтый светлый
+				//else if ((Mylevel->GetFlagsFOV(x + LeftUpX, y + LeftUpY))&FOV_CELL_VISITED)
+				//	terminal_color(0xafbf9e30); //желтый темный
+				//else
+				//	terminal_color("black");
+
+				//if (Tile == 1000)
+				//	terminal_put(x + 1, y + 1, 0x00a9);
+				//if (Tile == 2000)
+				//	terminal_put(x + 1, y + 1, 0x00fb);
+				//if (Tile == 2001)
+				//	terminal_put(x + 1, y + 1, 0x00fc);
+				map<int, CharOut>::iterator MapPtr;
+				MapPtr = CharCode.find(Tile);
 				if ((Mylevel->GetFlagsFOV(x + LeftUpX, y + LeftUpY))&FOV_CELL_VISIBLE)
-					terminal_color(0xffbf9e30); //желтый светлый
+					terminal_color(MapPtr->second.ColorVisible); //желтый светлый
 				else if ((Mylevel->GetFlagsFOV(x + LeftUpX, y + LeftUpY))&FOV_CELL_VISITED)
-					terminal_color(0xafbf9e30); //желтый темный
+					terminal_color(MapPtr->second.ColorNotVisible); //желтый темный
 				else
 					terminal_color("black");
+				terminal_put(x + 1, y + 1, MapPtr->second.Code);
 
-				if (Tile == 1000)
-					terminal_put(x + 1, y + 1, 0x00a9);
-				if (Tile == 2000)
-					terminal_put(x + 1, y + 1, 0x00fb);
-				if (Tile == 2001)
-					terminal_put(x + 1, y + 1, 0x00fc);
 			}
 			if ((x+LeftUpX == GamerCoordX) && (y+LeftUpY == GamerCoordY ))
 			{

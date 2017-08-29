@@ -56,6 +56,12 @@ struct Armour: public Item
 
 };
 
+struct Stuff : public Item
+{
+
+
+};
+
 class Items
 {
 private:
@@ -65,6 +71,9 @@ private:
 	vector <Armour> UniqueArmour;
 	vector <Armour> CommonArmour;
 	vector <Armour> ArmourFromLevel;
+	vector <Stuff> UniqueStuff;
+	vector <Stuff> CommonStuff;
+	vector <Stuff> StuffFromLevel;
 	set <int> ExistingID; // для проверки корректности ID при ручном создании вещи
 public:
 	Items(void);
@@ -79,6 +88,11 @@ public:
 	void InsertUniqueArmourInStorage (vector <map<string,string>> Temp);
 	void InsertCommonArmourInStorage (vector <map<string,string>> Temp);
 	void ReadArmourFromMap(map <string, string> &MyMap, Armour &Temp);
+	void GetUniqueStuffFromFile();
+	void GetCommonStuffFromFile();
+	void InsertUniqueStuffInStorage(vector <map<string, string>> Temp);
+	void InsertCommonStuffInStorage(vector <map<string, string>> Temp);
+	void ReadStuffFromMap(map <string, string> &MyMap, Stuff &Temp);
 	int QuantityUniqueWeapon ();
 	int QuantityCommonWeapon ();
 	int GetIdForCreation (int Id);
@@ -151,8 +165,10 @@ public:
 	void SaveItems();
 	void SaveWeapon(ofstream &MyStream);
 	void SaveArmour(ofstream &MyStream);
+	void SaveStuff(ofstream &MyStream);
 	void LoadItems();
 	void LoadWeapons(ifstream &MyStream);
 	void LoadArmour(ifstream &MyStream);
+	void LoadStuff(ifstream &MyStream);
 };
 
