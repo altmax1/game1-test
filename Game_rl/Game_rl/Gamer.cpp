@@ -325,7 +325,7 @@ void Gamer::GamerMoveLua (int KeyCode)
 	lua_State *L = MyGame->GetLuaState();
 	LuaAdapter *Luaad = MyGame->GetLuaadapter();
 	luaL_dofile(L, ".\\Files\\lua\\GamerMove.lua");
-    lua_pcall(L, 0, 0, 0);
+	lua_pcall(L, 0, 0, 0);
     LuaRef GamerMove = getGlobal(L, "GamerMove");
 	  //
 	try {

@@ -95,7 +95,7 @@ public:
 	void ReadStuffFromMap(map <string, string> &MyMap, Stuff &Temp);
 	int QuantityUniqueWeapon ();
 	int QuantityCommonWeapon ();
-	int GetIdForCreation (int Id);
+	int GetIdForCreation (int Id); // создает новую уникальную вещь и возвращает её ID для хранения 
 	int GetType2OfArmour (int ID);
 	bool GetStackable (int ID);
 	string GetNameById (int ID);
@@ -142,7 +142,7 @@ public:
 	void SetWeaponAfterEffectTime (int Id, int Time);
 	int GetWeaponAfterEffectPower (int Id);
 	void SetWeaponAfterEffectPower (int Id, int Power);
-	int CheckID (int ID);
+	int CheckID (int ID); // проверяет, существует ли такой ID при создании вещи
 	void SetWeaponDamage2Type(int ID, int Type);
 	int GetWeaponDamage2Type( int ID);
 	void SetWeaponMaxDamage2(int ID, int Damage);

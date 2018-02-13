@@ -1,3 +1,6 @@
+package.path =".\\Files\\lua\\?.lua;"
+require ("MedicalBox");
+
 GamerMakeCheats = function (Game)
 
 Game:PrintMessageNow ('Введите команду...')
@@ -16,6 +19,10 @@ end
 
 if Command == "CHANGE_DEX" then
 	ChangeGamerDex (Game)
+end
+
+if Command == "MED_BOX" then
+	MedicalBoxStart(Game)
 end
 
 end

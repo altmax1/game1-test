@@ -67,6 +67,55 @@ void Bestiary::FillCreatures ()
 				MyBeast.SetDefenseAdvansed(0, a);
 					
 		}
+
+		for (int a = 1; a <= 10; a++)
+		{
+			int MyID, MyChance, MyMaxCount, MyMinCount;
+			_itoa(a, temp, 10);
+			string name2 = temp;
+			string name3 = "ItemID";
+			string name = name3 + name2;
+			if (MyCreatures[i].count(name.c_str()) > 0)
+			{
+				MapPtr = MyCreatures[i].find(name.c_str());
+				MyID = atoi(MapPtr->second.c_str());
+
+				name3 = "ItemChance";
+				name = name3 + name2;
+				if (MyCreatures[i].count(name.c_str()) > 0)
+				{
+					MapPtr = MyCreatures[i].find(name.c_str());
+					MyChance = atoi(MapPtr->second.c_str());
+				}
+				else
+					MyChance = 100;
+
+				name3 = "ItemMaxCount";
+				name = name3 + name2;
+				if (MyCreatures[i].count(name.c_str()) > 0)
+				{
+					MapPtr = MyCreatures[i].find(name.c_str());
+					MyMaxCount = atoi(MapPtr->second.c_str());
+				}
+				else
+					MyMaxCount = 100;
+
+				name3 = "ItemMinCount";
+				name = name3 + name2;
+				if (MyCreatures[i].count(name.c_str()) > 0)
+				{
+					MapPtr = MyCreatures[i].find(name.c_str());
+					MyMinCount = atoi(MapPtr->second.c_str());
+				}
+				else
+					MyMinCount = 100;
+
+				MyBeast.SetItemAfterDeath(MyChance, MyID, MyMaxCount, MyMinCount);
+
+			}
+			
+
+		}
 		
 
 		MapPtr = MyCreatures[i].find ("Str");

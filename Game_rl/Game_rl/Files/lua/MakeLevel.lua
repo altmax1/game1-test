@@ -4,6 +4,7 @@ MakeLevel = function (Game, Level)
 	MakeCreatures (Game)
 	MakeConnector (Level, Game)
 	MakeDepots(Game)
+	MakeMedicalBoxes(Game)
 	--end
 end
 
@@ -87,5 +88,52 @@ for i = 1,20 do
 		Game:SetLevelTile (CoordX, CoordY, 2000)
 	end
 	Game:AddItemOnLevel(1,1,CoordX,CoordY)
+end
+end
+
+MakeMedicalBoxes = function (Game) --размещаем медиционские боксы
+NumOfRooms = Game:GetLevelNumOfRooms();
+for i = 1,20 do
+	Room = Game:MyRandom (NumOfRooms)
+	LeftX = Game:GetRoomLeftX(Room)
+	UpY = Game:GetRoomUpY(Room)
+	RoomWidth = Game:GetRoomWidth(Room)
+	RoomHeight = Game:GetRoomHeight(Room)
+	CoordX = LeftX + Game:MyRandom (RoomWidth)
+	CoordY = UpY+Game:MyRandom(RoomHeight)
+
+	direction = Game:MyRandom (4)
+	if direction == 0 then
+		repeat
+			CoordX = CoordX+1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2002)
+	end
+	
+	if direction == 1 then
+		repeat
+			CoordX = CoordX-1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2002)
+	end
+	
+	if direction == 2 then
+		repeat
+			CoordY = CoordY+1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2002)
+	end
+	
+	if direction == 3 then
+		repeat
+			CoordY = CoordY-1
+		until 
+			Game:GetTileBaseType (CoordX, CoordY) == '#'
+		Game:SetLevelTile (CoordX, CoordY, 2002)
+	end
+	
 end
 end

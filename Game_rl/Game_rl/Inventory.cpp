@@ -356,6 +356,19 @@ int Inventory::GetQuantityByNum (int Num)
 	return -1;
 }
 
+int Inventory::GetQuantityByID(int ID)
+{
+	int Quantity = 0;
+	int Existing = FindItemByID(ID);
+	if (Existing == 0)
+		return 0;
+	else
+	{
+		Quantity = GetQuantityByNum(Existing);
+		return Quantity;
+	}
+}
+
 void Inventory::SaveInventory()
 {
 	ofstream out(".\\Files\\Save\\inventory.sav", ios::binary | ios::out);

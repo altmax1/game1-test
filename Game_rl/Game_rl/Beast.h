@@ -1,4 +1,13 @@
 #pragma once
+
+struct AfterDeath
+{
+	int ID;
+	int chance;
+	int MaxCount;
+	int MinCount;
+};
+
 class Beast
 {
 private:
@@ -39,6 +48,7 @@ private:
 	int ColorVisible;
 	int ColorNotVisible;
 	int MovePoints;
+	std::vector <AfterDeath> ItemsAfterDeath; // вещи что выпадают после смерти
 	
 
 public:
@@ -132,6 +142,8 @@ public:
 	void SetMovePoints (int Points);
 	void SetNumInVector (int Num) {NumInVector = Num;};
 	int GetNumInVector () {return NumInVector;};
+	void SetItemAfterDeath(int chance, int ID, int MaxCount, int MinCount);
+	void DropItemsAfterDeath();
 
 };
 

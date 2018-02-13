@@ -1,3 +1,6 @@
+package.path =".\\Files\\lua\\?.lua;"
+require ("MedicalBox");
+
 TK_RIGHT=0x4F
 TK_LEFT=0x50
 TK_DOWN=0x51
@@ -15,6 +18,8 @@ PASSABLE= 1
 NOT_PASSABLE=0
 YES=1
 NO=0
+
+
 
 GamerMove = function (Game, KeyCode)
 Game:LevelRefresh();
@@ -98,10 +103,14 @@ if CreatureNum >= 0 then
 	
 	
 	end
-if CreatureNum < 0 then
+if CreatureNum < 0 then -- проверяем во что уперся и вызываем соответствующие процедуры.
 	Tile = Game:GetLevelTile (NextX, NextY)
 	if Tile == 2000 then
 		Game:PutItemInInventoryFromCell(NextX, NextY)
+	end
+	
+	if Tile == 2002 then
+		MedicalBoxStart(Game)
 	end
 
 end
@@ -236,3 +245,7 @@ if Beast.HP <=0 then
 	Beast.IsDead = YES
 end
 end
+
+--MedicalBox = function (Game) смотри в файле mbox.lua
+	
+

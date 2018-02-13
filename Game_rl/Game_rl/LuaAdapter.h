@@ -183,6 +183,21 @@ public:
 	string GetLevelName();
 	void SetLevelName(string Name);
 	void SaveGame();
+	void LTerminal_clear();
+	void LTerminal_refresh();
+	void LTerminal_print(int x, int y, string text);
+	void LTerminal_print_ext(int x, int y, int width, int height, string text);
+	void LTerminal_put(int x, int y, int code);
+	void LTerminal_color(int code);
+	int LTerminal_read();
+
+	int FindItemByID(int ID); //возвращает номер слота или 0 если нет вещи
+	int GetNumOfSlots(); //колво слотов в инвентаре занятых
+	int GetQuantityByNum(int Num);//колво вещей по номеру слота в инв.
+	int GetQuantityByID(int ID);//колво вещей по ID в инвентаре
+	int CreateUniqueItem(int ID);//создает уникальную вещь и возвращает ей ID 
+	void PutItemInInventory2(int Id, int Num); // Помещает вещь в инвентарь
+	void RemoveItemFromInventory(int num, int Quantity); //Убирает вещь из инвентаря
 	
 		
 };

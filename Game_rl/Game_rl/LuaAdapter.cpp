@@ -129,6 +129,88 @@ void LuaAdapter::SaveGame()
 	MyGame->SaveGame();
 }
 
+void LuaAdapter::LTerminal_clear()
+{
+	terminal_clear();
+	return;
+}
+
+void LuaAdapter::LTerminal_refresh()
+{
+	terminal_refresh();
+	return;
+}
+
+void LuaAdapter::LTerminal_print(int x, int y, string text)
+{
+	terminal_print(x, y, text.c_str());
+	return;
+}
+
+void LuaAdapter::LTerminal_print_ext(int x, int y, int width, int height, string text)
+{
+	terminal_print_ext(x, y, width, height, TK_ALIGN_DEFAULT, text.c_str());
+	return;
+}
+
+void LuaAdapter::LTerminal_put(int x, int y, int code)
+{
+	terminal_put(x, y, code);
+	return;
+}
+
+void LuaAdapter::LTerminal_color(int code)
+{
+	terminal_color(code);
+	return;
+
+}
+
+int LuaAdapter::LTerminal_read()
+{
+	return terminal_read();
+}
+
+int LuaAdapter::FindItemByID(int ID)
+{
+	return MyInventory->FindItemByID(ID);
+}
+
+int LuaAdapter::GetNumOfSlots()
+{
+	return MyInventory->GetNumOfSlots();
+}
+
+int LuaAdapter::GetQuantityByNum(int Num)
+{
+	return MyInventory->GetQuantityByNum(Num);
+}
+
+int LuaAdapter::GetQuantityByID(int ID)
+{
+	return MyInventory->GetQuantityByID(ID);
+
+}
+
+int LuaAdapter::CreateUniqueItem(int ID)
+{
+	return MyItems->GetIdForCreation(ID);
+}
+
+void LuaAdapter::PutItemInInventory2(int Id, int Num)
+{
+	bool st;
+	st = MyItems->GetStackable(Id);
+	MyInventory->PutItemInVector(Id, st, Num);
+	return;
+}
+
+void LuaAdapter::RemoveItemFromInventory(int num, int Quantity)
+{
+	MyInventory->RemoveItemFromVector(num, Quantity);
+	return;
+}
+
 void LuaAdapter::LuaDesc (lua_State *L)
 {
 	
@@ -279,6 +361,20 @@ void LuaAdapter::LuaDesc (lua_State *L)
 			.addFunction("GetLevelName", &LuaAdapter::GetLevelName)
 			.addFunction("SetLevelName", &LuaAdapter::SetLevelName)
 			.addFunction("SaveGame", &LuaAdapter::SaveGame)
+			.addFunction("Terminal_clear", &LuaAdapter::LTerminal_clear)
+			.addFunction("Terminal_refresh", &LuaAdapter::LTerminal_refresh)
+			.addFunction("Terminal_print", &LuaAdapter::LTerminal_print)
+			.addFunction("Terminal_put", &LuaAdapter::LTerminal_put)
+			.addFunction("Terminal_print_ext", &LuaAdapter::LTerminal_print_ext)
+			.addFunction("Terminal_color", &LuaAdapter::LTerminal_color)
+			.addFunction("Terminal_read", &LuaAdapter::LTerminal_read)
+			.addFunction("FindItemByID", &LuaAdapter::FindItemByID)
+			.addFunction("GetNumOfSlots", &LuaAdapter::GetNumOfSlots)
+			.addFunction("GetQuantityByNum", &LuaAdapter::GetQuantityByNum)
+			.addFunction("GetQuantityByID", &LuaAdapter::GetQuantityByID)
+			.addFunction("CreateUniqueItem", &LuaAdapter::CreateUniqueItem)
+			.addFunction("PutItemInInventory2", &LuaAdapter::PutItemInInventory2)
+			.addFunction("RemoveItemFromInventory", &LuaAdapter::RemoveItemFromInventory)
 			.addProperty ("GamerX", &LuaAdapter::GetGamerX, &LuaAdapter::SetGamerX)
 			.addProperty ("GamerY", &LuaAdapter::GetGamerY, &LuaAdapter::SetGamerY)
 			.addProperty ("GamerHP", &LuaAdapter::GetGamerHP, &LuaAdapter::SetGamerHP)

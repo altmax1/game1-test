@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Beast.h"
 #include "LuaAdapter.h"
+#include "level.h"
 
 using namespace std;
 
@@ -67,7 +68,8 @@ void Beast::MakeMove()
 			MyGame= Game::GetGameInstance();
 			level *MyLevel;
 			MyLevel = MyGame->GetLevel ();
-			IsDead = 1;
+			//IsDead = 1;
+			SetIsDead(1);
 			MyLevel->RemoveCreature (CoordX,CoordY);
 			Bestiary *MyBestiary;
 			MyBestiary = MyGame->GetBestiary();
@@ -207,6 +209,16 @@ void Beast::SaveCreature(ofstream & MyStream)
 	MyStream.write((char*)&ColorVisible, sizeof ColorVisible);
 	MyStream.write((char*)&ColorNotVisible, sizeof ColorNotVisible);
 	MyStream.write((char*)&MovePoints, sizeof MovePoints);
+	size = ItemsAfterDeath.size();
+	MyStream.write((char*)&size, sizeof size);
+	for (auto a : ItemsAfterDeath)
+	{
+		MyStream.write((char*)&a.chance, sizeof a.chance);
+		MyStream.write((char*)&a.ID, sizeof a.ID);
+		MyStream.write((char*)&a.MaxCount, sizeof a.MaxCount);
+		MyStream.write((char*)&a.MinCount, sizeof a.MinCount);
+
+	}
 }
 
 void Beast::LoadCreature(std::ifstream & MyStream)
@@ -294,6 +306,16 @@ void Beast::LoadCreature(std::ifstream & MyStream)
 	MyStream.read((char*)&ColorVisible, sizeof ColorVisible);
 	MyStream.read((char*)&ColorNotVisible, sizeof ColorNotVisible);
 	MyStream.read((char*)&MovePoints, sizeof MovePoints);
+	MyStream.read((char*)&size, sizeof size);
+	for (int i = 0; i < size; i++)
+	{
+		AfterDeath a;
+		MyStream.read((char*)&a.chance, sizeof a.chance);
+		MyStream.read((char*)&a.ID, sizeof a.ID);
+		MyStream.read((char*)&a.MaxCount, sizeof a.MaxCount);
+		MyStream.read((char*)&a.MinCount, sizeof a.MinCount);
+		ItemsAfterDeath.push_back(a);
+	}
 }
 
 // ------------------------------ Getters and Setters -----------------------
@@ -302,8 +324,11 @@ void Beast::SetIsDead (int a)
 {
 	if (a==0)
 		IsDead = 0;
-	if (a>0)
+	if (a > 0 && IsDead == 0)
+	{
 		IsDead = 1;
+		DropItemsAfterDeath();
+	}
 }
 
 int Beast::GetIsDead () const
@@ -686,4 +711,37 @@ int Beast::GetID () const
 	{
 		MovePoints = Points;
 		return;
+	}
+
+	void Beast::SetItemAfterDeath(int chance, int ID, int MaxCount, int MinCount)
+	{
+		AfterDeath a;
+		a.chance = chance;
+		a.ID = ID;
+		a.MaxCount = MaxCount;
+		a.MinCount = MinCount;
+		ItemsAfterDeath.push_back(a);
+	}
+
+	void Beast::DropItemsAfterDeath()
+	{
+		if (ItemsAfterDeath.empty())
+			return;
+		Game* MyGame;
+		MyGame = Game::GetGameInstance();
+		level* MyLevel;
+		MyLevel = MyGame->GetLevel();
+		int CurrentLevel = MyLevel->GetLevelNum();
+		MyGame->SetCurrentLevel(CoordZ);
+		for (auto a : ItemsAfterDeath)
+		{
+			int temp;
+			temp = rand() % 100;
+			if (temp >= a.chance)
+				continue;
+			int Quantity = a.MinCount + rand() % (a.MaxCount - a.MinCount + 1);
+			MyLevel->AddItem(a.ID, Quantity, CoordX, CoordY);
+
+		}
+		MyGame->SetCurrentLevel(CurrentLevel);
 	}

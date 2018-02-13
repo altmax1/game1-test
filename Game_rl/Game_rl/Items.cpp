@@ -431,7 +431,7 @@ void Items::ReadStuffFromMap(map<string, string>& MyMap, Stuff & TempStuff)
 	MapPtr = MyMap.find("Destroyed");
 	TempStuff.Destroyed = atoi(MapPtr->second.c_str());
 	MapPtr = MyMap.find("CharCode");
-	TempStuff.Unique = atoi(MapPtr->second.c_str());
+	TempStuff.CharCode = atoi(MapPtr->second.c_str());
 	MapPtr = MyMap.find("ColorVisible");
 	TempStuff.ColorVisible = strtoul(MapPtr->second.c_str(), NULL, 16);
 	MapPtr = MyMap.find("ColorNotVisible");

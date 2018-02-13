@@ -22,6 +22,7 @@ public:
 	void PrintItems ();
 	bool ItemExist (int ID);
 	int FindItemByID (int ID);
+
 	void DropItem ();
 	int SelectItem ();
 	void PrintBorder (int state);
@@ -35,6 +36,7 @@ public:
 	int GetNumOfSlots ();
 	int GetIdByNum (int Num);
 	int GetQuantityByNum( int Num);
+	int GetQuantityByID(int ID);
 	void SaveInventory();
 	void LoadInventory();
 };
