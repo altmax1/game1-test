@@ -13,7 +13,7 @@ LuaAdapter::LuaAdapter(void)
 	MyItems = MyGame->GetItems();
 	MyInterface = MyGame->GetInterface();
 	MyLog = MyGame->GetLog();
-
+			
 }
 
 LuaAdapter::~LuaAdapter(void)
@@ -173,21 +173,25 @@ int LuaAdapter::LTerminal_read()
 
 int LuaAdapter::FindItemByID(int ID)
 {
+	MyInventory = MyGamer->GetInventory();
 	return MyInventory->FindItemByID(ID);
 }
 
 int LuaAdapter::GetNumOfSlots()
 {
+	MyInventory = MyGamer->GetInventory();
 	return MyInventory->GetNumOfSlots();
 }
 
 int LuaAdapter::GetQuantityByNum(int Num)
 {
+	MyInventory = MyGamer->GetInventory();
 	return MyInventory->GetQuantityByNum(Num);
 }
 
 int LuaAdapter::GetQuantityByID(int ID)
 {
+	MyInventory = MyGamer->GetInventory();
 	return MyInventory->GetQuantityByID(ID);
 
 }
@@ -199,6 +203,7 @@ int LuaAdapter::CreateUniqueItem(int ID)
 
 void LuaAdapter::PutItemInInventory2(int Id, int Num)
 {
+	MyInventory = MyGamer->GetInventory();
 	bool st;
 	st = MyItems->GetStackable(Id);
 	MyInventory->PutItemInVector(Id, st, Num);
@@ -207,6 +212,7 @@ void LuaAdapter::PutItemInInventory2(int Id, int Num)
 
 void LuaAdapter::RemoveItemFromInventory(int num, int Quantity)
 {
+	MyInventory = MyGamer->GetInventory();
 	MyInventory->RemoveItemFromVector(num, Quantity);
 	return;
 }

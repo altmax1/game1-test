@@ -30,6 +30,7 @@ int Inventory::FindItemByID (int ID)
 	int iter = 0;
 	vector <InventoryCell>::iterator p;
 	p = MyInventory.begin();
+
 	while (p!=MyInventory.end())
 	{
 		if (p->ID == ID)
@@ -37,6 +38,7 @@ int Inventory::FindItemByID (int ID)
 		iter++;
 		p++;
 	}
+	return -1;
 
 }
 
@@ -360,7 +362,7 @@ int Inventory::GetQuantityByID(int ID)
 {
 	int Quantity = 0;
 	int Existing = FindItemByID(ID);
-	if (Existing == 0)
+	if (Existing == -1)
 		return 0;
 	else
 	{
