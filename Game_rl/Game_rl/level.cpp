@@ -564,10 +564,17 @@ void level::LevelProcessEffects ()
 
 		using namespace luabridge;
 
-		lua_State* L = luaL_newstate();
-		luaL_openlibs(L);
-		LuaAdapter Luaad;
-		Luaad.LuaDesc(L);
+			Game* MyGame;
+		level* MyLevel;
+		MyGame = Game::GetGameInstance();
+		MyLevel = MyGame->GetLevel();
+		lua_State* L = MyGame->GetLuaState();
+		LuaAdapter* Luaad = MyGame->GetLuaadapter();
+
+		//lua_State* L = luaL_newstate();
+		//luaL_openlibs(L);
+		//LuaAdapter Luaad;
+		//Luaad.LuaDesc(L);
 		luaL_dofile(L, ".\\Files\\lua\\LevelProcess.lua");
 		lua_pcall(L, 0, 0, 0);
 		LuaRef LevelProcess = getGlobal(L, "LevelProcess");
