@@ -77,6 +77,7 @@ void Beast::MakeMove()
 			return;
 		}
 	using namespace luabridge;
+/*
 
 	lua_State* L = luaL_newstate();
     luaL_openlibs(L);
@@ -91,7 +92,8 @@ void Beast::MakeMove()
         }
         catch (luabridge::LuaException const& e) {
             std::cout << "LuaException: " << e.what() << std::endl;
-        }
+        } 
+*/	
 	return;
 }
 

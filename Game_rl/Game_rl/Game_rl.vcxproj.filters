@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Include="ReadMe.txt" />
     <None Include="..\Debug\libBeaRLibFOV.a" />
+    <None Include="Debug\lua53.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -140,7 +141,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\Debug\BearLibTerminal.lib" />
     <Library Include="extlibs\lua53.lib" />
+    <Library Include="Debug\BearLibTerminal.lib" />
+    <Library Include="Debug\lua53.lib" />
   </ItemGroup>
 </Project>
